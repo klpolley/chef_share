@@ -5,7 +5,9 @@ public class Account {
     private String biography;
     //private List<Recipe> recipes;
 
-    public Account(String username, String password, String bio) {
+    public Account(String username, String password, String bio) throws IllegalArgumentException {
+        if (!isUserValid(username)) throw new IllegalArgumentException("Username must be between 6 and 15 characters, alphanumeric or _ only");
+        if (!isPasswordValid(password)) throw new IllegalArgumentException("Password must be at least 8 characters long");
         this.username = username;
         this.password = password;
         this.biography = bio;
@@ -15,7 +17,8 @@ public class Account {
         return username;
     }
 
-    public void setUsername(String newUser) {
+    public void setUsername(String newUser) throws IllegalArgumentException {
+        if (!isUserValid(newUser)) throw new IllegalArgumentException("Username must be between 6 and 15 characters, alphanumeric or _ only");
         this.username = newUser;
     }
 
@@ -25,6 +28,7 @@ public class Account {
     }
 
     public void setPassword(String newPassword) {
+        if (!isPasswordValid(newPassword)) throw new IllegalArgumentException("Password must be at least 8 characters long");
         this.password = newPassword;
     }
 
