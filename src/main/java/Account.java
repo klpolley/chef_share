@@ -10,6 +10,8 @@ public class Account {
     }
 
     public static boolean isUserValid(String username){
+        //valid username has between 6 and 15 characters, alphanumeric or underscore
+        //taken usernames will be handled by the account container class
         int length = username.length();
         if (length < 6 || length > 15) {
             return false;
@@ -25,6 +27,12 @@ public class Account {
             }
             return true;
          }
+    }
+
+    public static boolean isPasswordValid(String password) {
+        //valid password is at least 8 characters long
+        //alphanumeric and special characters allowed
+        return true;
     }
 
 }
