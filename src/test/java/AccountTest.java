@@ -12,22 +12,22 @@ public class AccountTest {
         //too short
         assertFalse(Account.isUserValid(""));
         assertFalse(Account.isUserValid("m_e"));
-        assertFalse(Account.isUserValid("user1"));
+        assertFalse(Account.isUserValid("User1"));
 
         //too long
-        assertFalse(Account.isUserValid("characters151515"));
+        assertFalse(Account.isUserValid("Characters151515"));
         assertFalse(Account.isUserValid("whatalongusernamehowcoulditbe"));
         assertFalse(Account.isUserValid("the_longest_username_ever_to_be_written_in_these_tests"));
 
         //just right
-        assertTrue(Account.isUserValid("lenof6"));
+        assertTrue(Account.isUserValid("LenOf6"));
         assertTrue(Account.isUserValid("my_username"));
-        assertTrue(Account.isUserValid("fifteencharswoo"));
+        assertTrue(Account.isUserValid("fifteencharzWOO"));
 
         //bad characters, fine length
         assertFalse(Account.isUserValid("$$$$$$"));
         assertFalse(Account.isUserValid("hello#bad"));
-        assertFalse(Account.isUserValid("my.username"));
+        assertFalse(Account.isUserValid("my.Username"));
     }
 
     @Test
