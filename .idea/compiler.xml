@@ -9,8 +9,5 @@
         <module name="ChefShare" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ChefShare" target="1.10" />
-    </bytecodeTargetLevel>
   </component>
 </project>
