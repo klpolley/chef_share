@@ -2,11 +2,13 @@ public class Account {
 
     private String username;
     private String password;
-    private String bio;
+    private String biography;
     //private List<Recipe> recipes;
 
-    public Account(String username, String password, String bio){
-
+    public Account(String username, String password, String bio) {
+        this.username = username;
+        this.password = password;
+        this.biography = bio;
     }
 
     public String getUsername() {
@@ -14,23 +16,24 @@ public class Account {
     }
 
     public void setUsername(String newUser) {
-
+        this.username = newUser;
     }
 
     public boolean confirmPassword(String password) {
-        return true;
+        if (password.equals(this.password)) return true;
+        else return false;
     }
 
     public void setPassword(String newPassword) {
-
+        this.password = newPassword;
     }
 
-    public String getBio() {
-        return password;
+    public String getBiography() {
+        return biography;
     }
 
     public void setBiography(String newBio) {
-
+        this.biography = newBio;
     }
 
     public static boolean isUserValid(String username){
