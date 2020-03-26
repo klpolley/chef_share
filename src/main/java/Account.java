@@ -9,6 +9,30 @@ public class Account {
 
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String newUser) {
+
+    }
+
+    public boolean confirmPassword(String password) {
+        return true;
+    }
+
+    public void setPassword(String newPassword) {
+
+    }
+
+    public String getBio() {
+        return password;
+    }
+
+    public void setBiography(String newBio) {
+
+    }
+
     public static boolean isUserValid(String username){
         //valid username has between 6 and 15 characters, alphanumeric or underscore
         //taken usernames will be handled by the account container class
@@ -32,7 +56,12 @@ public class Account {
     public static boolean isPasswordValid(String password) {
         //valid password is at least 8 characters long
         //alphanumeric and special characters allowed
-        return true;
+        int length = password.length();
+        if (length < 8) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
