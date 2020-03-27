@@ -77,7 +77,7 @@ public class IngredientTest {
         assertEquals(16, i1.getAmount(), 10);
         assertEquals("oz", i1.getUnit());
 
-        Food food2 = new Food("rice",111);
+        Food food2 = new Food("rice",111, 1.452);
         Ingredient i2 = new Ingredient(food2, 100, "g");
         assertEquals("rice", i2.getName());
         assertEquals(111, i2.getCalories(), 10);
