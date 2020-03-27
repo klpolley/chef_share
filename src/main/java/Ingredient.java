@@ -24,6 +24,10 @@ public class Ingredient {
 
     public String getUnit(){ return unit;    }
 
+    public String toString(){
+        return amount + " " + unit + "\n" + food.getName() + "\n" + getCalories() + " Calories";
+    }
+
     private static DecimalFormat calReturn = new DecimalFormat("0.00");
 
 

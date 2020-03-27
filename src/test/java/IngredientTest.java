@@ -70,14 +70,14 @@ public class IngredientTest {
 
     @Test
     void constructorTest(){
-        Food food = new Food("Broccoli", 34, 0.38 );
+        Food food = new Food("Broccoli", 34);
         Ingredient i1 = new Ingredient(food, 16, "oz");
         assertEquals("Broccoli", i1.getName());
         assertEquals(154.22, i1.getCalories(), 10);
         assertEquals(16, i1.getAmount(), 10);
         assertEquals("oz", i1.getUnit());
 
-        Food food2 = new Food("rice",111,  1.452);
+        Food food2 = new Food("rice",111);
         Ingredient i2 = new Ingredient(food2, 100, "g");
         assertEquals("rice", i2.getName());
         assertEquals(111, i2.getCalories(), 10);
