@@ -28,4 +28,8 @@ public class Food {
     public double getDensity() {
         return density;
     }
+
+    public String toString(){
+        return name;
+    }
 }
