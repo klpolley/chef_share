@@ -63,6 +63,8 @@ public class IngredientTest {
         assertTrue(Ingredient.validUnit("tsp."));
         assertFalse(Ingredient.validUnit("g."));
         assertFalse(Ingredient.validUnit(".tsp"));
+        assertFalse(Ingredient.validUnit("tbsp.ghj"));
+        assertFalse(Ingredient.validUnit("tbspghj."));
 
     }
 
@@ -84,7 +86,7 @@ public class IngredientTest {
 
         Ingredient i3 = new Ingredient(food2, 2, "cup");
         assertEquals("rice", i3.getName());
-        assertEquals(381.31, i3.getCalories(), 10);
+        assertEquals(762.62, i3.getCalories(), 10);
         assertEquals(2, i3.getAmount(), 10);
         assertEquals("cup", i3.getUnit());
 
