@@ -34,7 +34,40 @@ public class AccountContainerTest {
         assertThrows(IllegalArgumentException.class, ()->accounts.createAccount("thecoolestuserevertoexist", "password", ""));
         assertThrows(IllegalArgumentException.class, ()->accounts.createAccount("username", "pass", ""));
         assertThrows(IllegalArgumentException.class, ()->accounts.createAccount("user", "pass", "Rules are for losers"));
+    }
 
+    @Test
+    void removeAccountTest() {
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username", "password", "gourmet chef");
+        accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
+        accounts.createAccount("1broccoli", "get1those1greens", "");
+
+        //remove existing account
+        accounts.removeAccount("username");
+        assertFalse(accounts.accountExists("username"));
+        assertTrue(accounts.accountExists("user12345"));
+        assertTrue(accounts.accountExists("1broccoli"));
+
+        //try to remove account that is not in container
+        assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("username"));
+        assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("notreal"));
+
+        accounts.removeAccount("user12345");
+        assertFalse(accounts.accountExists("username"));
+        assertFalse(accounts.accountExists("user12345"));
+        assertTrue(accounts.accountExists("1broccoli"));
+
+        assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("user12345"));
+
+        accounts.removeAccount("1broccoli");
+        assertFalse(accounts.accountExists("username"));
+        assertFalse(accounts.accountExists("user12345"));
+        assertFalse(accounts.accountExists("1broccoli"));
+
+        //try to remove from empty container
+        assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("1broccoli"));
+        assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("neverexisted"));
     }
 
 }
