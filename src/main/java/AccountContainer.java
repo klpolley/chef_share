@@ -50,6 +50,10 @@ public class AccountContainer {
         return accounts.containsKey(username);
     }
 
+    public Account getAccount(String username) {
+        return null;
+    }
+
     public Account getCurrentAccount() {
         return null;
     }

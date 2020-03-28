@@ -70,4 +70,16 @@ public class AccountContainerTest {
         assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("neverexisted"));
     }
 
+    @Test
+    void getBioTest() {
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username", "password", "gourmet chef");
+        accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
+        accounts.createAccount("1broccoli", "get1those1greens", "");
+
+        assertEquals("gourmet chef", accounts.getUserBio("username"));
+        assertEquals("secure chef", accounts.getUserBio("user12345"));
+        assertEquals("", accounts.getUserBio("1broccoli"));
+    }
+
 }
