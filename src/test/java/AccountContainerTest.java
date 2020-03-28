@@ -192,8 +192,8 @@ public class AccountContainerTest {
         assertEquals("gourmet chef", accounts.getUserBio(accounts.getCurrentAccount().getUsername()));
 
         //login while account is logged in
-        assertThrows(IllegalArgumentException.class, ()->accounts.login("username", "password"));
-        assertThrows(IllegalArgumentException.class, ()->accounts.login("user12345", "p.a!s#w%o^r&d"));
+        assertThrows(IllegalStateException.class, ()->accounts.login("username", "password"));
+        assertThrows(IllegalStateException.class, ()->accounts.login("user12345", "p.a!s#w%o^r&d"));
 
         //logout
         accounts.logout();
@@ -215,8 +215,8 @@ public class AccountContainerTest {
         assertEquals("user12345", accounts.getCurrentAccount().getUsername());
 
         //same tests again with new account
-        assertThrows(IllegalArgumentException.class, ()->accounts.login("username", "password"));
-        assertThrows(IllegalArgumentException.class, ()->accounts.login("user12345", "p.a!s#w%o^r&d"));
+        assertThrows(IllegalStateException.class, ()->accounts.login("username", "password"));
+        assertThrows(IllegalStateException.class, ()->accounts.login("user12345", "p.a!s#w%o^r&d"));
         accounts.logout();
         assertNull(accounts.getCurrentAccount());
         assertThrows(IllegalStateException.class, ()->accounts.logout());

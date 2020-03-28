@@ -54,20 +54,20 @@ public class AccountContainer {
     }
 
     public void login(String username, String password) {
+        if (currentAccount != null) throw new IllegalStateException("Account already logged in");
         if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
+        Account acct = accounts.get(username);
+        if (!acct.confirmPassword(password)) throw new IllegalArgumentException("Password incorrect");
+        currentAccount = acct;
     }
 
     public void logout() {
-
-    }
-
-    public boolean confirmCredentials(String username, String password) {
-        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
-        return false;
+        if (currentAccount ==  null) throw new IllegalStateException("No account logged in");
+        currentAccount = null;
     }
 
     public Account getCurrentAccount() {
-        return null;
+        return currentAccount;
     }
 
 
