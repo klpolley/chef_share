@@ -7,8 +7,10 @@ public class AccountContainer {
 
     private Account currentAccount = null;
 
-    public void createAccount(String username, String password, String bio) {
-
+    public void createAccount(String username, String password, String bio) throws IllegalArgumentException {
+        if (accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username already exists");
+        Account acct = new Account(username, password, bio);
+        accounts.put(username, acct);
     }
 
     public void removeAccount(String username) {
@@ -44,7 +46,7 @@ public class AccountContainer {
     }
 
     public boolean accountExists(String username) {
-        return false;
+        return accounts.containsKey(username);
     }
 
     public Account getCurrentAccount() {
