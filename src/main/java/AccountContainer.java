@@ -19,15 +19,15 @@ public class AccountContainer {
     }
 
     public void updateUsername(String username, String newUsername) {
-
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
     }
 
     public void updatePassword(String username, String newPassword) {
-
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
     }
 
     public void updateBiography(String username, String newBio) {
-
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
     }
 
     public String getUserBio(String username) {
@@ -36,14 +36,15 @@ public class AccountContainer {
     }
 
     public void login(String username, String password) {
-
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
     }
 
     public void logout(String username) {
-
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
     }
 
     public boolean confirmCredentials(String username, String password) {
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
         return false;
     }
 
@@ -52,7 +53,8 @@ public class AccountContainer {
     }
 
     public Account getAccount(String username) {
-        return null;
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
+        return accounts.get(username);
     }
 
     public Account getCurrentAccount() {

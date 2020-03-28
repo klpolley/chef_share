@@ -85,4 +85,32 @@ public class AccountContainerTest {
         assertThrows(IllegalArgumentException.class, ()->accounts.getUserBio("nonexistent"));
     }
 
+    @Test
+    void updateUserTest() {
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username", "password", "gourmet chef");
+        accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
+        accounts.createAccount("1broccoli", "get1those1greens", "");
+
+        //update username without affecting other accounts
+        accounts.updateUsername("username", "newname");
+        assertTrue(accounts.accountExists("newname"));
+        assertFalse(accounts.accountExists("username"));
+        assertEquals("gourmet chef", accounts.getUserBio("newname"));
+        assertTrue(accounts.accountExists("user12345"));
+        assertTrue(accounts.accountExists("1broccoli"));
+
+        //update username to one that was previously taken
+        accounts.updateUsername("user12345", "username");
+        assertTrue(accounts.accountExists("username"));
+        assertFalse(accounts.accountExists("user12345"));
+        assertEquals("secure chef", accounts.getUserBio("username"));
+        assertTrue(accounts.accountExists("newname"));
+        assertTrue(accounts.accountExists("1broccoli"));
+
+        //try to update username to name that already exists
+        assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("username", "1broccoli"));
+        assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("newname", "username"));
+    }
+
 }
