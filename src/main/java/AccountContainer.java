@@ -20,6 +20,11 @@ public class AccountContainer {
 
     public void updateUsername(String username, String newUsername) {
         if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
+        if (accounts.containsKey(newUsername)) throw new IllegalArgumentException("Account with that username already exists");
+        Account acct = accounts.get(username);
+        acct.setUsername(newUsername);
+        accounts.remove(username);
+        accounts.put(newUsername, acct);
     }
 
     public void updatePassword(String username, String newPassword) {

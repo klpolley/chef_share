@@ -111,6 +111,10 @@ public class AccountContainerTest {
         //try to update username to name that already exists
         assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("username", "1broccoli"));
         assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("newname", "username"));
+
+        //try to update username of acct that doesn't exist
+        assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("user12345", "thebestuser"));
+
     }
 
 }
