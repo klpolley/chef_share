@@ -1,6 +1,9 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class AccountContainer {
 
-    private Map<String, Account> accounts = new Map<>();
+    private Map<String, Account> accounts = new HashMap<>();
 
     private Account currentAccount = null;
 
@@ -25,7 +28,7 @@ public class AccountContainer {
     }
 
     public String getUserBio(String username) {
-
+        return null;
     }
 
     public void login(String username, String password) {
@@ -37,15 +40,15 @@ public class AccountContainer {
     }
 
     public boolean confirmCredentials(String username, String password) {
-
+        return false;
     }
 
     public boolean accountExists(String username) {
-
+        return false;
     }
 
     public Account getCurrentAccount() {
-
+        return null;
     }
 
 
