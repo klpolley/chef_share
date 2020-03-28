@@ -188,6 +188,7 @@ public class AccountContainerTest {
 
         //good login
         accounts.login("username", "password");
+        assertEquals("username", accounts.getCurrentAccount().getUsername());
 
         //login while account is logged in
         assertThrows(IllegalArgumentException.class, ()->accounts.login("username", "password"));
