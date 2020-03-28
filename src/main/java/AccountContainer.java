@@ -57,8 +57,8 @@ public class AccountContainer {
         if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
     }
 
-    public void logout(String username) {
-        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
+    public void logout() {
+
     }
 
     public boolean confirmCredentials(String username, String password) {

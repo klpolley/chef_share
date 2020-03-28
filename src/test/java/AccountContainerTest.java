@@ -174,7 +174,7 @@ public class AccountContainerTest {
     }
 
     @Test
-    void loginTest() {
+    void loginAndLogoutTest() {
         AccountContainer accounts = new AccountContainer();
         accounts.createAccount("username", "password", "gourmet chef");
         accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
@@ -189,11 +189,37 @@ public class AccountContainerTest {
         //good login
         accounts.login("username", "password");
         assertEquals("username", accounts.getCurrentAccount().getUsername());
+        assertEquals("gourmet chef", accounts.getUserBio(accounts.getCurrentAccount().getUsername()));
 
         //login while account is logged in
         assertThrows(IllegalArgumentException.class, ()->accounts.login("username", "password"));
         assertThrows(IllegalArgumentException.class, ()->accounts.login("user12345", "p.a!s#w%o^r&d"));
 
+        //logout
+        accounts.logout();
+        assertNull(accounts.getCurrentAccount());
+
+        //try to logout without being logged in
+        assertThrows(IllegalStateException.class, ()->accounts.logout());
+
+        //log back in
+        accounts.login("username", "password");
+        assertEquals("username", accounts.getCurrentAccount().getUsername());
+
+        //logout again
+        accounts.logout();
+        assertNull(accounts.getCurrentAccount());
+
+        //log in with different account
+        accounts.login("user12345", "p.a!s#w%o^r&d");
+        assertEquals("user12345", accounts.getCurrentAccount().getUsername());
+
+        //same tests again with new account
+        assertThrows(IllegalArgumentException.class, ()->accounts.login("username", "password"));
+        assertThrows(IllegalArgumentException.class, ()->accounts.login("user12345", "p.a!s#w%o^r&d"));
+        accounts.logout();
+        assertNull(accounts.getCurrentAccount());
+        assertThrows(IllegalStateException.class, ()->accounts.logout());
     }
 
 }
