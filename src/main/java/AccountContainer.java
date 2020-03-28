@@ -31,7 +31,8 @@ public class AccountContainer {
     }
 
     public String getUserBio(String username) {
-        return null;
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
+        return accounts.get(username).getBiography();
     }
 
     public void login(String username, String password) {

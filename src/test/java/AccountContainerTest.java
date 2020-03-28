@@ -80,6 +80,9 @@ public class AccountContainerTest {
         assertEquals("gourmet chef", accounts.getUserBio("username"));
         assertEquals("secure chef", accounts.getUserBio("user12345"));
         assertEquals("", accounts.getUserBio("1broccoli"));
+
+        //account that does not exist throws exception
+        assertThrows(IllegalArgumentException.class, ()->accounts.getUserBio("nonexistent"));
     }
 
 }
