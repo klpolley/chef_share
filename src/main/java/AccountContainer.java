@@ -35,6 +35,8 @@ public class AccountContainer {
 
     public void updateBiography(String username, String newBio) {
         if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
+        Account acct = accounts.get(username);
+        acct.setBiography(newBio);
     }
 
     public String getUserBio(String username) {
