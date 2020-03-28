@@ -115,6 +115,37 @@ public class AccountContainerTest {
         //try to update username of acct that doesn't exist
         assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("user12345", "thebestuser"));
 
+        //update with bad username
+        assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("username", "user"));
+        assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("username", "?username"));
+        assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("username", "1234!@#$"));
+    }
+
+    @Test
+    void updatePasswordTest() {
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username", "password", "gourmet chef");
+        accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
+        accounts.createAccount("1broccoli", "get1those1greens", "");
+        Account acct = accounts.getAccount("username");
+        Account acct2 = accounts.getAccount("user12345");
+        Account acct3 = accounts.getAccount("1broccoli");
+
+        //update username without affecting other accounts
+        accounts.updatePassword("username", "betterpassword?123");
+        assertTrue(acct.confirmPassword("betterpassword?123"));
+        assertTrue(acct2.confirmPassword("p.a!s#w%o^r&d"));
+        assertTrue(acct3.confirmPassword("get1those1greens"));
+
+        //update password to same as others - works
+        accounts.updatePassword("user12345", "get1those1greens");
+        assertTrue(acct2.confirmPassword("get1those1greens"));
+
+        //try to update username of acct that doesn't exist
+        assertThrows(IllegalArgumentException.class, ()->accounts.updatePassword("fakeuser", "password"));
+
+        //update with bad password
+        assertThrows(IllegalArgumentException.class, ()->accounts.updatePassword("user12345", "short!"));
     }
 
 }
