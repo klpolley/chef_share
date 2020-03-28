@@ -173,4 +173,26 @@ public class AccountContainerTest {
         assertThrows(IllegalArgumentException.class, ()->accounts.updateBiography("fakeuser", "description"));
     }
 
+    @Test
+    void loginTest() {
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username", "password", "gourmet chef");
+        accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
+        accounts.createAccount("1broccoli", "get1those1greens", "");
+
+        //login to account that does not exist
+        assertThrows(IllegalArgumentException.class, ()->accounts.login("fakeuser", "password"));
+
+        //account login with bad password
+        assertThrows(IllegalArgumentException.class, ()->accounts.login("username", "notcorrect"));
+
+        //good login
+        accounts.login("username", "password");
+
+        //login while account is logged in
+        assertThrows(IllegalArgumentException.class, ()->accounts.login("username", "password"));
+        assertThrows(IllegalArgumentException.class, ()->accounts.login("user12345", "p.a!s#w%o^r&d"));
+
+    }
+
 }
