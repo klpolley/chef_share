@@ -14,7 +14,8 @@ public class AccountContainer {
     }
 
     public void removeAccount(String username) {
-
+        if (!accounts.containsKey(username)) throw new IllegalArgumentException("Account with that username does not exist");
+        accounts.remove(username);
     }
 
     public void updateUsername(String username, String newUsername) {
