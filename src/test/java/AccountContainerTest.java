@@ -34,6 +34,10 @@ public class AccountContainerTest {
         assertThrows(IllegalArgumentException.class, ()->accounts.createAccount("thecoolestuserevertoexist", "password", ""));
         assertThrows(IllegalArgumentException.class, ()->accounts.createAccount("username", "pass", ""));
         assertThrows(IllegalArgumentException.class, ()->accounts.createAccount("user", "pass", "Rules are for losers"));
+
+        //can't create account when logged in
+        accounts.login("username", "password");
+        assertThrows(IllegalStateException.class, ()->accounts.createAccount("newest", "passwordiest",""));
     }
 
     @Test
@@ -42,6 +46,9 @@ public class AccountContainerTest {
         accounts.createAccount("username", "password", "gourmet chef");
         accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
         accounts.createAccount("1broccoli", "get1those1greens", "");
+
+        //no one logged in- definitely can't do things
+        assertThrows(IllegalStateException.class, ()->accounts.removeAccount("user12345"));
 
         accounts.login("username", "password");
 
@@ -126,11 +133,10 @@ public class AccountContainerTest {
         assertTrue(accounts.accountExists("1broccoli"));
 
         //try to update username not logged in
-        assertThrows(IllegalStateException.class, ()->accounts.updateUsername("username", "newname"));
+        assertThrows(IllegalStateException.class, ()->accounts.updateUsername("newname", "whatever"));
 
         //try to update username to name that already exists
         assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("username", "1broccoli"));
-        assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("newname", "username"));
 
         //try to update username of acct that doesn't exist
         assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("user12345", "thebestuser"));
@@ -151,7 +157,7 @@ public class AccountContainerTest {
         Account acct2 = accounts.getAccount("user12345");
         Account acct3 = accounts.getAccount("1broccoli");
 
-        accounts.login("1broccoli", "get1those1greens");
+        accounts.login("username", "password");
 
         //update username without affecting other accounts
         accounts.updatePassword("username", "betterpassword?123");
@@ -183,7 +189,7 @@ public class AccountContainerTest {
         accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
         accounts.createAccount("1broccoli", "get1those1greens", "");
 
-        accounts.login("username", "password");
+        accounts.login("1broccoli", "get1those1greens");
 
         //update bio without impacting other accounts
         accounts.updateBiography("1broccoli", "i <3 broccoli");
