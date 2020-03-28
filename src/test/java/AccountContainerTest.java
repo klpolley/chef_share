@@ -43,6 +43,8 @@ public class AccountContainerTest {
         accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
         accounts.createAccount("1broccoli", "get1those1greens", "");
 
+        accounts.login("username", "password");
+
         //remove existing account
         accounts.removeAccount("username");
         assertFalse(accounts.accountExists("username"));
@@ -53,12 +55,22 @@ public class AccountContainerTest {
         assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("username"));
         assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("notreal"));
 
+        //try to remove account not logged in
+        assertThrows(IllegalStateException.class, ()->accounts.removeAccount("user12345"));
+
+        accounts.logout();
+        accounts.login("user12345", "p.a!s#w%o^r&d");
+
         accounts.removeAccount("user12345");
         assertFalse(accounts.accountExists("username"));
         assertFalse(accounts.accountExists("user12345"));
         assertTrue(accounts.accountExists("1broccoli"));
 
+        //try to remove account already removed
         assertThrows(IllegalArgumentException.class, ()->accounts.removeAccount("user12345"));
+
+        accounts.logout();
+        accounts.login("1broccoli", "get1those1greens");
 
         accounts.removeAccount("1broccoli");
         assertFalse(accounts.accountExists("username"));
@@ -92,6 +104,8 @@ public class AccountContainerTest {
         accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
         accounts.createAccount("1broccoli", "get1those1greens", "");
 
+        accounts.login("username", "password");
+
         //update username without affecting other accounts
         accounts.updateUsername("username", "newname");
         assertTrue(accounts.accountExists("newname"));
@@ -100,6 +114,9 @@ public class AccountContainerTest {
         assertTrue(accounts.accountExists("user12345"));
         assertTrue(accounts.accountExists("1broccoli"));
 
+        accounts.logout();
+        accounts.login("user12345", "p.a!s#w%o^r&d");
+
         //update username to one that was previously taken
         accounts.updateUsername("user12345", "username");
         assertTrue(accounts.accountExists("username"));
@@ -107,6 +124,9 @@ public class AccountContainerTest {
         assertEquals("secure chef", accounts.getUserBio("username"));
         assertTrue(accounts.accountExists("newname"));
         assertTrue(accounts.accountExists("1broccoli"));
+
+        //try to update username not logged in
+        assertThrows(IllegalStateException.class, ()->accounts.updateUsername("username", "newname"));
 
         //try to update username to name that already exists
         assertThrows(IllegalArgumentException.class, ()->accounts.updateUsername("username", "1broccoli"));
@@ -131,15 +151,23 @@ public class AccountContainerTest {
         Account acct2 = accounts.getAccount("user12345");
         Account acct3 = accounts.getAccount("1broccoli");
 
+        accounts.login("1broccoli", "get1those1greens");
+
         //update username without affecting other accounts
         accounts.updatePassword("username", "betterpassword?123");
         assertTrue(acct.confirmPassword("betterpassword?123"));
         assertTrue(acct2.confirmPassword("p.a!s#w%o^r&d"));
         assertTrue(acct3.confirmPassword("get1those1greens"));
 
+        accounts.logout();
+        accounts.login("user12345", "p.a!s#w%o^r&d");
+
         //update password to same as others - works
         accounts.updatePassword("user12345", "get1those1greens");
         assertTrue(acct2.confirmPassword("get1those1greens"));
+
+        //try to update account not logged in
+        assertThrows(IllegalStateException.class, ()->accounts.updatePassword("username", "betterpassword?123"));
 
         //try to update username of acct that doesn't exist
         assertThrows(IllegalArgumentException.class, ()->accounts.updatePassword("fakeuser", "password"));
@@ -155,22 +183,33 @@ public class AccountContainerTest {
         accounts.createAccount("user12345", "p.a!s#w%o^r&d", "secure chef");
         accounts.createAccount("1broccoli", "get1those1greens", "");
 
+        accounts.login("username", "password");
+
         //update bio without impacting other accounts
         accounts.updateBiography("1broccoli", "i <3 broccoli");
         assertEquals("i <3 broccoli", accounts.getUserBio("1broccoli"));
         assertEquals("gourmet chef", accounts.getUserBio("username"));
         assertEquals("secure chef", accounts.getUserBio("user12345"));
 
+        accounts.logout();
+        accounts.login("user12345", "p.a!s#w%o^r&d");
+
         //update to empty
         accounts.updateBiography("user12345", "");
         assertEquals("", accounts.getUserBio("user12345"));
+
+        accounts.logout();
+        accounts.login("username", "password");
 
         //update to existing bio (fine)
         accounts.updateBiography("username", "i <3 broccoli");
         assertEquals("i <3 broccoli", accounts.getUserBio("username"));
 
-        //try to update username of acct that doesn't exist
+        //try to update description of acct that doesn't exist
         assertThrows(IllegalArgumentException.class, ()->accounts.updateBiography("fakeuser", "description"));
+
+        //try to update accounts not logged in
+        assertThrows(IllegalStateException.class, ()->accounts.updateBiography("user12345", ""));
     }
 
     @Test

@@ -69,8 +69,4 @@ public class AccountContainer {
     public Account getCurrentAccount() {
         return currentAccount;
     }
-
-
-
-
 }
