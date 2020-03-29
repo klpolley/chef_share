@@ -103,7 +103,7 @@ public class RecipeTest {
     void removeStepTest(){
         Recipe r =  new Recipe("Test");
         for(int x = 0; x < 15 ; x++){
-            r.addStep("step" + (x+1));
+            r.addStep("step " + (x+1));
         }
 
         assertEquals(15, r.getNumberSteps());

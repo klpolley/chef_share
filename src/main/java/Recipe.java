@@ -38,7 +38,10 @@ public class Recipe {
         return false;
     }
 
-    public void removeStep(int stepNum) throws IllegalArgumentException{}
+    public void removeStep(int stepNum) throws IllegalArgumentException{
+        if(stepNum > steps.size() || stepNum < 1) throw new IllegalArgumentException("Cannot remove a step that does not exist");
+        steps.remove(stepNum-1);
+    }
 
     public Collection<String> getSteps(){
         return this.steps;
