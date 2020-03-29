@@ -42,6 +42,18 @@ public class Recipe {
         return this.steps;
     }
 
+    public void addStep(String stepIn){}
+
+    public void addStep(String stepIn, int stepNum){}
+
+    public String getStep(int stepNum){
+        return"";
+    }
+
+    public int getNumberSteps(){
+        return -102;
+    }
+
     public String getPrintableSteps(){
         String result = "";
         for(int i = 0; i < steps.size(); i++){
