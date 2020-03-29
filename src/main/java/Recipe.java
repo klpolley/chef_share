@@ -42,19 +42,29 @@ public class Recipe {
         return this.steps;
     }
 
-    public void addStep(String stepIn){}
+    public void addStep(String stepIn){
+        steps.add(stepIn);
+    }
 
-    public void addStep(String stepIn, int stepNum) throws IllegalArgumentException{}
+    public void addStep(String stepIn, int stepNum) throws IllegalArgumentException{
+        if(stepNum > steps.size()+1 || stepNum < 1) throw new IllegalArgumentException("Cannot add step there");
+        steps.add(stepNum -1, stepIn);
+    }
 
     public String getStep(int stepNum) throws IllegalArgumentException{
-        return"";
+        if(stepNum > steps.size() || stepNum < 1) throw new IllegalArgumentException("No such Step");
+        return steps.get(stepNum-1);
     }
 
     public int getNumberSteps(){
-        return -102;
+        return steps.size();
     }
 
-    public void editStep(int stepNum, String newStep) throws IllegalArgumentException{}
+    public void editStep(int stepNum, String newStep) throws IllegalArgumentException{
+        if(stepNum > steps.size() || stepNum < 1) throw new IllegalArgumentException("No such step");
+        steps.remove(stepNum-1);
+        steps.add(stepNum-1, newStep);
+    }
 
     public String getPrintableSteps(){
         String result = "";

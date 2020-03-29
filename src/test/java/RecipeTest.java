@@ -38,7 +38,7 @@ public class RecipeTest {
     void getStepTest(){
         ArrayList<String> steps = new ArrayList<>();
         for(int x  =0; x < 15; x++){
-            steps.add("step " + x +1);
+            steps.add("step " + (x + 1));
         }
 
         ArrayList<Ingredient> food = new ArrayList<>();
@@ -65,17 +65,20 @@ public class RecipeTest {
         r.addStep("step 1");
         assertEquals(1, r.getNumberSteps());
         assertEquals("step 1", r.getStep(1));
-        assertEquals("1: step 1", r.getPrintableSteps());
+        assertEquals("1:  step 1\n", r.getPrintableSteps());
         r.addStep("step 2");
         assertEquals(2, r.getNumberSteps());
         assertEquals("step 2", r.getStep(2));
-        assertEquals("1: step 1\n2: step 2", r.getPrintableSteps());
+        assertEquals("1:  step 1\n2:  step 2\n", r.getPrintableSteps());
 
         r.addStep("new step 2", 2);
         assertEquals("new step 2", r.getStep(2));
         assertEquals("step 2", r.getStep(3));
 
-        assertThrows(IllegalArgumentException.class, ()-> r.addStep("test fail", 5));
+        r.addStep("Step 4", 4);
+        assertEquals("Step 4", r.getStep(4));
+
+        assertThrows(IllegalArgumentException.class, ()-> r.addStep("test fail", 6));
     }
 
     @Test
