@@ -99,5 +99,19 @@ public class RecipeTest {
         assertThrows(IllegalArgumentException.class, ()-> r.editStep(0, "test"));
     }
 
+    @Test
+    void removeStepTest(){
+        Recipe r =  new Recipe("Test");
+        for(int x = 0; x < 15 ; x++){
+            r.addStep("step" + (x+1));
+        }
+
+        assertEquals(15, r.getNumberSteps());
+        r.removeStep(10);
+        assertEquals(14, r.getNumberSteps());
+        assertEquals("step 9",r.getStep(9));
+        assertEquals("step 11",r.getStep(10));
+    }
+
 
 }

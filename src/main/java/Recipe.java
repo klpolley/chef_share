@@ -38,6 +38,8 @@ public class Recipe {
         return false;
     }
 
+    public void removeStep(int stepNum) throws IllegalArgumentException{}
+
     public Collection<String> getSteps(){
         return this.steps;
     }
