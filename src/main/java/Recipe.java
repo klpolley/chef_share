@@ -44,7 +44,7 @@ public class Recipe {
 
     public void addStep(String stepIn){}
 
-    public void addStep(String stepIn, int stepNum){}
+    public void addStep(String stepIn, int stepNum) throws IllegalArgumentException{}
 
     public String getStep(int stepNum) throws IllegalArgumentException{
         return"";
@@ -54,7 +54,7 @@ public class Recipe {
         return -102;
     }
 
-    public void editStep(int stepNum, String newStep){}
+    public void editStep(int stepNum, String newStep) throws IllegalArgumentException{}
 
     public String getPrintableSteps(){
         String result = "";
