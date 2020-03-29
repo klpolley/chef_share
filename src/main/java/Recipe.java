@@ -38,8 +38,37 @@ public class Recipe {
         return false;
     }
 
+    public void removeStep(int stepNum) throws IllegalArgumentException{
+        if(stepNum > steps.size() || stepNum < 1) throw new IllegalArgumentException("Cannot remove a step that does not exist");
+        steps.remove(stepNum-1);
+    }
+
     public Collection<String> getSteps(){
         return this.steps;
+    }
+
+    public void addStep(String stepIn){
+        steps.add(stepIn);
+    }
+
+    public void addStep(String stepIn, int stepNum) throws IllegalArgumentException{
+        if(stepNum > steps.size()+1 || stepNum < 1) throw new IllegalArgumentException("Cannot add step there");
+        steps.add(stepNum -1, stepIn);
+    }
+
+    public String getStep(int stepNum) throws IllegalArgumentException{
+        if(stepNum > steps.size() || stepNum < 1) throw new IllegalArgumentException("No such Step");
+        return steps.get(stepNum-1);
+    }
+
+    public int getNumberSteps(){
+        return steps.size();
+    }
+
+    public void editStep(int stepNum, String newStep) throws IllegalArgumentException{
+        if(stepNum > steps.size() || stepNum < 1) throw new IllegalArgumentException("No such step");
+        steps.remove(stepNum-1);
+        steps.add(stepNum-1, newStep);
     }
 
     public String getPrintableSteps(){
