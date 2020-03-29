@@ -46,13 +46,15 @@ public class Recipe {
 
     public void addStep(String stepIn, int stepNum){}
 
-    public String getStep(int stepNum){
+    public String getStep(int stepNum) throws IllegalArgumentException{
         return"";
     }
 
     public int getNumberSteps(){
         return -102;
     }
+
+    public void editStep(int stepNum, String newStep){}
 
     public String getPrintableSteps(){
         String result = "";
