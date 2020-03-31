@@ -3,6 +3,8 @@ Software to create, share, and search recipes, create grocery lists, and interac
 
 ## Sprint \#1
 Sprint Goal: Creating and editing recipes along with their ingredients that can be tied to accounts
+# Review Document
+https://docs.google.com/document/d/1AYqBQfuLaSEkS0hOyUL0Zk2XLd6zh8sBCS4cR9UPxJ0/edit?usp=sharing
 
 ## UML Diagrams
 https://drive.google.com/drive/folders/1SnlEJikbiLD5087pKPdLXCfem7UDupe0?usp=sharing
