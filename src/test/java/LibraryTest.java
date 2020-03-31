@@ -11,31 +11,46 @@ public class LibraryTest {
     }
 
     @Test
-    void addFoodtoLib(){
+    void addFoodtoLib() {
         Library foodLibrary = new Library();
 
         //add a bunch of food
         Food pickle = new Food("pickle", 550);
         foodLibrary.addFood(pickle);
-        assertEquals(1,foodLibrary.getLength());
+        assertEquals(1, foodLibrary.getLength());
 
         Food cookie = new Food("cookie", 800);
         foodLibrary.addFood(cookie);
-        assertEquals(2,foodLibrary.getLength());
+        assertEquals(2, foodLibrary.getLength());
 
         Food banana = new Food("banana", 250);
         foodLibrary.addFood(banana);
-        assertEquals(3,foodLibrary.getLength());
+        assertEquals(3, foodLibrary.getLength());
+    }
+        @Test
+        void isFoodPresentTest(){
 
-        //test that each food name is correct
-        String foodName1 = foodLibrary.getFoodName(0);
-        assertTrue("pickle" == foodName1);
+            Library foodLibrary = new Library();
 
-        String foodName2 = foodLibrary.getFoodName(1);
-        assertTrue("cookie" == foodName2);
+            //add a bunch of food
+            Food pickle = new Food("pickle", 550);
+            foodLibrary.addFood(pickle);
 
-        String foodName3 = foodLibrary.getFoodName(2);
-        assertTrue("banana" == foodName3);
+            Food cookie = new Food("cookie", 800);
+            foodLibrary.addFood(cookie);
+
+            Food banana = new Food("banana", 250);
+            foodLibrary.addFood(banana);
+
+            //test foods that are present
+            assertTrue(foodLibrary.isFoodPresent("pickle"));
+            assertTrue(foodLibrary.isFoodPresent("cookie"));
+            assertTrue(foodLibrary.isFoodPresent("banana"));
+            //test foods that aren't present
+            assertFalse(foodLibrary.isFoodPresent("apple"));
+            assertFalse(foodLibrary.isFoodPresent("cheese"));
+            assertFalse(foodLibrary.isFoodPresent("bananas")); //checking that very close string isn't considered true
+
     }
 
 }
