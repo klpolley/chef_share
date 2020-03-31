@@ -85,6 +85,7 @@ public class Account {
     public void editStep(String name, int stepNum, String newStep) throws IllegalArgumentException{}
 
     public void createRecipe(String name) throws IllegalArgumentException{}
+    public void createRecipe(Recipe In) throws IllegalArgumentException{}
 
     public String recipeListToString(){return "";}
 
