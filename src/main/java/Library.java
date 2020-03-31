@@ -16,10 +16,12 @@ public class Library {
     }
 
     public void addFood(Food foodIn){
-
+        libraryList.add(foodIn);
+        length++;
     }
 
     public String getFoodName(int index){
-        return "hi";
+        String foodName = libraryList.get(index).getName();
+        return foodName;
     }
 }
