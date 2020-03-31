@@ -1,5 +1,8 @@
 import javax.print.attribute.HashDocAttributeSet;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Account {
 
@@ -75,21 +78,54 @@ public class Account {
         }
     }
 
-    public void addStep(String name, String step, int stepNumber)throws IllegalArgumentException{}
-    public void addStep(String name, String step)throws IllegalArgumentException{}
-
-    public String getStep(String name, int stepNum) throws IllegalArgumentException{return "";}
-    public int getNumberSteps(String name){
-        return -10;
+    public void addStep(String name, String step, int stepNumber)throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        recipeList.get(name).addStep(step,stepNumber);
     }
-    public void editStep(String name, int stepNum, String newStep) throws IllegalArgumentException{}
+    public void addStep(String name, String step)throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        recipeList.get(name).addStep(step);
+    }
 
-    public void createRecipe(String name) throws IllegalArgumentException{}
-    public void createRecipe(Recipe In) throws IllegalArgumentException{}
+    public String getStep(String name, int stepNum) throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        return recipeList.get(name).getStep(stepNum);
+    }
+    public int getNumberSteps(String name)throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        return recipeList.get(name).getNumberSteps();
+    }
+    public void editStep(String name, int stepNum, String newStep) throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        recipeList.get(name).editStep(stepNum, newStep);
+    }
 
-    public String recipeListToString(){return "";}
+    public void createRecipe(String name) throws IllegalArgumentException{
+        if(recipeList.containsKey(name)) throw new IllegalArgumentException("Recipe already Exits");
+        recipeList.put(name, new Recipe(name));
+    }
+    public void createRecipe(Recipe In) throws IllegalArgumentException{
+        if(recipeList.containsKey(In.getName())) throw new IllegalArgumentException("Recipe already Exits");
+        recipeList.put(In.getName(), In);
+    }
 
-    public String recipeToString(String name)throws IllegalArgumentException{return "";}
+    public String recipeListToString(){
+        if(recipeList.size() <= 0) return "";
+        Set<String> set = recipeList.keySet();
+        String[] arr = {""};
+        arr = set.toArray(arr);
+        Arrays.sort(arr);
+        String ret = "";
+        for(int x = 0; x < arr.length; x++){
+            ret+= arr[x] + "\n";
+        }
+        return ret;
+    }
+
+    public String recipeToString(String name)throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        return recipeList.get(name).getPrintableSteps();
+    }
 
     public int numOfRecipes(){return recipeList.size();}
 

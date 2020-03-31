@@ -95,6 +95,7 @@ public class AccountTest {
         assertEquals(1, a.numOfRecipes());
         a.createRecipe("2");
         assertEquals(2, a.numOfRecipes());
+        assertThrows(IllegalArgumentException.class, ()-> a.createRecipe("2"));
     }
 
     @Test
@@ -110,7 +111,8 @@ public class AccountTest {
         Account r = new Account("Testasdf", "12345678", "bio");
         r.createRecipe(recipe);
         assertEquals("1:  First add the eggs\n", r.recipeToString("Raw Eggs"));
-        assertEquals("Eggs\n", r.recipeToString("Raw Eggs"));
+
+        assertThrows(IllegalArgumentException.class, ()-> r.recipeToString("tasdest"));
     }
 
     @Test
@@ -136,6 +138,9 @@ public class AccountTest {
         assertThrows(IllegalArgumentException.class, () -> r.getStep("test", -1));
         assertThrows(IllegalArgumentException.class, () -> r.getStep("test", 0));
         assertThrows(IllegalArgumentException.class, () -> r.getStep("test", 16));
+
+
+        assertThrows(IllegalArgumentException.class, ()-> r.getStep("tasdest", 100));
     }
 
     @Test
@@ -180,5 +185,29 @@ public class AccountTest {
         assertThrows(IllegalArgumentException.class, () -> r.editStep("test",3, "test"));
         assertThrows(IllegalArgumentException.class, () -> r.editStep("test",-3, "test"));
         assertThrows(IllegalArgumentException.class, () -> r.editStep("test",0, "test"));
+    }
+
+    @Test
+    void recipeListToStringTest(){
+        Account a = new Account("sadfdgas","pasdpfapsdf","");
+        a.createRecipe("test");
+        a.createRecipe("2");
+        a.createRecipe("wowowow");
+
+        assertEquals("2\ntest\nwowowow\n", a.recipeListToString());
+
+        Account b = new Account("sadfdgas","pasdpfapsdf","");
+        b.createRecipe("a");
+        b.createRecipe("b");
+        b.createRecipe("c");
+
+        assertEquals("a\nb\nc\n", b.recipeListToString());
+
+        Account c = new Account("sadfdgas","pasdpfapsdf","");
+        c.createRecipe("c");
+        c.createRecipe("b");
+        c.createRecipe("a");
+
+        assertEquals("a\nb\nc\n", c.recipeListToString());
     }
 }
