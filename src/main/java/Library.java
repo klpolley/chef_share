@@ -6,11 +6,12 @@ public class Library {
     public int length;
 
     public Library(){
-
+        libraryList = new ArrayList<Food>();
+        length = 0;
     }
 
     public int getLength(){
 
-        return -1;
+        return 0;
     }
 }
