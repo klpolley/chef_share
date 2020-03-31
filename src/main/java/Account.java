@@ -1,8 +1,12 @@
+import javax.print.attribute.HashDocAttributeSet;
+import java.util.HashMap;
+
 public class Account {
 
     private String username;
     private String password;
     private String biography;
+    private HashMap<String, Recipe> recipeList;
 
     public Account(String username, String password, String bio) throws IllegalArgumentException {
         if (!isUserValid(username)) throw new IllegalArgumentException("Username must be between 6 and 15 characters, alphanumeric or _ only");
@@ -10,6 +14,7 @@ public class Account {
         this.username = username;
         this.password = password;
         this.biography = bio;
+        this.recipeList = new HashMap<>();
     }
 
     public String getUsername() {
@@ -69,5 +74,13 @@ public class Account {
             return true;
         }
     }
+
+    public void addStepToRecipe(String name, String step, int stepNumber)throws IllegalArgumentException{}
+
+    public void createRecipe(String name) throws IllegalArgumentException{}
+
+    public String recipeListToString(){return "";}
+
+    public String recipeToString(String name)throws IllegalArgumentException{return "";}
 
 }
