@@ -62,10 +62,17 @@ public class Account {
     public static boolean isPasswordValid(String password) {
         //valid password is at least 8 characters long
         //alphanumeric and special characters allowed
+        //spaces not allowed
+        //let the user determine how secure or not they want to be
         int length = password.length();
         if (length < 8) {
             return false;
         } else {
+            for(char i:password.toCharArray()) {
+                if (i == ' ') {
+                    return false;
+                }
+            }
             return true;
         }
     }
