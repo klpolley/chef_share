@@ -12,6 +12,14 @@ public class Library {
 
     public int getLength(){
 
-        return 0;
+        return length;
+    }
+
+    public void addFood(Food foodIn){
+
+    }
+
+    public String getFoodName(int index){
+        return "hi";
     }
 }
