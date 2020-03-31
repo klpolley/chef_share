@@ -1,12 +1,11 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Library {
-    public List<Food> libraryList;
+    HashMap<String,Food> libraryList;
     public int length;
 
     public Library(){
-        libraryList = new ArrayList<Food>();
+        libraryList =new HashMap<String,Food>();
         length = 0;
     }
 
@@ -16,12 +15,17 @@ public class Library {
     }
 
     public void addFood(Food foodIn){
-        libraryList.add(foodIn);
+        String name = foodIn.getName();
+
+        libraryList.put(name, foodIn);
         length++;
     }
 
-    public String getFoodName(int index){
-        String foodName = libraryList.get(index).getName();
-        return foodName;
+    public boolean isFoodPresent(String foodName){
+        if (libraryList.containsKey(foodName)) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }
