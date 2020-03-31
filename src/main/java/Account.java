@@ -75,12 +75,21 @@ public class Account {
         }
     }
 
-    public void addStepToRecipe(String name, String step, int stepNumber)throws IllegalArgumentException{}
+    public void addStep(String name, String step, int stepNumber)throws IllegalArgumentException{}
+    public void addStep(String name, String step)throws IllegalArgumentException{}
+
+    public String getStep(String name, int stepNum) throws IllegalArgumentException{return "";}
+    public int getNumberSteps(String name){
+        return -10;
+    }
+    public void editStep(String name, int stepNum, String newStep) throws IllegalArgumentException{}
 
     public void createRecipe(String name) throws IllegalArgumentException{}
 
     public String recipeListToString(){return "";}
 
     public String recipeToString(String name)throws IllegalArgumentException{return "";}
+
+    public int numOfRecipes(){return recipeList.size();}
 
 }
