@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountTest {
@@ -63,14 +66,14 @@ public class AccountTest {
         assertEquals("", acct2.getBiography());
         assertNotEquals("description", acct2.getBiography());
 
-        assertThrows(IllegalArgumentException.class, ()-> acct2.setUsername("bad"));
-        assertThrows(IllegalArgumentException.class, ()-> acct2.setUsername("nogood$$$"));
+        assertThrows(IllegalArgumentException.class, () -> acct2.setUsername("bad"));
+        assertThrows(IllegalArgumentException.class, () -> acct2.setUsername("nogood$$$"));
         acct2.setUsername("newuser");
         assertEquals("newuser", acct2.getUsername());
         assertNotEquals("unknown", acct2.getUsername());
 
         acct2.setPassword("newpassword");
-        assertThrows(IllegalArgumentException.class, ()-> acct2.setPassword("short"));
+        assertThrows(IllegalArgumentException.class, () -> acct2.setPassword("short"));
         assertTrue(acct2.confirmPassword("newpassword"));
         assertFalse(acct2.confirmPassword("#password!!"));
 
@@ -79,10 +82,103 @@ public class AccountTest {
         assertNotEquals("", acct2.getBiography());
 
 
-        assertThrows(IllegalArgumentException.class, ()-> new Account("user", "password", ""));
-        assertThrows(IllegalArgumentException.class, ()-> new Account("username", "pass1", ""));
-        assertThrows(IllegalArgumentException.class, ()-> new Account("user$name", "pass$word", ""));
+        assertThrows(IllegalArgumentException.class, () -> new Account("user", "password", ""));
+        assertThrows(IllegalArgumentException.class, () -> new Account("username", "pass1", ""));
+        assertThrows(IllegalArgumentException.class, () -> new Account("user$name", "pass$word", ""));
     }
 
+    @Test
+    void createRecipeTest() {
+        Account a = new Account("testasdf", "testpassword", "bio");
+        assertEquals(0, a.numOfRecipes());
+        a.createRecipe("testRecipe");
+        assertEquals(1, a.numOfRecipes());
+        a.createRecipe("2");
+        assertEquals(2, a.numOfRecipes());
+    }
 
+    @Test
+    void getPrintableTest() {
+        ArrayList<String> steps = new ArrayList<String>();
+        steps.add("First add the eggs");
+        Food food = new Food("Eggs", 100);
+        Ingredient ingredient = new Ingredient(food, 100, "g");
+        ArrayList<Ingredient> ingredients = new ArrayList();
+        ingredients.add(ingredient);
+
+        Recipe recipe = new Recipe("Raw Eggs", steps, ingredients);
+        Account r = new Account("Testasdf", "12345678", "bio");
+        r.createRecipe(recipe);
+        assertEquals("1:  First add the eggs\n", r.recipeToString("Raw Eggs"));
+        assertEquals("Eggs\n", r.recipeToString("Raw Eggs"));
+    }
+
+    @Test
+    void getStepTest() {
+        ArrayList<String> steps = new ArrayList<>();
+        for (int x = 0; x < 15; x++) {
+            steps.add("step " + (x + 1));
+        }
+
+        ArrayList<Ingredient> food = new ArrayList<>();
+        Recipe recipe = new Recipe("test", steps, food);
+        Account r = new Account("Testasdf", "12345678", "bio");
+        r.createRecipe(recipe);
+        assertEquals("step 1", r.getStep("test", 1));
+        assertEquals("step 2", r.getStep("test", 2));
+        assertEquals("step 3", r.getStep("test", 3));
+        assertEquals("step 10", r.getStep("test", 10));
+        assertEquals("step 15", r.getStep("test", 15));
+
+        assertEquals(15, r.getNumberSteps("test"));
+
+        assertThrows(IllegalArgumentException.class, () -> r.getStep("test", 100));
+        assertThrows(IllegalArgumentException.class, () -> r.getStep("test", -1));
+        assertThrows(IllegalArgumentException.class, () -> r.getStep("test", 0));
+        assertThrows(IllegalArgumentException.class, () -> r.getStep("test", 16));
+    }
+
+    @Test
+    void addStepTest() {
+        Account r = new Account("Testasdf", "12345678", "bio");
+        r.createRecipe("Test");
+        assertEquals(0, r.getNumberSteps("Test"));
+        r.addStep("Test", "step 1");
+        assertEquals(1, r.getNumberSteps("Test"));
+        assertEquals("step 1", r.getStep("Test", 1));
+        assertEquals("1:  step 1\n", r.recipeToString("Test"));
+        r.addStep("Test", "step 2");
+        assertEquals(2, r.getNumberSteps("Test"));
+        assertEquals("step 2", r.getStep("Test", 2));
+        assertEquals("1:  step 1\n2:  step 2\n", r.recipeToString("Test"));
+
+        r.addStep("Test", "new step 2", 2);
+        assertEquals("new step 2", r.getStep("Test", 2));
+        assertEquals("step 2", r.getStep("Test", 3));
+
+        r.addStep("Test", "Step 4", 4);
+        assertEquals("Step 4", r.getStep("Test", 4));
+
+        assertThrows(IllegalArgumentException.class, () -> r.addStep("Test", "test fail", 6));
+    }
+
+    @Test
+    void changeStepTest() {
+        Recipe recipe = new Recipe("test");
+        Account r = new Account("Testasdf", "Tewasdfsad", "bio");
+        r.createRecipe(recipe);
+        r.addStep("test","step 1");
+        r.addStep("test","step 2");
+        r.editStep("test",2, "new step 2");
+        assertEquals("new step 2", r.getStep("test",2));
+        assertThrows(IllegalArgumentException.class, () -> r.getStep("test",3));
+
+        r.editStep("test",1, "new step 1");
+        assertEquals("new step 1", r.getStep("test",1));
+        assertThrows(IllegalArgumentException.class, () -> r.getStep("test",3));
+
+        assertThrows(IllegalArgumentException.class, () -> r.editStep("test",3, "test"));
+        assertThrows(IllegalArgumentException.class, () -> r.editStep("test",-3, "test"));
+        assertThrows(IllegalArgumentException.class, () -> r.editStep("test",0, "test"));
+    }
 }
