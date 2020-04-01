@@ -82,12 +82,50 @@ public class Recipe {
     public String getPrintableIngredients(){
         String result = "";
         for(Ingredient i : ingredients){
-            result += i.getName() + "\n";
+            result += i.getAmount() + i.getUnit() + " " + i.getName() + "\n";
         }
         return result;
     }
 
     public Collection<Ingredient> getIngredients() {
         return this.ingredients;
+    }
+
+    public String getIngredient(int loc) {
+        if(loc > 0 && loc <= getNumberIngredients()){
+            Ingredient i = ingredients.get(loc-1);
+            return i.getAmount() + i.getUnit() + " " + i.getName();
+        }
+        else throw new IllegalArgumentException("Ingredient does not exist!");
+    }
+
+    public int getNumberIngredients() {
+        return ingredients.size();
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        ingredients.add(ingredient);
+    }
+
+    public void addIngredient(Ingredient ingredient, int loc) {
+        if(loc > 0 && loc <= getNumberIngredients() + 1){
+            ingredients.add(loc - 1, ingredient);
+        }
+        else throw new IllegalArgumentException("Cannot insert ingredient at that location");
+    }
+
+    public void editIngredient(Ingredient ingredient, int loc) {
+        if(loc > 0 && loc <= getNumberIngredients()){
+            ingredients.remove(loc - 1);
+            ingredients.add(loc - 1, ingredient);
+        }
+        else throw new IllegalArgumentException("Ingredient does not exist!");
+    }
+
+    public void removeIngredient(int loc) {
+        if(loc > 0 && loc <= getNumberIngredients()){
+            ingredients.remove(loc - 1);
+        }
+        else throw new IllegalArgumentException("Ingredient does not exist!");
     }
 }
