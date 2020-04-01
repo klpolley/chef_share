@@ -43,10 +43,16 @@ public class AccountTest {
         assertTrue(Account.isPasswordValid("pass_word"));
         assertTrue(Account.isPasswordValid("#pass!word41"));
         assertTrue(Account.isPasswordValid("00password55"));
+
+        //has spaces
+        assertFalse(Account.isPasswordValid("test pass"));
+        assertFalse(Account.isPasswordValid("fine except spaces"));
+        assertFalse(Account.isPasswordValid("you choose your security level"));
     }
 
     @Test
     void constructorTest() {
+        //create account and check info
         Account acct1 = new Account("username", "password1234", "the best user");
         assertEquals("username", acct1.getUsername());
         assertNotEquals("notmyuser", acct1.getUsername());
@@ -55,6 +61,7 @@ public class AccountTest {
         assertEquals("the best user", acct1.getBiography());
         assertNotEquals("the worst user", acct1.getBiography());
 
+        //create another account and check info
         Account acct2 = new Account("unknown", "#password!!", "");
         assertEquals("unknown", acct2.getUsername());
         assertNotEquals("knownuser", acct2.getUsername());
@@ -63,22 +70,25 @@ public class AccountTest {
         assertEquals("", acct2.getBiography());
         assertNotEquals("description", acct2.getBiography());
 
+        //update username - error on bad input, success on good input
         assertThrows(IllegalArgumentException.class, ()-> acct2.setUsername("bad"));
         assertThrows(IllegalArgumentException.class, ()-> acct2.setUsername("nogood$$$"));
         acct2.setUsername("newuser");
         assertEquals("newuser", acct2.getUsername());
         assertNotEquals("unknown", acct2.getUsername());
 
+        //update password - good and bad inputs
         acct2.setPassword("newpassword");
         assertThrows(IllegalArgumentException.class, ()-> acct2.setPassword("short"));
         assertTrue(acct2.confirmPassword("newpassword"));
         assertFalse(acct2.confirmPassword("#password!!"));
 
+        //update biography
         acct2.setBiography("chef");
         assertEquals("chef", acct2.getBiography());
         assertNotEquals("", acct2.getBiography());
 
-
+        //try to create accounts with bad input
         assertThrows(IllegalArgumentException.class, ()-> new Account("user", "password", ""));
         assertThrows(IllegalArgumentException.class, ()-> new Account("username", "pass1", ""));
         assertThrows(IllegalArgumentException.class, ()-> new Account("user$name", "pass$word", ""));
