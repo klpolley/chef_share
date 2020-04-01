@@ -3,7 +3,6 @@ public class Account {
     private String username;
     private String password;
     private String biography;
-    //private List<Recipe> recipes;
 
     public Account(String username, String password, String bio) throws IllegalArgumentException {
         if (!isUserValid(username)) throw new IllegalArgumentException("Username must be between 6 and 15 characters, alphanumeric or _ only");
