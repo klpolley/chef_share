@@ -82,12 +82,32 @@ public class Recipe {
     public String getPrintableIngredients(){
         String result = "";
         for(Ingredient i : ingredients){
-            result += i.getName() + "\n";
+            result += i.getAmount() + i.getUnit() + " " + i.getName() + "\n";
         }
         return result;
     }
 
     public Collection<Ingredient> getIngredients() {
         return this.ingredients;
+    }
+
+    public String getIngredient(int loc) {
+        return "";
+    }
+
+    public int getNumberIngredients() {
+        return -1;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+    }
+
+    public void addIngredient(Ingredient ingredient, int loc) {
+    }
+
+    public void editIngredient(Ingredient ingredient, int loc) {
+    }
+
+    public void removeIngredient(int loc) {
     }
 }

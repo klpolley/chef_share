@@ -31,7 +31,7 @@ public class RecipeTest {
 
         Recipe recipe = new Recipe("Raw Eggs", steps, ingredients);
         assertEquals("1:  First add the eggs\n", recipe.getPrintableSteps());
-        assertEquals("Eggs\n", recipe.getPrintableIngredients());
+        assertEquals("100.0g Eggs\n", recipe.getPrintableIngredients());
     }
 
     @Test
@@ -111,6 +111,90 @@ public class RecipeTest {
         assertEquals(14, r.getNumberSteps());
         assertEquals("step 9",r.getStep(9));
         assertEquals("step 11",r.getStep(10));
+    }
+
+    @Test
+    void getIngredientTest(){
+        ArrayList<String> steps = new ArrayList<>();
+
+        Food food = new Food("Eggs", 100);
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        for(int x  = 1; x <= 15; x++){
+            ingredients.add(new Ingredient(food, x, "g"));
+        }
+
+        Recipe r = new Recipe("test", steps, ingredients);
+
+        assertEquals("1.0g Eggs", r.getIngredient(1));
+        assertEquals("2.0g Eggs", r.getIngredient(2));
+        assertEquals("3.0g Eggs", r.getIngredient(3));
+        assertEquals("10.0g Eggs", r.getIngredient(10));
+        assertEquals("15.0g Eggs", r.getIngredient(15));
+
+        assertEquals(15, r.getNumberIngredients());
+
+        assertThrows(IllegalArgumentException.class, ()-> r.getIngredient(100));
+        assertThrows(IllegalArgumentException.class, ()-> r.getIngredient(-1));
+        assertThrows(IllegalArgumentException.class, ()-> r.getIngredient(0));
+        assertThrows(IllegalArgumentException.class, ()-> r.getIngredient(16));
+    }
+
+    @Test
+    void addIngredientTest(){
+        Recipe r = new Recipe("Test");
+        Food eggs = new Food("Eggs", 100);
+        assertEquals(0, r.getNumberIngredients());
+        r.addIngredient(new Ingredient(eggs, 1, "g"));
+        assertEquals(1, r.getNumberIngredients());
+        assertEquals("1.0g Eggs", r.getIngredient(1));
+        assertEquals("1.0g Eggs\n", r.getPrintableIngredients());
+        r.addIngredient(new Ingredient(eggs, 1, "g"));
+        assertEquals(2, r.getNumberIngredients());
+        assertEquals("2.0g Eggs", r.getIngredient(2));
+        assertEquals("1.0g Eggs\n2.0g Eggs\n", r.getPrintableIngredients());
+
+        r.addIngredient(new Ingredient(eggs, 3, "g"), 2);
+        assertEquals("3.0g Eggs", r.getIngredient(2));
+        assertEquals("2.0g Eggs", r.getIngredient(3));
+
+        r.addIngredient(new Ingredient(eggs, 4, "g"), 4);
+        assertEquals("4.0g Eggs", r.getIngredient(4));
+
+        assertThrows(IllegalArgumentException.class, ()-> r.addIngredient(new Ingredient(eggs, 5, "g"), 6));
+    }
+
+    @Test
+    void changeIngredientTest(){
+        Recipe r = new Recipe("test");
+        Food eggs = new Food("Eggs", 100);
+        r.addIngredient(new Ingredient(eggs, 1, "g"));
+        r.addIngredient(new Ingredient(eggs, 2, "g"));
+        r.editIngredient(new Ingredient(eggs, 3, "g"), 2);
+        assertEquals("3.0g Eggs", r.getIngredient(2));
+        assertThrows(IllegalArgumentException.class, ()-> r.getIngredient(3));
+
+        r.editIngredient(new Ingredient(eggs, 4, "g"), 1);
+        assertEquals("4.0g Eggs", r.getIngredient(1));
+        assertThrows(IllegalArgumentException.class, ()-> r.getIngredient(3));
+
+        assertThrows(IllegalArgumentException.class, ()-> r.editIngredient(new Ingredient(eggs, 1, "g"), 3));
+        assertThrows(IllegalArgumentException.class, ()-> r.editIngredient(new Ingredient(eggs, 1, "g"), -3));
+        assertThrows(IllegalArgumentException.class, ()-> r.editIngredient(new Ingredient(eggs, 1, "g"), 0));
+    }
+
+    @Test
+    void removeIngredientTest(){
+        Recipe r =  new Recipe("Test");
+        Food food = new Food("Eggs", 100);
+        for(int x = 1; x <= 15 ; x++){
+            r.addIngredient(new Ingredient(food, x, "g"));
+        }
+
+        assertEquals(15, r.getNumberIngredients());
+        r.removeIngredient(10);
+        assertEquals(14, r.getNumberIngredients());
+        assertEquals("10.0g Eggs",r.getStep(9));
+        assertEquals("12.0g Eggs",r.getStep(10));
     }
 
 
