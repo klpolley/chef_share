@@ -7,7 +7,7 @@ public class Food {
         if (nameIn == "" || nameIn==" "){
             throw new IllegalArgumentException("food name cannot be empty");
         }
-        else if (!(caloriesIn>0)){
+        else if (!isCalorieValid(caloriesIn)){
             throw new IllegalArgumentException("calories must be a positive value greater than 0");
         }
         else{
@@ -22,7 +22,7 @@ public class Food {
         if (nameIn == "" || nameIn==" "){
             throw new IllegalArgumentException("food name cannot be empty");
         }
-        else if (!(caloriesIn>0)){
+        else if (!isCalorieValid(caloriesIn)){
             throw new IllegalArgumentException("calories must be a positive value greater than 0");
         }
         else{
@@ -47,5 +47,21 @@ public class Food {
 
     public String toString(){
         return name;
+    }
+
+    public static boolean isCalorieValid(double caloriesIn){
+        boolean isValid = true;
+
+        if (caloriesIn <= 0){
+            isValid = false;
+        }
+        else {
+            String amountString = Double.toString(caloriesIn);
+            if (amountString.indexOf('.')+2 < amountString.length()-1){
+                isValid=false;
+            }
+        }
+
+        return isValid;
     }
 }

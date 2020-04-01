@@ -18,6 +18,20 @@ public class FoodTest {
         assertEquals("banana", banana.getName());
         assertEquals(250, banana.getCalories());
 
+        //food with valid decimal amount
+        Food apple = new Food("apple", 200.00);
+        Food cheese = new Food("cheese", 600.25);
+
+        assertEquals("apple", apple.getName());
+        assertTrue((apple.getCalories()-200) < .1);
+        assertEquals("cheese", cheese.getName());
+        assertTrue((cheese.getCalories() - 600.25 < .1));
+
+        //food with invalid decimal
+        assertThrows(IllegalArgumentException.class, ()-> new Food("brownie", 900.001));
+        assertThrows(IllegalArgumentException.class, ()-> new Food("squash", 400.089));
+
+
         //negative calorie amount
         assertThrows(IllegalArgumentException.class, ()-> new Food("squash", -400));
         assertThrows(IllegalArgumentException.class, ()-> new Food("brownie", -900));
@@ -30,6 +44,8 @@ public class FoodTest {
         assertThrows(IllegalArgumentException.class, ()-> new Food("", 700));
         //one space
         assertThrows(IllegalArgumentException.class, ()-> new Food(" ", 700));
+
+
     }
 
 
