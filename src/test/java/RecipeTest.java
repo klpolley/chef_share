@@ -148,7 +148,7 @@ public class RecipeTest {
         assertEquals(1, r.getNumberIngredients());
         assertEquals("1.0g Eggs", r.getIngredient(1));
         assertEquals("1.0g Eggs\n", r.getPrintableIngredients());
-        r.addIngredient(new Ingredient(eggs, 1, "g"));
+        r.addIngredient(new Ingredient(eggs, 2, "g"));
         assertEquals(2, r.getNumberIngredients());
         assertEquals("2.0g Eggs", r.getIngredient(2));
         assertEquals("1.0g Eggs\n2.0g Eggs\n", r.getPrintableIngredients());
@@ -193,8 +193,8 @@ public class RecipeTest {
         assertEquals(15, r.getNumberIngredients());
         r.removeIngredient(10);
         assertEquals(14, r.getNumberIngredients());
-        assertEquals("10.0g Eggs",r.getStep(9));
-        assertEquals("12.0g Eggs",r.getStep(10));
+        assertEquals("9.0g Eggs",r.getIngredient(9));
+        assertEquals("11.0g Eggs",r.getIngredient(10));
     }
 
 
