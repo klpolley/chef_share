@@ -14,6 +14,7 @@ public class shoppingListTest {
     void addIngredientsTest(){
         shoppingList myList = new shoppingList();
 
+        //create ingredients
         Food food = new Food("Broccoli", 34);
         Ingredient i1 = new Ingredient(food, 16, "oz");
 
@@ -23,6 +24,7 @@ public class shoppingListTest {
         Food food3 = new Food("apple", 70, 1.987);
         Ingredient i3 = new Ingredient(food3, 85, "g");
 
+        //add each ingredient and check list length
         myList.addIngredient(i1);
         assertEquals(1,myList.getLength());
 
@@ -31,7 +33,15 @@ public class shoppingListTest {
 
         myList.addIngredient(i3);
         assertEquals(3,myList.getLength());
-    }
 
+
+        //check ingredient names in list
+        assertEquals("Broccoli", myList.getIngredientName(0));
+
+        assertEquals("rice", myList.getIngredientName(1));
+
+        assertEquals("apple", myList.getIngredientName(2));
+
+    }
 
 }

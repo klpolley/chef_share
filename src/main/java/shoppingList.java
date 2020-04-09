@@ -18,4 +18,7 @@ public class shoppingList {
         shoppingList.add(ingredientIn);
     }
 
+    public String getIngredientName(int index){
+        return shoppingList.get(index).getName();
+    }
 }
