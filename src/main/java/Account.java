@@ -131,13 +131,17 @@ public class Account {
         return ret;
     }
 
-    public List getRecipeList() {
+    public List<String> getRecipeNameList() {
         List<String> recipes = new ArrayList<>();
         for(String name:recipeList.keySet()) {
             recipes.add(name);
         }
         Collections.sort(recipes);
         return recipes;
+    }
+
+    public List<Recipe> getRecipeList() {
+        return null;
     }
 
     public String recipeToString(String name)throws IllegalArgumentException{
