@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 public class AccountContainer {
 
@@ -77,27 +74,72 @@ public class AccountContainer {
         return currentAccount;
     }
 
+    //gets sorted list of account names
+    private List<String> getAcctNames() {
+        List<String> accounts = new ArrayList<>();
+        for(String name: this.accounts.keySet()) {
+            accounts.add(name);
+        }
+        Collections.sort(accounts);
+        return accounts;
+    }
+
     //returns list of all recipe objects from all accounts
     //add methods for getting filtered lists with only some recipes
     //other methods take list parameters so you can perform same functions
-    //on different lists, not just all recipes
+    //on different lists, not just all recipesf
+    //recipes sorted by name, then account
     public List<Recipe> getAllRecipes() {
-        return null;
+        List<Recipe> all = new ArrayList<>();
+        for (String name: getAcctNames()) {
+            Account acct = accounts.get(name);
+            List<Recipe> acctRecs = acct.getRecipeList();
+            for (Recipe r:acctRecs) {
+                all.add(r);
+            }
+        }
+        Collections.sort(all);
+        return all;
     }
 
     //get recipes as "tuples" with name and user - mostly for testing purposes
     public String[][] getRecipeListTuples(List<Recipe> recipes) {
-        return null;
+        String[][] tuples = new String[recipes.size()][2];
+
+        for (int i=0; i<recipes.size(); i++) {
+            Recipe r = recipes.get(i);
+            tuples[i][0] = r.getName();
+            tuples[i][1] = r.getAuthor();
+        }
+
+        return tuples;
     }
 
     //returns string that can be printed for user to select from
     //each recipe will have the name, account username, and a number for selection purposes
     public String getRecipeListString(List<Recipe> recipes) {
-        return null;
+        String toprint = "#\tName, Author\n";
+        int num = 1;
+        for(Recipe r: recipes) {
+            toprint += (num + "\t");
+            toprint += (r.getName() + ", ");
+            toprint += (r.getAuthor() + "\n");
+            num++;
+        }
+        return toprint;
     }
 
-    public String selectRecipeToPrint(int selection, List<Recipe> allRecipes) {
-        return null;
+    public String printSelectedRecipe(int selection, List<Recipe> allRecipes) {
+
+        Recipe r = allRecipes.get(selection-1);
+        String toprint = r.getName() + " by " + r.getAuthor() + "\n\n";
+        toprint += "Ingredients\n";
+        toprint += r.getPrintableIngredients();
+        toprint += "\n";
+        toprint += "Steps\n";
+        toprint += r.getPrintableSteps();
+
+        return toprint;
     }
 
 }

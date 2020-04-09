@@ -348,55 +348,55 @@ public class AccountContainerTest {
 
         //make sure the printout is correct for selection
         String printout = accounts.getRecipeListString(all);
-        String shouldBe = "#\tName\tAuthor" +
-                "1\tThing With Eggs\tusername1\n" +
-                "2\tThing With Eggs\tusername2\n" +
-                "3\tThing with SO MANY Eggs\tusername3\n" +
-                "4\tXEggs\tusername2";
+        String shouldBe = "#\tName, Author\n" +
+                "1\tThing With Eggs, username1\n" +
+                "2\tThing With Eggs, username2\n" +
+                "3\tThing With SO MANY Eggs, username3\n" +
+                "4\tXEggs, username2\n";
         assertEquals(shouldBe, printout);
 
-        String recPrint = accounts.selectRecipeToPrint(1, all);
-        shouldBe = "Thing With Eggs by username1\n" +
+        String recPrint = accounts.printSelectedRecipe(1, all);
+        shouldBe = "Thing With Eggs by username1\n\n" +
                 "Ingredients\n" +
-                "2g Eggs\n" +
+                "2.0g Eggs\n" +
                 "\n" +
                 "Steps\n" +
-                "1. step 1\n" +
-                "2. step 2\n";
+                "1: step 1\n" +
+                "2: step 2\n";
         assertEquals(shouldBe, recPrint);
 
-        recPrint = accounts.selectRecipeToPrint(2, all);
-        shouldBe = "Thing With Eggs by username2\n" +
+        recPrint = accounts.printSelectedRecipe(2, all);
+        shouldBe = "Thing With Eggs by username2\n\n" +
                 "Ingredients\n" +
-                "3g Eggs\n" +
+                "3.0g Eggs\n" +
                 "\n" +
                 "Steps\n" +
-                "1. egg 1\n" +
-                "2. egg 2\n" +
-                "3. egg 3\n";
+                "1: egg 1\n" +
+                "2: egg 2\n" +
+                "3: egg 3\n";
         assertEquals(shouldBe, recPrint);
 
-        recPrint = accounts.selectRecipeToPrint(3, all);
-        shouldBe = "Thing With SO MANY Eggs by username3\n" +
+        recPrint = accounts.printSelectedRecipe(3, all);
+        shouldBe = "Thing With SO MANY Eggs by username3\n\n" +
                 "Ingredients\n" +
-                "100g Eggs\n" +
-                "100g Super Eggs\n" +
+                "100.0g Eggs\n" +
+                "100.0g Super Eggs\n" +
                 "\n" +
                 "Steps\n" +
-                "1. add eggs\n" +
-                "2. add more eggs\n" +
-                "3. add infinite eggs\n";
+                "1: add eggs\n" +
+                "2: add more eggs\n" +
+                "3: add infinite eggs\n";
         assertEquals(shouldBe, recPrint);
 
-        recPrint = accounts.selectRecipeToPrint(4, all);
-        shouldBe = "XEggs by username2\n" +
+        recPrint = accounts.printSelectedRecipe(4, all);
+        shouldBe = "XEggs by username2\n\n" +
                 "Ingredients\n" +
-                "3g Eggs\n" +
+                "3.0g Eggs\n" +
                 "\n" +
                 "Steps\n" +
-                "1. egg 1\n" +
-                "2. egg 2\n" +
-                "3. egg 3\n";
+                "1: egg 1\n" +
+                "2: egg 2\n" +
+                "3: egg 3\n";
         assertEquals(shouldBe, recPrint);
     }
 

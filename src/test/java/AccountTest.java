@@ -120,7 +120,7 @@ public class AccountTest {
         Recipe recipe = new Recipe("Raw Eggs", steps, ingredients);
         Account r = new Account("Testasdf", "12345678", "bio");
         r.createRecipe(recipe);
-        assertEquals("1:  First add the eggs\n", r.recipeToString("Raw Eggs"));
+        assertEquals("1: First add the eggs\n", r.recipeToString("Raw Eggs"));
 
         assertThrows(IllegalArgumentException.class, ()-> r.recipeToString("tasdest"));
     }
@@ -161,11 +161,11 @@ public class AccountTest {
         r.addStep("Test", "step 1");
         assertEquals(1, r.getNumberSteps("Test"));
         assertEquals("step 1", r.getStep("Test", 1));
-        assertEquals("1:  step 1\n", r.recipeToString("Test"));
+        assertEquals("1: step 1\n", r.recipeToString("Test"));
         r.addStep("Test", "step 2");
         assertEquals(2, r.getNumberSteps("Test"));
         assertEquals("step 2", r.getStep("Test", 2));
-        assertEquals("1:  step 1\n2:  step 2\n", r.recipeToString("Test"));
+        assertEquals("1: step 1\n2: step 2\n", r.recipeToString("Test"));
 
         r.addStep("Test", "new step 2", 2);
         assertEquals("new step 2", r.getStep("Test", 2));

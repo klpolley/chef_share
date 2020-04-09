@@ -2,10 +2,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Comparable<Recipe> {
     private String name;
     private List<String> steps;
     private List<Ingredient> ingredients;
+    private String author;
 
     public Recipe(String nameIn) throws IllegalArgumentException{
         setName(nameIn);
@@ -19,6 +20,13 @@ public class Recipe {
         this.ingredients = ingredientsIn;
     }
 
+    public int compareTo(Recipe other){
+        //returns -1 if "this" object is less than "that" object
+        //returns 0 if they are equal
+        //returns 1 if "this" object is greater than "that" object
+        return this.name.compareTo(other.name);
+    }
+
     public void setName(String nameIn) throws IllegalArgumentException{
         if(validName(nameIn))
             this.name = nameIn;
@@ -27,6 +35,14 @@ public class Recipe {
 
     public String getName(){
         return name;
+    }
+
+    public void setAuthor(String user) {
+        this.author = user;
+    }
+
+    public String getAuthor(){
+        return author;
     }
 
     public boolean validName(String name){
@@ -74,7 +90,7 @@ public class Recipe {
     public String getPrintableSteps(){
         String result = "";
         for(int i = 0; i < steps.size(); i++){
-            result += (i+1) + ":  " + steps.get(i) + "\n";
+            result += (i+1) + ": " + steps.get(i) + "\n";
         }
         return result;
     }
