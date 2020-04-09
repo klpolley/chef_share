@@ -1,8 +1,10 @@
 import javax.print.attribute.HashDocAttributeSet;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Collections;
 
 public class Account {
 
@@ -127,6 +129,15 @@ public class Account {
             ret+= arr[x] + "\n";
         }
         return ret;
+    }
+
+    public List getRecipeList() {
+        List<String> recipes = new ArrayList<>();
+        for(String name:recipeList.keySet()) {
+            recipes.add(name);
+        }
+        Collections.sort(recipes);
+        return recipes;
     }
 
     public String recipeToString(String name)throws IllegalArgumentException{

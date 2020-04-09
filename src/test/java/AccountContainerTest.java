@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class AccountContainerTest {
 
     @Test
@@ -265,6 +268,119 @@ public class AccountContainerTest {
         accounts.logout();
         assertNull(accounts.getCurrentAccount());
         assertThrows(IllegalStateException.class, ()->accounts.logout());
+    }
+
+
+    @Test
+    void getAllRecipesTest() {
+
+        //GET SOME ACCOUNTS WITH SOME RECIPES AND SO MANY EGGS
+        //account creation, login and recipe creation out of order to test sorting
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username2", "password", "");
+        accounts.createAccount("username1", "password", "");
+        accounts.createAccount("username3", "password", "");
+
+        accounts.login("username1", "password");
+        Account current = accounts.getCurrentAccount();
+
+        ArrayList<String> steps = new ArrayList<>();
+        steps.add("step 1");
+        steps.add("step 2");
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        Food eggs = new Food("Eggs", 100);
+        ingredients.add(new Ingredient(eggs, 2, "g"));
+
+        Recipe recipe = new Recipe("Thing With Eggs", steps, ingredients);
+        current.createRecipe(recipe);
+
+        accounts.logout();
+        accounts.login("username3", "password");
+        current = accounts.getCurrentAccount();
+
+        steps = new ArrayList<>();
+        steps.add("add eggs");
+        steps.add("add more eggs");
+        steps.add("add infinite eggs");
+        ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient(eggs, 100, "g"));
+        Food superEggs = new Food("Super Eggs", 1000);
+        ingredients.add(new Ingredient(superEggs, 100, "g"));
+
+        recipe = new Recipe("Thing With SO MANY Eggs", steps, ingredients);
+        current.createRecipe(recipe);
+
+        accounts.logout();
+        accounts.login("username2", "password");
+        current = accounts.getCurrentAccount();
+
+        steps = new ArrayList<>();
+        steps.add("egg 1");
+        steps.add("egg 2");
+        steps.add("egg 3");
+        ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient(eggs, 3, "g"));
+
+        recipe = new Recipe("Thing With Eggs", steps, ingredients);
+        current.createRecipe(recipe);
+
+        //get all recipes
+        List<Recipe> all = accounts.getAllRecipes();
+        String[][] tuples = accounts.getRecipeListTuples(all);
+
+        //make sure there are 3 recipes, each recipe has name + user
+        assertEquals(3, tuples.length);
+        for (String[] rec: tuples) {
+            assertEquals(2, rec.length);
+        }
+        //make sure recipes are given in order - recipes in alphabetical order, then order by username
+        assertEquals("Thing With Eggs", tuples[0][0]);
+        assertEquals("username1", tuples[0][1]);
+        assertEquals("Thing With Eggs", tuples[1][0]);
+        assertEquals("username2", tuples[1][1]);
+        assertEquals("Thing With SO MANY Eggs", tuples[2][0]);
+        assertEquals("username3", tuples[2][1]);
+
+        //make sure the printout is correct for selection
+        String printout = accounts.getRecipeListString(all);
+        String shouldBe = "#\tName\tAuthor" +
+                "1\tThing With Eggs\tusername1\n" +
+                "2\tThing With Eggs\tusername2\n" +
+                "3\tThing with SO MANY Eggs\tusername3";
+        assertEquals(shouldBe, printout);
+
+        String recPrint = accounts.selectRecipeToPrint(1, all);
+        shouldBe = "Thing With Eggs by username1\n" +
+                "Ingredients\n" +
+                "2g Eggs\n" +
+                "\n" +
+                "Steps\n" +
+                "1. step 1\n" +
+                "2. step 2\n";
+        assertEquals(shouldBe, recPrint);
+
+        recPrint = accounts.selectRecipeToPrint(2, all);
+        shouldBe = "Thing With Eggs by username2\n" +
+                "Ingredients\n" +
+                "3g Eggs\n" +
+                "\n" +
+                "Steps\n" +
+                "1. egg 1\n" +
+                "2. egg 2\n" +
+                "3. egg 3\n";
+        assertEquals(shouldBe, recPrint);
+
+        recPrint = accounts.selectRecipeToPrint(2, all);
+        shouldBe = "Thing With SO MANY Eggs by username3\n" +
+                "Ingredients\n" +
+                "100g Eggs\n" +
+                "100g Super Eggs\n" +
+                "\n" +
+                "Steps\n" +
+                "1. add eggs\n" +
+                "2. add more eggs\n" +
+                "3. add infinite eggs\n";
+        assertEquals(shouldBe, recPrint);
     }
 
 }
