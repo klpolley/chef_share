@@ -220,4 +220,33 @@ public class AccountTest {
 
         assertEquals("a\nb\nc\n", c.recipeListToString());
     }
+
+    @Test
+    void addToShoppingListTest() {
+        Account acct = new Account("username", "password", "");
+
+        Food f = new Food("Broccoli", 100);
+        Ingredient i = new Ingredient(f, 1, "cup");
+        Ingredient i2 = new Ingredient(f, 2, "g");
+
+        acct.addToShoppingList(i);
+        acct.addToShoppingList(i2);
+
+        assertEquals(2, acct.getShoppingList().getLength());
+
+        Food f2 = new Food("Chocolate", 200);
+        Ingredient i3 = new Ingredient(f2, 3, "tbsp");
+        Ingredient i4 = new Ingredient(f2, 5, "tbsp");
+
+        acct.addToShoppingList(i3);
+        acct.addToShoppingList(i4);
+
+        assertEquals(4, acct.getShoppingList().getLength());
+        assertEquals("Broccoli", acct.getShoppingList().getIngredientName(0));
+        assertEquals("Broccoli", acct.getShoppingList().getIngredientName(1));
+        assertEquals("Chocolate", acct.getShoppingList().getIngredientName(2));
+        assertEquals("Chocolate", acct.getShoppingList().getIngredientName(3));
+    }
+
+
 }

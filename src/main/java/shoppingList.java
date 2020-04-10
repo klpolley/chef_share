@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class shoppingList {
-    public int length;
+    private int length;
     ArrayList <Ingredient> shoppingList;
 
     public shoppingList(){
