@@ -1,8 +1,10 @@
 import javax.print.attribute.HashDocAttributeSet;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Collections;
 
 public class Account {
 
@@ -109,10 +111,13 @@ public class Account {
 
     public void createRecipe(String name) throws IllegalArgumentException{
         if(recipeList.containsKey(name)) throw new IllegalArgumentException("Recipe already Exits");
+        Recipe r = new Recipe(name);
+        r.setAuthor(username);
         recipeList.put(name, new Recipe(name));
     }
     public void createRecipe(Recipe In) throws IllegalArgumentException{
         if(recipeList.containsKey(In.getName())) throw new IllegalArgumentException("Recipe already Exits");
+        In.setAuthor(username);
         recipeList.put(In.getName(), In);
     }
 
@@ -127,6 +132,26 @@ public class Account {
             ret+= arr[x] + "\n";
         }
         return ret;
+    }
+
+    //get sorted list of recipe names (alphabetical)
+    public List<String> getRecipeNameList() {
+        List<String> recipes = new ArrayList<>();
+        for(String name:recipeList.keySet()) {
+            recipes.add(name);
+        }
+        Collections.sort(recipes);
+        return recipes;
+    }
+
+    //get sorted list of recipes
+    public List<Recipe> getRecipeList() {
+        List<String> names = getRecipeNameList();
+        List<Recipe> recipes = new ArrayList<>();
+        for (String name: names) {
+            recipes.add(recipeList.get(name));
+        }
+        return recipes;
     }
 
     public String recipeToString(String name)throws IllegalArgumentException{
