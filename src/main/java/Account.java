@@ -172,7 +172,7 @@ public class Account {
     }
 
     public void addToShoppingList(Ingredient ingr) {
-
+        shopping.addIngredient(ingr);
     }
 
     public void removeFromShoppingList() {
