@@ -167,8 +167,8 @@ public class Account {
         return shopping;
     }
 
-    public String getPrintableShopping() {
-        return null;
+    public String printShoppingList() {
+        return shopping.printList();
     }
 
     public void addToShoppingList(Ingredient ingr) {

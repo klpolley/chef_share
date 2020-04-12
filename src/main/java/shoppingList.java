@@ -47,4 +47,12 @@ public class shoppingList {
         }
 
     }
+
+    public String printList() {
+        String str = "";
+        for (Ingredient i: shoppingList) {
+            str += i.getAmount() + i.getUnit() + " " + i.getName() + "\n";
+        }
+        return str;
+    }
 }

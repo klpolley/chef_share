@@ -289,4 +289,25 @@ public class AccountTest {
 
     }
 
+    @Test
+    void printListTest() {
+        Account acct = new Account("username", "password", "");
+
+        Food f = new Food("Broccoli", 100);
+        Food f2 = new Food("Chocolate", 200);
+        Food f3 = new Food("Eggs", 100);
+        Food f4 = new Food("Apples", 100);
+        Ingredient i = new Ingredient(f, 1, "cup");
+        Ingredient i2 = new Ingredient(f2, 2, "g");
+        Ingredient i3 = new Ingredient(f3, 3, "tbsp");
+        Ingredient i4 = new Ingredient(f4, 5, "tbsp");
+        acct.addToShoppingList(i);
+        acct.addToShoppingList(i2);
+        acct.addToShoppingList(i3);
+        acct.addToShoppingList(i4);
+
+        String shouldbe = "1.0cup Broccoli\n2.0g Chocolate\n3.0tbsp Eggs\n5.0tbsp Apples\n";
+        assertEquals(shouldbe, acct.printShoppingList());
+    }
+
 }
