@@ -175,6 +175,10 @@ public class Account {
         shopping.addIngredient(ingr);
     }
 
+    public void removeFromShoppingList(String name) {
+
+    }
+
     public void removeFromShoppingList() {
 
     }
