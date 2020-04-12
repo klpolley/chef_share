@@ -34,7 +34,17 @@ public class shoppingList {
         return index;
     }
 
-    public void removeIngredient(int index){
+    public void removeIngredient(String ingredientNameIn) throws IllegalArgumentException{
+
+        int index = getIngredientIndex(ingredientNameIn);
+
+        if (index == -1){
+            throw new IllegalArgumentException("Ingredient is not present in list");
+        }else {
+
+            shoppingList.remove(index);
+            length--;
+        }
 
     }
 }
