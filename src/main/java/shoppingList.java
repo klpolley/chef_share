@@ -21,4 +21,30 @@ public class shoppingList {
     public String getIngredientName(int index){
         return shoppingList.get(index).getName();
     }
+
+    public int getIngredientIndex(String name){
+        int index = -1;
+
+        for(int i = 0; i<length; i++){
+            if (name.equals(shoppingList.get(i).getName())){
+                index = i;
+            }
+        }
+
+        return index;
+    }
+
+    public void removeIngredient(String ingredientNameIn) throws IllegalArgumentException{
+
+        int index = getIngredientIndex(ingredientNameIn);
+
+        if (index == -1){
+            throw new IllegalArgumentException("Ingredient is not present in list");
+        }else {
+
+            shoppingList.remove(index);
+            length--;
+        }
+
+    }
 }
