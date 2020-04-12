@@ -176,11 +176,8 @@ public class Account {
     }
 
     public void removeFromShoppingList(String name) {
-
+        shopping.removeIngredient(name);
     }
 
-    public void removeFromShoppingList() {
-
-    }
 
 }
