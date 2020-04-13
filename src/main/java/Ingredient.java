@@ -1,6 +1,6 @@
 import java.text.DecimalFormat;
 
-public class Ingredient {
+public class Ingredient implements Comparable<Ingredient> {
     private Food food;
     private double amount;
     private String unit;
@@ -12,6 +12,13 @@ public class Ingredient {
         amount = amtIn;
         if(!validUnit(unitIn)) throw new IllegalArgumentException("Invalid Unit");
         unit = unitIn;
+    }
+
+    public int compareTo(Ingredient other){
+        //returns -1 if "this" object is less than "that" object
+        //returns 0 if they are equal
+        //returns 1 if "this" object is greater than "that" object
+        return this.food.getName().compareTo(other.food.getName());
     }
 
     public double getAmount() {

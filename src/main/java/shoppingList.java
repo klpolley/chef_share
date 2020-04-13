@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class shoppingList {
-    public int length;
+    private int length;
     ArrayList <Ingredient> shoppingList;
 
     public shoppingList(){
@@ -46,5 +46,13 @@ public class shoppingList {
             length--;
         }
 
+    }
+
+    public String printList() {
+        String str = "";
+        for (Ingredient i: shoppingList) {
+            str += i.getAmount() + i.getUnit() + " " + i.getName() + "\n";
+        }
+        return str;
     }
 }
