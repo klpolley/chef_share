@@ -1,8 +1,10 @@
 import javax.print.attribute.HashDocAttributeSet;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Collections;
 
 public class Account {
 
@@ -10,6 +12,7 @@ public class Account {
     private String password;
     private String biography;
     private HashMap<String, Recipe> recipeList;
+    private shoppingList shopping;
 
     public Account(String username, String password, String bio) throws IllegalArgumentException {
         if (!isUserValid(username)) throw new IllegalArgumentException("Username must be between 6 and 15 characters, alphanumeric or _ only");
@@ -18,6 +21,7 @@ public class Account {
         this.password = password;
         this.biography = bio;
         this.recipeList = new HashMap<>();
+        this.shopping = new shoppingList();
     }
 
     public String getUsername() {
@@ -109,10 +113,13 @@ public class Account {
 
     public void createRecipe(String name) throws IllegalArgumentException{
         if(recipeList.containsKey(name)) throw new IllegalArgumentException("Recipe already Exits");
+        Recipe r = new Recipe(name);
+        r.setAuthor(username);
         recipeList.put(name, new Recipe(name));
     }
     public void createRecipe(Recipe In) throws IllegalArgumentException{
         if(recipeList.containsKey(In.getName())) throw new IllegalArgumentException("Recipe already Exits");
+        In.setAuthor(username);
         recipeList.put(In.getName(), In);
     }
 
@@ -129,11 +136,48 @@ public class Account {
         return ret;
     }
 
+    //get sorted list of recipe names (alphabetical)
+    public List<String> getRecipeNameList() {
+        List<String> recipes = new ArrayList<>();
+        for(String name:recipeList.keySet()) {
+            recipes.add(name);
+        }
+        Collections.sort(recipes);
+        return recipes;
+    }
+
+    //get sorted list of recipes
+    public List<Recipe> getRecipeList() {
+        List<String> names = getRecipeNameList();
+        List<Recipe> recipes = new ArrayList<>();
+        for (String name: names) {
+            recipes.add(recipeList.get(name));
+        }
+        return recipes;
+    }
+
     public String recipeToString(String name)throws IllegalArgumentException{
         if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
         return recipeList.get(name).getPrintableSteps();
     }
 
     public int numOfRecipes(){return recipeList.size();}
+
+    public shoppingList getShoppingList() {
+        return shopping;
+    }
+
+    public String printShoppingList() {
+        return shopping.printList();
+    }
+
+    public void addToShoppingList(Ingredient ingr) {
+        shopping.addIngredient(ingr);
+    }
+
+    public void removeFromShoppingList(String name) {
+        shopping.removeIngredient(name);
+    }
+
 
 }

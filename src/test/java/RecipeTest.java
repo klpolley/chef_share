@@ -30,7 +30,7 @@ public class RecipeTest {
         ingredients.add(ingredient);
 
         Recipe recipe = new Recipe("Raw Eggs", steps, ingredients);
-        assertEquals("1:  First add the eggs\n", recipe.getPrintableSteps());
+        assertEquals("1: First add the eggs\n", recipe.getPrintableSteps());
         assertEquals("100.0g Eggs\n", recipe.getPrintableIngredients());
     }
 
@@ -65,11 +65,11 @@ public class RecipeTest {
         r.addStep("step 1");
         assertEquals(1, r.getNumberSteps());
         assertEquals("step 1", r.getStep(1));
-        assertEquals("1:  step 1\n", r.getPrintableSteps());
+        assertEquals("1: step 1\n", r.getPrintableSteps());
         r.addStep("step 2");
         assertEquals(2, r.getNumberSteps());
         assertEquals("step 2", r.getStep(2));
-        assertEquals("1:  step 1\n2:  step 2\n", r.getPrintableSteps());
+        assertEquals("1: step 1\n2: step 2\n", r.getPrintableSteps());
 
         r.addStep("new step 2", 2);
         assertEquals("new step 2", r.getStep(2));

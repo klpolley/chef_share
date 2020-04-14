@@ -120,7 +120,7 @@ public class AccountTest {
         Recipe recipe = new Recipe("Raw Eggs", steps, ingredients);
         Account r = new Account("Testasdf", "12345678", "bio");
         r.createRecipe(recipe);
-        assertEquals("1:  First add the eggs\n", r.recipeToString("Raw Eggs"));
+        assertEquals("1: First add the eggs\n", r.recipeToString("Raw Eggs"));
 
         assertThrows(IllegalArgumentException.class, ()-> r.recipeToString("tasdest"));
     }
@@ -161,11 +161,11 @@ public class AccountTest {
         r.addStep("Test", "step 1");
         assertEquals(1, r.getNumberSteps("Test"));
         assertEquals("step 1", r.getStep("Test", 1));
-        assertEquals("1:  step 1\n", r.recipeToString("Test"));
+        assertEquals("1: step 1\n", r.recipeToString("Test"));
         r.addStep("Test", "step 2");
         assertEquals(2, r.getNumberSteps("Test"));
         assertEquals("step 2", r.getStep("Test", 2));
-        assertEquals("1:  step 1\n2:  step 2\n", r.recipeToString("Test"));
+        assertEquals("1: step 1\n2: step 2\n", r.recipeToString("Test"));
 
         r.addStep("Test", "new step 2", 2);
         assertEquals("new step 2", r.getStep("Test", 2));
@@ -220,4 +220,94 @@ public class AccountTest {
 
         assertEquals("a\nb\nc\n", c.recipeListToString());
     }
+
+    @Test
+    void addToShoppingListTest() {
+        Account acct = new Account("username", "password", "");
+
+        Food f = new Food("Broccoli", 100);
+        Ingredient i = new Ingredient(f, 1, "cup");
+        Food f3 = new Food("Eggs", 100);
+        Ingredient i2 = new Ingredient(f3, 2, "g");
+
+        acct.addToShoppingList(i);
+        acct.addToShoppingList(i2);
+
+        assertEquals(2, acct.getShoppingList().getLength());
+
+        Food f2 = new Food("Chocolate", 200);
+        Ingredient i3 = new Ingredient(f2, 3, "tbsp");
+        Food f4 = new Food("Apples", 100);
+        Ingredient i4 = new Ingredient(f4, 5, "tbsp");
+
+        acct.addToShoppingList(i3);
+        acct.addToShoppingList(i4);
+
+        assertEquals(4, acct.getShoppingList().getLength());
+        assertEquals("Broccoli", acct.getShoppingList().getIngredientName(0));
+        assertEquals("Eggs", acct.getShoppingList().getIngredientName(1));
+        assertEquals("Chocolate", acct.getShoppingList().getIngredientName(2));
+        assertEquals("Apples", acct.getShoppingList().getIngredientName(3));
+    }
+
+    @Test
+    void removeFromShoppingListTest() {
+        Account acct = new Account("username", "password", "");
+
+        Food f = new Food("Broccoli", 100);
+        Food f2 = new Food("Chocolate", 200);
+        Food f3 = new Food("Eggs", 100);
+        Food f4 = new Food("Apples", 100);
+        Ingredient i = new Ingredient(f, 1, "cup");
+        Ingredient i2 = new Ingredient(f3, 2, "g");
+        Ingredient i3 = new Ingredient(f2, 3, "tbsp");
+        Ingredient i4 = new Ingredient(f4, 5, "tbsp");
+        acct.addToShoppingList(i);
+        acct.addToShoppingList(i2);
+        acct.addToShoppingList(i3);
+        acct.addToShoppingList(i4);
+
+        assertEquals(4, acct.getShoppingList().getLength());
+
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Beans"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Gala Apples"));
+
+        acct.removeFromShoppingList("Chocolate");
+
+        assertEquals(3, acct.getShoppingList().getLength());
+        assertEquals("Broccoli", acct.getShoppingList().getIngredientName(0));
+        assertEquals("Eggs", acct.getShoppingList().getIngredientName(1));
+        assertEquals("Apples", acct.getShoppingList().getIngredientName(2));
+
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Chocolate"));
+
+        acct.removeFromShoppingList("Broccoli");
+
+        assertEquals(2, acct.getShoppingList().getLength());
+        assertEquals("Eggs", acct.getShoppingList().getIngredientName(0));
+        assertEquals("Apples", acct.getShoppingList().getIngredientName(1));
+
+    }
+
+    @Test
+    void printListTest() {
+        Account acct = new Account("username", "password", "");
+
+        Food f = new Food("Broccoli", 100);
+        Food f2 = new Food("Chocolate", 200);
+        Food f3 = new Food("Eggs", 100);
+        Food f4 = new Food("Apples", 100);
+        Ingredient i = new Ingredient(f, 1, "cup");
+        Ingredient i2 = new Ingredient(f2, 2, "g");
+        Ingredient i3 = new Ingredient(f3, 3, "tbsp");
+        Ingredient i4 = new Ingredient(f4, 5, "tbsp");
+        acct.addToShoppingList(i);
+        acct.addToShoppingList(i2);
+        acct.addToShoppingList(i3);
+        acct.addToShoppingList(i4);
+
+        String shouldbe = "1.0cup Broccoli\n2.0g Chocolate\n3.0tbsp Eggs\n5.0tbsp Apples\n";
+        assertEquals(shouldbe, acct.printShoppingList());
+    }
+
 }
