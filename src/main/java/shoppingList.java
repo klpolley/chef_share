@@ -13,9 +13,22 @@ public class shoppingList {
         return length;
     }
 
-    public void addIngredient(Ingredient ingredientIn){
-        length++;
-        shoppingList.add(ingredientIn);
+    public void addIngredient(Ingredient ingredientIn) {
+        String ingredientName = ingredientIn.getName();
+        int index = getIngredientIndex(ingredientName);
+
+        if (index == -1) {
+            length++;
+            shoppingList.add(ingredientIn);
+        }else{
+            String unit = getUnit(index);
+            if (unit.equals(ingredientIn.getUnit())){
+                shoppingList.get(index).setAmount(shoppingList.get(index).getAmount()+ingredientIn.getAmount());
+            }else{
+                length++;
+                shoppingList.add(ingredientIn);
+            }
+        }
     }
 
     public String getIngredientName(int index){
@@ -38,6 +51,9 @@ public class shoppingList {
         return shoppingList.get(index).getAmount();
     }
 
+    public String getUnit(int index){
+        return shoppingList.get(index).getUnit();
+    }
 
     public void removeIngredient(String ingredientNameIn) throws IllegalArgumentException{
 
