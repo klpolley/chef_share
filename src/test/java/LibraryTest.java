@@ -1,4 +1,11 @@
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+
+import util.JsonUtil;
+
+import java.io.IOException;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LibraryTest {
@@ -28,19 +35,9 @@ public class LibraryTest {
         assertEquals(3, foodLibrary.getLength());
     }
         @Test
-        void isFoodPresentTest(){
+        void isFoodPresentTest() throws IOException {
 
-            Library foodLibrary = new Library();
-
-            //add a bunch of food
-            Food pickle = new Food("pickle", 550);
-            foodLibrary.addFood(pickle);
-
-            Food cookie = new Food("cookie", 800);
-            foodLibrary.addFood(cookie);
-
-            Food banana = new Food("banana", 250);
-            foodLibrary.addFood(banana);
+            Library foodLibrary = JsonUtil.fromJsonFile("src/test/resources/LibraryTest.json", Library.class);
 
             //test foods that are present
             assertTrue(foodLibrary.isFoodPresent("pickle"));

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Food {
     private String name;
     private double calories; //Assume that this is number of calories per 100g of said food.
@@ -64,4 +66,39 @@ public class Food {
 
         return isValid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Food food = (Food) o;
+        return Double.compare(food.calories, calories) == 0 &&
+                Double.compare(food.density, density) == 0 &&
+                Objects.equals(name, food.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, calories, density);
+    }
+
+    //JSON functions:
+
+    public Food(){}
+
+    public void setName(String name){
+        if (name == "" || name ==" "){
+            throw new IllegalArgumentException("food name cannot be empty");
+        }
+        else this.name = name;
+    }
+
+    public void setCalories(double calories){
+        if (!isCalorieValid(calories)){
+            throw new IllegalArgumentException("calories must be a positive value greater than 0");
+        }
+        else this.calories = calories;
+    }
+
+    public void setDensity(double density){this.density = density;}
 }

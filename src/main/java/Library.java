@@ -28,4 +28,12 @@ public class Library {
             return false;
         }
     }
+
+    //JSON functions:
+
+    public void setLibraryList(HashMap<String, Food> foodMap) {
+        this.libraryList = foodMap;
+    }
+
+    public void setLength(int length){this.length = length;}
 }
