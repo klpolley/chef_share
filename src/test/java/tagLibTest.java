@@ -58,14 +58,20 @@ public class tagLibTest {
         TagLib t = new TagLib();
         t.addTag("noodle");
         assertEquals("Tags:\nnoodle\n", t.printTags());
+        t.addTag("ohh");
+        assertEquals("Tags:\nnoodle\nohh\n", t.printTags());
         t.addTag("starch");
-        assertEquals("Tags:\nnoodle\nstarch\n", t.printTags());
+        assertEquals("Tags:\nnoodle\nohh\nstarch\n", t.printTags());
 
         TagLib t2 = new TagLib();
         t2.addTag("starch");
         assertEquals("Tags:\nstarch\n", t2.printTags());
         t2.addTag("noodle");
         assertEquals("Tags:\nnoodle\nstarch\n", t2.printTags());
+        t2.addTag("ohh");
+        assertEquals("Tags:\nnoodle\nohh\nstarch\n", t2.printTags());
+        t2.addTag("apple");
+        assertEquals("Tags:\napple\nnoodle\nohh\nstarch\n", t2.printTags());
     }
 
     @Test
@@ -104,5 +110,16 @@ public class tagLibTest {
             t.addTag("" + (char)(x + 65));
             assertEquals(x+1, t.numTags());
         }
+    }
+
+    @Test
+    void alphabeticalTest(){
+        String a = "aaa", b = "bbb", c = "ccc", d = "aa";
+        assertEquals(-1, TagLib.alphabetical(a, b));
+        assertEquals(0, TagLib.alphabetical(a, a));
+        assertEquals(1, TagLib.alphabetical(b,a));
+        assertEquals(-1, TagLib.alphabetical(a, c));
+        assertEquals(-1, TagLib.alphabetical(d, a));
+        assertEquals(1, TagLib.alphabetical(a,d));
     }
 }
