@@ -75,7 +75,7 @@ public class shoppingListTest {
         assertEquals(-1, myList.getIngredientIndex("chocolate"));
 
     }
-
+/*
     @Test
     void removeIngredientsTest(){
         //create list and add ingredients
@@ -122,6 +122,7 @@ public class shoppingListTest {
         assertEquals(-1, myList.getIngredientIndex("apple"));
 
     }
+    */
 
     @Test
     void getAmountTest(){
@@ -195,6 +196,70 @@ public class shoppingListTest {
         assertEquals(10, myList.getAmount(3));
         assertEquals(10, myList.getAmount(4));
         assertEquals(10, myList.getAmount(5));
+
+    }
+
+    @Test
+    void removingAmountsTest(){
+        shoppingList myList = new shoppingList();
+
+        Food food = new Food("Broccoli", 34);
+        Ingredient i1 = new Ingredient(food, 16, "oz");
+
+        Food food2 = new Food("rice",111, 1.452);
+        Ingredient i2 = new Ingredient(food2, 100, "g");
+
+        Food food3 = new Food("apple", 70, 1.987);
+        Ingredient i3 = new Ingredient(food3, 85, "g");
+
+
+        myList.addIngredient(i1);
+
+        myList.addIngredient(i2);
+
+        myList.addIngredient(i3);
+
+
+        //remove some of an ingredient with correct unit
+        myList.removeIngredient("Broccoli",6,"oz");
+        assertEquals(3, myList.getLength());
+        assertEquals(10,myList.getAmount(0));
+
+        myList.removeIngredient("rice",50,"g");
+        assertEquals(3, myList.getLength());
+        assertEquals(50,myList.getAmount(1));
+
+        myList.removeIngredient("apple",25,"g");
+        assertEquals(3, myList.getLength());
+        assertEquals(60,myList.getAmount(3));
+
+
+        //remove with wrong units (ingredient does not exist)
+        assertThrows(IllegalArgumentException.class, ()->myList.removeIngredient("Broccoli",6,"g"));
+        assertThrows(IllegalArgumentException.class, ()->myList.removeIngredient("rice",50,"oz"));
+
+        //remove 0
+        myList.removeIngredient("Broccoli",0,"oz");
+        assertEquals(3, myList.getLength());
+        assertEquals(10,myList.getAmount(0));
+
+        //remove more than available
+        assertThrows(IllegalArgumentException.class, ()->myList.removeIngredient("Broccoli",11,"oz"));
+        assertThrows(IllegalArgumentException.class, ()->myList.removeIngredient("Broccoli",15,"oz"));
+
+        //remove all of an ingredient
+        myList.removeIngredient("Broccoli",10,"oz");
+        assertEquals(2,myList.getLength());
+        assertEquals(-1, myList.getIngredientIndex("Broccoli"));
+
+        myList.removeIngredient("rice",50,"g");
+        assertEquals(1,myList.getLength());
+        assertEquals(-1, myList.getIngredientIndex("rice"));
+
+        myList.removeIngredient("apple",60,"g");
+        assertEquals(0,myList.getLength());
+        assertEquals(-1, myList.getIngredientIndex("apple"));
+
 
     }
 
