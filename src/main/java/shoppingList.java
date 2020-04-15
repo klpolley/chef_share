@@ -55,4 +55,8 @@ public class shoppingList {
         }
         return str;
     }
+
+    public void addRecipeToList(Recipe r) {
+
+    }
 }

@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class shoppingListTest {
 
     @Test
@@ -121,6 +124,62 @@ public class shoppingListTest {
         assertEquals(0,myList.getLength());
         assertEquals(-1, myList.getIngredientIndex("apple"));
 
+    }
+
+    @Test
+    void addRecipeToListTest() {
+
+        //create recipes to add to list
+
+        Food food = new Food("Broccoli", 34);
+        Ingredient i1 = new Ingredient(food, 2, "cup");
+        Food food2 = new Food("Cheese",111, 1.452);
+        Ingredient i2 = new Ingredient(food2, 3, "lb");
+        Food food3 = new Food("Bread", 70, 1.987);
+        Ingredient i3 = new Ingredient(food3, 92, "g");
+
+        ArrayList<Ingredient> ingrs = new ArrayList<>();
+        ingrs.add(i1);
+        ingrs.add(i2);
+        ingrs.add(i3);
+
+        ArrayList<String> steps = new ArrayList<>();
+        steps.add("melt cheese and dip my dudes");
+
+        Recipe r1 = new Recipe("Fondue", steps, ingrs);
+
+        Food food4 = new Food("Pasta", 200);
+        Ingredient i4 = new Ingredient(food4, 16, "oz");
+        Food food5 = new Food("Tomato",50, 2);
+        Ingredient i5 = new Ingredient(food5, 100, "g");
+
+        ArrayList<Ingredient> ingr2 = new ArrayList<>();
+        ingr2.add(i4);
+        ingr2.add(i5);
+
+        ArrayList<String> steps2 = new ArrayList<>();
+        steps2.add("cook pasta");
+        steps2.add("add tomatoes");
+
+        Recipe r2 = new Recipe("Pasta Thing", steps2, ingr2);
+
+        shoppingList list = new shoppingList();
+
+        list.addRecipeToList(r1);
+
+        assertNotEquals(-1, list.getIngredientIndex("Broccoli"));
+        assertNotEquals(-1, list.getIngredientIndex("Bread"));
+        assertNotEquals(-1, list.getIngredientIndex("Cheese"));
+        assertEquals(-1, list.getIngredientIndex("Pasta"));
+        assertEquals(-1, list.getIngredientIndex("Tomato"));
+
+        list.addRecipeToList(r2);
+
+        assertNotEquals(-1, list.getIngredientIndex("Broccoli"));
+        assertNotEquals(-1, list.getIngredientIndex("Bread"));
+        assertNotEquals(-1, list.getIngredientIndex("Cheese"));
+        assertNotEquals(-1, list.getIngredientIndex("Pasta"));
+        assertNotEquals(-1, list.getIngredientIndex("Tomato"));
     }
 
 }
