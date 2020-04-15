@@ -231,7 +231,7 @@ public class shoppingListTest {
 
         myList.removeIngredient("apple",25,"g");
         assertEquals(3, myList.getLength());
-        assertEquals(60,myList.getAmount(3));
+        assertEquals(60,myList.getAmount(2));
 
 
         //remove with wrong units (ingredient does not exist)

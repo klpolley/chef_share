@@ -60,13 +60,21 @@ public class shoppingList {
         int index = getIngredientIndex(ingredientNameIn);
 
         if (index == -1){
-            throw new IllegalArgumentException("Ingredient is not present in list");
-        }else {
-
-            shoppingList.remove(index);
-            length--;
+            throw new IllegalArgumentException("Ingredient is not in your shopping list.");
+        }else if (amount >= 0 && amount <= shoppingList.get(index).getAmount()){
+            String unitOf = getUnit(index);
+            if (unitOf.equals(unit)) {
+                shoppingList.get(index).setAmount(shoppingList.get(index).getAmount() - amount);
+                if (shoppingList.get(index).getAmount() == 0) {
+                    shoppingList.remove(index);
+                    length--;
+                }
+            }else{
+                throw new IllegalArgumentException("You don't have an ingredient with those units.");
+            }
+        } else{
+            throw new IllegalArgumentException("That is not a correct amount to remove.");
         }
-
     }
 
     public String printList() {
