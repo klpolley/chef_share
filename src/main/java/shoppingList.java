@@ -57,6 +57,9 @@ public class shoppingList {
     }
 
     public void addRecipeToList(Recipe r) {
-
+        Collection<Ingredient> ingrs = r.getIngredients();
+        for (Ingredient i: ingrs) {
+            addIngredient(i);
+        }
     }
 }

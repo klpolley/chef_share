@@ -172,6 +172,7 @@ public class shoppingListTest {
         assertNotEquals(-1, list.getIngredientIndex("Cheese"));
         assertEquals(-1, list.getIngredientIndex("Pasta"));
         assertEquals(-1, list.getIngredientIndex("Tomato"));
+        assertEquals(-1, list.getIngredientIndex("What"));
 
         list.addRecipeToList(r2);
 
@@ -180,6 +181,8 @@ public class shoppingListTest {
         assertNotEquals(-1, list.getIngredientIndex("Cheese"));
         assertNotEquals(-1, list.getIngredientIndex("Pasta"));
         assertNotEquals(-1, list.getIngredientIndex("Tomato"));
+        assertEquals(-1, list.getIngredientIndex("Nope"));
+
     }
 
 }
