@@ -176,7 +176,7 @@ public class Account {
     }
 
     public void removeFromShoppingList(String name) {
-        shopping.removeIngredient(name);
+        //shopping.removeIngredient(name);
     }
 
 
