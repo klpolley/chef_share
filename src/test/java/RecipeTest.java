@@ -224,12 +224,12 @@ public class RecipeTest {
         r.removeTag("tag");
         assertEquals(1, r.numTags());
         r.removeTag("tagtwo");
-        assertEquals(1, r.numTags());
+        assertEquals(0, r.numTags());
 
-        r.addTag("tag");
-        assertThrows(IllegalArgumentException.class, ()-> r.addTag("tag"));
-        assertThrows(IllegalArgumentException.class, ()-> r.addTag("tag1"));
-        assertThrows(IllegalArgumentException.class, ()-> r.addTag(""));
+
+        assertThrows(IllegalArgumentException.class, ()-> r.removeTag("tag"));
+        assertThrows(IllegalArgumentException.class, ()-> r.removeTag("tag1"));
+        assertThrows(IllegalArgumentException.class, ()-> r.removeTag(""));
 
     }
 

@@ -1,3 +1,4 @@
+import javax.swing.text.html.HTML;
 import java.util.*;
 
 public class Recipe implements Comparable<Recipe> {
@@ -11,6 +12,7 @@ public class Recipe implements Comparable<Recipe> {
         setName(nameIn);
         this.steps = new ArrayList();
         this.ingredients = new ArrayList();
+        this.tags = new HashSet<>();
     }
 
     public Recipe(String nameIn, ArrayList<String> stepsIn, ArrayList<Ingredient> ingredientsIn) throws IllegalArgumentException{
@@ -144,10 +146,22 @@ public class Recipe implements Comparable<Recipe> {
         else throw new IllegalArgumentException("Ingredient does not exist!");
     }
 
-    public void addTag(String Tag)throws IllegalArgumentException{}
-    public void removeTag(String Tag)throws IllegalArgumentException{}
-    public boolean isTag(String Tag) throws IllegalArgumentException{return false;}
-    public int numTags() {return -123001;}
-    public Iterator<String> getTags(){return null;}
+    public void addTag(String tag)throws IllegalArgumentException{
+        if(!TagLib.validTag(tag)) throw new IllegalArgumentException("Invalid tag");
+        if(tags.contains(tag)) throw new IllegalArgumentException("Tag already on this recipe");
+        tags.add(tag);
+    }
+    public void removeTag(String tag)throws IllegalArgumentException{
+        if(!TagLib.validTag(tag)) throw new IllegalArgumentException("Invalid tag");
+        if(!tags.contains(tag))throw new IllegalArgumentException("Tag isn't on this recipe");
+        tags.remove(tag);
+
+    }
+    public boolean isTag(String tag) throws IllegalArgumentException{
+        if(!TagLib.validTag(tag))throw new IllegalArgumentException("Invalid Tag");
+        return tags.contains(tag);
+    }
+    public int numTags() {return tags.size();}
+    public Iterator<String> getTags(){return tags.iterator();}
 
 }
