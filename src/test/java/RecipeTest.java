@@ -2,6 +2,9 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.channels.FileLockInterruptionException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -195,6 +198,69 @@ public class RecipeTest {
         assertEquals(14, r.getNumberIngredients());
         assertEquals("9.0g Eggs",r.getIngredient(9));
         assertEquals("11.0g Eggs",r.getIngredient(10));
+    }
+
+    @Test
+    void addTagTest(){
+        Recipe r = new Recipe("Test");
+        assertEquals(0, r.numTags());
+        r.addTag("tag");
+        assertEquals(1, r.numTags());
+        r.addTag("tagtwo");
+        assertEquals(2, r.numTags());
+
+        assertThrows(IllegalArgumentException.class, ()-> r.addTag("tag"));
+        assertThrows(IllegalArgumentException.class, ()-> r.addTag("tag1"));
+        assertThrows(IllegalArgumentException.class, ()-> r.addTag(""));
+
+    }
+
+    @Test
+    void removeTagTest(){
+        Recipe r = new Recipe("Test");
+        r.addTag("tag");
+        r.addTag("tagtwo");
+
+        r.removeTag("tag");
+        assertEquals(1, r.numTags());
+        r.removeTag("tagtwo");
+        assertEquals(1, r.numTags());
+
+        r.addTag("tag");
+        assertThrows(IllegalArgumentException.class, ()-> r.addTag("tag"));
+        assertThrows(IllegalArgumentException.class, ()-> r.addTag("tag1"));
+        assertThrows(IllegalArgumentException.class, ()-> r.addTag(""));
+
+    }
+
+    @Test
+    void isTagTest() {
+        Recipe r = new Recipe("Test");
+        r.addTag("tag");
+        r.addTag("tagtwo");
+
+        assertTrue(r.isTag("tag"));
+        assertFalse(r.isTag("tab"));
+        assertTrue(r.isTag("tagtwo"));
+        assertFalse(r.isTag("hsadfh"));
+
+        assertThrows(IllegalArgumentException.class, ()-> r.isTag("tag1"));
+    }
+
+    @Test
+    void getTagsTest(){
+        Recipe r = new Recipe("Test");
+        r.addTag("tag");
+        r.addTag("tagtwo");
+
+        HashSet<String> tagExpected = new HashSet<>();
+        tagExpected.add("tag");
+        tagExpected.add("tagtwo");
+
+        Iterator<String> itr = r.getTags();
+        while(itr.hasNext()){
+            assertTrue(tagExpected.contains(itr.next()));
+        }
     }
 
 }

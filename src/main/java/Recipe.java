@@ -1,12 +1,11 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class Recipe implements Comparable<Recipe> {
     private String name;
     private List<String> steps;
     private List<Ingredient> ingredients;
     private String author;
+    private HashSet<String> tags;
 
     public Recipe(String nameIn) throws IllegalArgumentException{
         setName(nameIn);
@@ -144,4 +143,11 @@ public class Recipe implements Comparable<Recipe> {
         }
         else throw new IllegalArgumentException("Ingredient does not exist!");
     }
+
+    public void addTag(String Tag)throws IllegalArgumentException{}
+    public void removeTag(String Tag)throws IllegalArgumentException{}
+    public boolean isTag(String Tag) throws IllegalArgumentException{return false;}
+    public int numTags() {return -123001;}
+    public Iterator<String> getTags(){return null;}
+
 }
