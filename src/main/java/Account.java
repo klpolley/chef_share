@@ -179,5 +179,6 @@ public class Account {
         shopping.removeIngredient(name);
     }
 
+    public void addRecipeToShoppingList(Recipe r) {shopping.addRecipeToList(r);}
 
 }
