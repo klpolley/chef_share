@@ -26,6 +26,8 @@ public class Ingredient implements Comparable<Ingredient> {
         return amount;
     }
 
+    public void setAmount(double newAmount) { amount = newAmount; }
+
     public String getName() {
         return food.getName();
     }
