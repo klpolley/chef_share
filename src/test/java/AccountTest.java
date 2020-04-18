@@ -259,8 +259,8 @@ public class AccountTest {
         Food f3 = new Food("Eggs", 100);
         Food f4 = new Food("Apples", 100);
         Ingredient i = new Ingredient(f, 1, "cup");
-        Ingredient i2 = new Ingredient(f3, 2, "g");
-        Ingredient i3 = new Ingredient(f2, 3, "tbsp");
+        Ingredient i2 = new Ingredient(f2, 2, "g");
+        Ingredient i3 = new Ingredient(f3, 3, "tbsp");
         Ingredient i4 = new Ingredient(f4, 5, "tbsp");
         acct.addToShoppingList(i);
         acct.addToShoppingList(i2);
@@ -269,19 +269,28 @@ public class AccountTest {
 
         assertEquals(4, acct.getShoppingList().getLength());
 
-        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Beans"));
-        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Gala Apples"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Beans", 1, "cup"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Gala Apples", 1, "cup"));
 
-        acct.removeFromShoppingList("Chocolate");
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Chocolate", 1, "cup"));
 
-        assertEquals(3, acct.getShoppingList().getLength());
+        acct.removeFromShoppingList("Chocolate", 1, "g");
+
+        assertEquals(4, acct.getShoppingList().getLength());
+        assertEquals("Broccoli", acct.getShoppingList().getIngredientName(0));
+        assertEquals("Chocolate", acct.getShoppingList().getIngredientName(1));
+        assertEquals(1, acct.getShoppingList().getAmount(1));
+        assertEquals("Eggs", acct.getShoppingList().getIngredientName(2));
+        assertEquals("Apples", acct.getShoppingList().getIngredientName(3));
+
+        acct.removeFromShoppingList("Chocolate", 1, "g");
         assertEquals("Broccoli", acct.getShoppingList().getIngredientName(0));
         assertEquals("Eggs", acct.getShoppingList().getIngredientName(1));
         assertEquals("Apples", acct.getShoppingList().getIngredientName(2));
 
-        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Chocolate"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Chocolate", 1, "g"));
 
-        acct.removeFromShoppingList("Broccoli");
+        acct.removeFromShoppingList("Broccoli", 1, "cup");
 
         assertEquals(2, acct.getShoppingList().getLength());
         assertEquals("Eggs", acct.getShoppingList().getIngredientName(0));
