@@ -175,8 +175,9 @@ public class Account {
         shopping.addIngredient(ingr);
     }
 
-    public void removeFromShoppingList(String name) {
-        //shopping.removeIngredient(name);
+    public void removeFromShoppingList(String name, double amount, String unit) {
+        shopping.removeIngredient(name, amount, unit);
+
     }
 
 

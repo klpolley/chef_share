@@ -75,7 +75,7 @@ public class shoppingListTest {
         assertEquals(-1, myList.getIngredientIndex("chocolate"));
 
     }
-/*
+
     @Test
     void removeIngredientsTest(){
         //create list and add ingredients
@@ -98,31 +98,31 @@ public class shoppingListTest {
 
         //remove items not in list - check that length is the same
 
-        assertThrows(IllegalArgumentException.class, ()-> myList.removeIngredient("cheese"));
+        assertThrows(IllegalArgumentException.class, ()-> myList.removeIngredient("cheese", 1, "cup"));
         assertEquals(3,myList.getLength());
 
-        assertThrows(IllegalArgumentException.class, ()-> myList.removeIngredient("chocolate"));
+        assertThrows(IllegalArgumentException.class, ()-> myList.removeIngredient("chocolate", 10, "g"));
         assertEquals(3,myList.getLength());
 
-        assertThrows(IllegalArgumentException.class, ()-> myList.removeIngredient("bacon"));
+        assertThrows(IllegalArgumentException.class, ()-> myList.removeIngredient("bacon", 5, "lb"));
         assertEquals(3,myList.getLength());
 
         //remove items that are in the list - check that length changes and item isn't found in list
 
-        myList.removeIngredient("Broccoli");
+        myList.removeIngredient("Broccoli", 16, "oz");
         assertEquals(2,myList.getLength());
         assertEquals(-1, myList.getIngredientIndex("Broccoli"));
 
-        myList.removeIngredient("rice");
+        myList.removeIngredient("rice", 100, "g");
         assertEquals(1,myList.getLength());
         assertEquals(-1, myList.getIngredientIndex("rice"));
 
-        myList.removeIngredient("apple");
+        myList.removeIngredient("apple", 85, "g");
         assertEquals(0,myList.getLength());
         assertEquals(-1, myList.getIngredientIndex("apple"));
 
     }
-    */
+
 
     @Test
     void getAmountTest(){

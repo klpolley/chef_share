@@ -55,7 +55,7 @@ public class shoppingList {
         return shoppingList.get(index).getUnit();
     }
 
-    public void removeIngredient(String ingredientNameIn, int amount, String unit) throws IllegalArgumentException{
+    public void removeIngredient(String ingredientNameIn, double amount, String unit) throws IllegalArgumentException{
 
         int index = getIngredientIndex(ingredientNameIn);
 
