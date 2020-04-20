@@ -319,4 +319,33 @@ public class AccountTest {
         assertEquals(shouldbe, acct.printShoppingList());
     }
 
+
+    @Test
+    void createCookedList(){
+        Account acct = new Account("username", "password", "");
+        //check that this creates an empty list of recipes
+        assertEquals(0, acct.numOfCooked());
+    }
+
+    @Test
+    void addCookedRecipes(){
+        Account acct = new Account("username", "password", "");
+
+        Recipe test = new Recipe("test");
+        acct.addToCookedList("test", test);
+        assertEquals(1,acct.numOfCooked());
+
+        Recipe test2 = new Recipe("test2");
+        acct.addToCookedList("test2", test2);
+        assertEquals(2,acct.numOfCooked());
+
+        Recipe alsoTest = new Recipe("alsoTest");
+        acct.addToCookedList("alsoTest", alsoTest);
+        assertEquals(3,acct.numOfCooked());
+
+        Recipe wowTests = new Recipe("wowTests");
+        acct.addToCookedList("wowTests", wowTests);
+        assertEquals(4,acct.numOfCooked());
+
+    }
 }
