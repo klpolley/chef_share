@@ -1,17 +1,18 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import javax.swing.text.html.HTML;
+import java.util.*;
 
 public class Recipe implements Comparable<Recipe> {
     private String name;
     private List<String> steps;
     private List<Ingredient> ingredients;
     private String author;
+    private HashSet<String> tags;
 
     public Recipe(String nameIn) throws IllegalArgumentException{
         setName(nameIn);
         this.steps = new ArrayList();
         this.ingredients = new ArrayList();
+        this.tags = new HashSet<>();
     }
 
     public Recipe(String nameIn, ArrayList<String> stepsIn, ArrayList<Ingredient> ingredientsIn) throws IllegalArgumentException{
@@ -144,4 +145,23 @@ public class Recipe implements Comparable<Recipe> {
         }
         else throw new IllegalArgumentException("Ingredient does not exist!");
     }
+
+    public void addTag(String tag)throws IllegalArgumentException{
+        if(!TagLib.validTag(tag)) throw new IllegalArgumentException("Invalid tag");
+        if(tags.contains(tag)) throw new IllegalArgumentException("Tag already on this recipe");
+        tags.add(tag);
+    }
+    public void removeTag(String tag)throws IllegalArgumentException{
+        if(!TagLib.validTag(tag)) throw new IllegalArgumentException("Invalid tag");
+        if(!tags.contains(tag))throw new IllegalArgumentException("Tag isn't on this recipe");
+        tags.remove(tag);
+
+    }
+    public boolean isTag(String tag) throws IllegalArgumentException{
+        if(!TagLib.validTag(tag))throw new IllegalArgumentException("Invalid Tag");
+        return tags.contains(tag);
+    }
+    public int numTags() {return tags.size();}
+    public Iterator<String> getTags(){return tags.iterator();}
+
 }

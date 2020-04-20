@@ -177,6 +177,7 @@ public class Account {
 
     public void removeFromShoppingList(String name, double amount, String unit) {
         shopping.removeIngredient(name, amount, unit);
+
     }
 
 
