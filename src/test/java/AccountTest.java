@@ -332,19 +332,19 @@ public class AccountTest {
         Account acct = new Account("username", "password", "");
 
         Recipe test = new Recipe("test");
-        acct.addToCookedList("test", test);
+        acct.addToCookedList(test);
         assertEquals(1,acct.numOfCooked());
 
         Recipe test2 = new Recipe("test2");
-        acct.addToCookedList("test2", test2);
+        acct.addToCookedList(test2);
         assertEquals(2,acct.numOfCooked());
 
         Recipe alsoTest = new Recipe("alsoTest");
-        acct.addToCookedList("alsoTest", alsoTest);
+        acct.addToCookedList(alsoTest);
         assertEquals(3,acct.numOfCooked());
 
         Recipe wowTests = new Recipe("wowTests");
-        acct.addToCookedList("wowTests", wowTests);
+        acct.addToCookedList(wowTests);
         assertEquals(4,acct.numOfCooked());
 
     }
