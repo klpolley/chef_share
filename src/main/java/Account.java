@@ -13,6 +13,7 @@ public class Account {
     private String biography;
     private HashMap<String, Recipe> recipeList;
     private shoppingList shopping;
+    private ArrayList <Recipe> cookedRecipesList;
 
     public Account(String username, String password, String bio) throws IllegalArgumentException {
         if (!isUserValid(username)) throw new IllegalArgumentException("Username must be between 6 and 15 characters, alphanumeric or _ only");
@@ -22,6 +23,8 @@ public class Account {
         this.biography = bio;
         this.recipeList = new HashMap<>();
         this.shopping = new shoppingList();
+        this.cookedRecipesList = new ArrayList<Recipe>();
+
     }
 
     public String getUsername() {
@@ -178,6 +181,12 @@ public class Account {
     public void removeFromShoppingList(String name, double amount, String unit) {
         shopping.removeIngredient(name, amount, unit);
 
+    }
+
+    public int numOfCooked(){return cookedRecipesList.size();}
+
+    public void addToCookedList(Recipe recipeCooked){
+        cookedRecipesList.add(recipeCooked);
     }
 
 
