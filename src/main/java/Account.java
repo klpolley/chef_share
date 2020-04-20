@@ -185,7 +185,7 @@ public class Account {
     public int numOfCooked(){return cookedRecipesList.size();}
 
     public void addToCookedList(String recipeName, Recipe recipeCooked){
-
+        cookedRecipesList.put(recipeName, recipeCooked);
     }
 
 
