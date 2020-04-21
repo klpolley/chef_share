@@ -501,6 +501,130 @@ public class AccountContainerTest {
 
         subList = accounts.getRecipeByTag("notHere");
         assertEquals(0, subList.size());
+
+
+        assertThrows(IllegalArgumentException.class, ()-> accounts.getRecipeByTag("Invalid 2ag"));
+        assertThrows(IllegalArgumentException.class, ()-> accounts.getRecipeByTag(""));
     }
 
+    @Test
+    void getRecipeWithMultiTagsTest(){
+        //GET SOME ACCOUNTS WITH SOME RECIPES AND SO MANY EGGS
+        //account creation, login and recipe creation out of order to test sorting
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username2", "password", "");
+        accounts.createAccount("username1", "password", "");
+        accounts.createAccount("username3", "password", "");
+
+        accounts.login("username1", "password");
+        Account current = accounts.getCurrentAccount();
+
+        Recipe recipe = new Recipe("Thing With Eggs");
+        recipe.addTag("tag");
+        recipe.addTag("two");
+        recipe.addTag("double");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("test");
+        recipe.addTag("tag");
+        recipe.addTag("one");
+        current.createRecipe(recipe);
+
+        accounts.logout();
+        accounts.login("username3", "password");
+        current = accounts.getCurrentAccount();
+
+        recipe = new Recipe("Thing With SO MANY Eggs");
+        recipe.addTag("tag");
+        recipe.addTag("two");
+        current.createRecipe(recipe);
+
+        accounts.logout();
+        accounts.login("username2", "password");
+        current = accounts.getCurrentAccount();
+
+        recipe = new Recipe("Thing With Eggs");
+        recipe.addTag("one");
+        recipe.addTag("double");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("XEggs");
+        recipe.addTag("tag");
+        recipe.addTag("one");
+        recipe.addTag("two");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("Never See");
+        current.createRecipe(recipe);
+
+
+
+        String[] names = new String[] {"XEggs", "test"};
+        HashSet<String> namesTemp = new HashSet<>();
+        for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
+        String[] tags = new String[] {"tag","one"};
+        List<Recipe> subList = accounts.getRecipeByMultiTags(tags);
+
+        assertEquals(2, subList.size());
+        for(int x = 0; x < subList.size(); x++){
+            assertTrue(namesTemp.contains(subList.get(x).getName()));
+            namesTemp.remove(subList.get(x).getName());
+        }
+        assertEquals(0,namesTemp.size());
+
+
+        names = new String[] {"Thing With Eggs", "Thing With Eggs", "XEggs"};
+        for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
+        tags = new String[] {"tag","two"};
+        subList = accounts.getRecipeByMultiTags(tags);
+
+        assertEquals(3, subList.size());
+        for(int x = 0; x < subList.size(); x++){
+            assertTrue(namesTemp.contains(subList.get(x).getName()));
+            namesTemp.remove(subList.get(x).getName());
+        }
+        assertEquals(0,namesTemp.size());
+
+
+        tags = new String[] {"two","one"};
+        subList = accounts.getRecipeByMultiTags(tags);
+        assertEquals(1, subList.size());
+        assertEquals("XEggs", subList.get(1).getName());
+
+
+        tags = new String[] {"one","two"};
+        subList = accounts.getRecipeByMultiTags(tags);
+        assertEquals(1, subList.size());
+        assertEquals("XEggs", subList.get(1).getName());
+
+
+        tags = new String[] {"one", "double"};
+        subList = accounts.getRecipeByMultiTags(tags);
+        assertEquals(1, subList.size());
+        assertEquals("Thing With Eggs", subList.get(1).getName());
+        assertEquals("username2", subList.get(1).getAuthor());
+
+        tags = new String[] {"two", "double"};
+        subList = accounts.getRecipeByMultiTags(tags);
+        assertEquals(1, subList.size());
+        assertEquals("Thing With Eggs", subList.get(1).getName());
+        assertEquals("username1", subList.get(1).getAuthor());
+
+        tags = new String[] {"tag", "one", "two"};
+        subList = accounts.getRecipeByMultiTags(tags);
+        assertEquals(1, subList.size());
+        assertEquals("XEggs", subList.get(1).getName());
+
+        tags = new String[] {"tag","two", "double"};
+        subList = accounts.getRecipeByMultiTags(tags);
+        assertEquals(1, subList.size());
+        assertEquals("Thing With Eggs", subList.get(1).getName());
+
+        tags = new String[] {"illegal 2ag", "validTag"};
+        String[] finalTags = tags;
+        assertThrows(IllegalArgumentException.class, ()-> accounts.getRecipeByMultiTags(finalTags));
+        tags = new String[] { "validTag","illegal 2ag"};
+        String[] finalTags2 = tags;
+        assertThrows(IllegalArgumentException.class, ()-> accounts.getRecipeByMultiTags(finalTags2));
+    }
 }
