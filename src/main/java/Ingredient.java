@@ -1,4 +1,5 @@
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class Ingredient implements Comparable<Ingredient> {
     private Food food;
@@ -25,14 +26,20 @@ public class Ingredient implements Comparable<Ingredient> {
         return amount;
     }
 
+    public void setAmount(double newAmount) { amount = newAmount; }
+
     public String getName() {
         return food.getName();
     }
 
     public String getUnit(){ return unit;    }
 
-    public String toString(){
+    public String toStringCal(){
         return amount + " " + unit + "\n" + food.getName() + "\n" + getCalories() + " Calories";
+    }
+
+    public String toString() {
+        return amount + " " + unit + "\n" + food.getName();
     }
 
     private static DecimalFormat calReturn = new DecimalFormat("0.00");
@@ -192,5 +199,18 @@ public class Ingredient implements Comparable<Ingredient> {
         return Double.parseDouble(df.format(returnVal));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return Double.compare(that.amount, amount) == 0 &&
+                Objects.equals(food, that.food) &&
+                Objects.equals(unit, that.unit);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(food, amount, unit);
+    }
 }

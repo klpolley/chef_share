@@ -259,8 +259,8 @@ public class AccountTest {
         Food f3 = new Food("Eggs", 100);
         Food f4 = new Food("Apples", 100);
         Ingredient i = new Ingredient(f, 1, "cup");
-        Ingredient i2 = new Ingredient(f3, 2, "g");
-        Ingredient i3 = new Ingredient(f2, 3, "tbsp");
+        Ingredient i2 = new Ingredient(f2, 2, "g");
+        Ingredient i3 = new Ingredient(f3, 3, "tbsp");
         Ingredient i4 = new Ingredient(f4, 5, "tbsp");
         acct.addToShoppingList(i);
         acct.addToShoppingList(i2);
@@ -269,19 +269,28 @@ public class AccountTest {
 
         assertEquals(4, acct.getShoppingList().getLength());
 
-        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Beans"));
-        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Gala Apples"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Beans", 1, "cup"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Gala Apples", 1, "cup"));
 
-        acct.removeFromShoppingList("Chocolate");
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Chocolate", 1, "cup"));
 
-        assertEquals(3, acct.getShoppingList().getLength());
+        acct.removeFromShoppingList("Chocolate", 1, "g");
+
+        assertEquals(4, acct.getShoppingList().getLength());
+        assertEquals("Broccoli", acct.getShoppingList().getIngredientName(0));
+        assertEquals("Chocolate", acct.getShoppingList().getIngredientName(1));
+        assertEquals(1, acct.getShoppingList().getAmount(1));
+        assertEquals("Eggs", acct.getShoppingList().getIngredientName(2));
+        assertEquals("Apples", acct.getShoppingList().getIngredientName(3));
+
+        acct.removeFromShoppingList("Chocolate", 1, "g");
         assertEquals("Broccoli", acct.getShoppingList().getIngredientName(0));
         assertEquals("Eggs", acct.getShoppingList().getIngredientName(1));
         assertEquals("Apples", acct.getShoppingList().getIngredientName(2));
 
-        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Chocolate"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromShoppingList("Chocolate", 1, "g"));
 
-        acct.removeFromShoppingList("Broccoli");
+        acct.removeFromShoppingList("Broccoli", 1, "cup");
 
         assertEquals(2, acct.getShoppingList().getLength());
         assertEquals("Eggs", acct.getShoppingList().getIngredientName(0));
@@ -310,4 +319,132 @@ public class AccountTest {
         assertEquals(shouldbe, acct.printShoppingList());
     }
 
+
+    @Test
+    void createCookedList(){
+        Account acct = new Account("username", "password", "");
+        //check that this creates an empty list of recipes
+        assertEquals(0, acct.numOfCooked());
+    }
+
+    @Test
+    void addCookedRecipes(){
+        Account acct = new Account("username", "password", "");
+
+        Recipe test = new Recipe("test");
+        acct.addToCookedList(test);
+        assertEquals(1,acct.numOfCooked());
+
+        Recipe test2 = new Recipe("test2");
+        acct.addToCookedList(test2);
+        assertEquals(2,acct.numOfCooked());
+
+        Recipe alsoTest = new Recipe("alsoTest");
+        acct.addToCookedList(alsoTest);
+        assertEquals(3,acct.numOfCooked());
+
+        Recipe wowTests = new Recipe("wowTests");
+        acct.addToCookedList(wowTests);
+        assertEquals(4,acct.numOfCooked());
+
+    }
+
+    @Test
+    void ingredientInInventoryTest() {
+
+        //also tests adding and removing from inventory
+
+        Account acct = new Account("username", "password", "");
+
+        Food food = new Food("Banana", 100);
+        Food food2 = new Food("Orange", 100);
+        Food food3 = new Food("Apple", 100);
+
+        Ingredient ing1 = new Ingredient(food, 1, "g");
+        acct.addToInventory(ing1);
+        assertTrue(acct.getInventory().haveIngredient(ing1));
+
+        Ingredient ing2 = new Ingredient(food, 2, "cup");
+        acct.addToInventory(ing2);
+        assertTrue(acct.getInventory().haveIngredient(ing2));
+
+        Ingredient ing3 = new Ingredient(food, 3, "g");
+        acct.addToInventory(ing3);
+
+        Ingredient ing4 = new Ingredient(food2, 2, "g");
+        acct.addToInventory(ing4);
+
+        Ingredient ing5 = new Ingredient(food3, 5, "lb");
+        acct.addToInventory(ing5);
+
+        String shouldBe = "5.0 lb\nApple\n" +
+                "4.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
+
+        assertEquals(shouldBe, acct.printInventory());
+
+        assertTrue(acct.ingredientInInventory("Banana", 2, "g"));
+        assertTrue(acct.ingredientInInventory("Banana", 2, "cup"));
+        assertTrue(acct.ingredientInInventory("Orange", 1, "g"));
+        assertTrue(acct.ingredientInInventory("Orange", 2, "g"));
+        assertTrue(acct.ingredientInInventory("Apple", 5, "lb"));
+        assertTrue(acct.ingredientInInventory("Apple", 3, "lb"));
+        assertTrue(acct.ingredientInInventory("Apple", 1, "lb"));
+
+        assertFalse(acct.ingredientInInventory("Banana", 1, "lb"));
+        assertFalse(acct.ingredientInInventory("Banana", 5, "g"));
+        assertFalse(acct.ingredientInInventory("Banana", 3, "cup"));
+        assertFalse(acct.ingredientInInventory("Orange", 3, "cup"));
+        assertFalse(acct.ingredientInInventory("Orange", 3, "g"));
+        assertFalse(acct.ingredientInInventory("Apple", 3, "cup"));
+        assertFalse(acct.ingredientInInventory("Apple", 6, "lb"));
+
+        assertFalse(acct.ingredientInInventory("Pear", 4, "g"));
+        assertFalse(acct.ingredientInInventory("Peach", 5, "lb"));
+
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Peach", 1, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 1, "tsp"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 6, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Apple", 1, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Orange", 2.01, "g"));
+
+        acct.removeFromInventory("Banana", 2, "g");
+
+        shouldBe = "5.0 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe, acct.printInventory());
+
+        acct.removeFromInventory("Apple", 1.5, "lb");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        acct.removeFromInventory("Banana", 2, "cup");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        acct.removeFromInventory("Orange", 2, "g");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 2, "cup"));
+
+        acct.removeFromInventory("Apple", 3.5, "lb");
+        acct.removeFromInventory("Banana", 2, "g");
+
+        assertEquals("",  acct.printInventory());
+
+
+    }
 }
