@@ -157,7 +157,7 @@ public class Recipe implements Comparable<Recipe> {
         tags.remove(tag);
 
     }
-    public boolean isTag(String tag) throws IllegalArgumentException{
+    public boolean hasTag(String tag) throws IllegalArgumentException{
         if(!TagLib.validTag(tag))throw new IllegalArgumentException("Invalid Tag");
         return tags.contains(tag);
     }

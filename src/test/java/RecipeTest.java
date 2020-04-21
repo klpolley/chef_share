@@ -234,17 +234,17 @@ public class RecipeTest {
     }
 
     @Test
-    void isTagTest() {
+    void hasTagTest() {
         Recipe r = new Recipe("Test");
         r.addTag("tag");
         r.addTag("tagtwo");
 
-        assertTrue(r.isTag("tag"));
-        assertFalse(r.isTag("tab"));
-        assertTrue(r.isTag("tagtwo"));
-        assertFalse(r.isTag("hsadfh"));
+        assertTrue(r.hasTag("tag"));
+        assertFalse(r.hasTag("tab"));
+        assertTrue(r.hasTag("tagtwo"));
+        assertFalse(r.hasTag("hsadfh"));
 
-        assertThrows(IllegalArgumentException.class, ()-> r.isTag("tag1"));
+        assertThrows(IllegalArgumentException.class, ()-> r.hasTag("tag1"));
     }
 
     @Test
