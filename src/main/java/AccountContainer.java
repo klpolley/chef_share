@@ -103,6 +103,7 @@ public class AccountContainer {
     }
 
     public List<Recipe> getRecipeByTag(String tag){
+        if(!TagLib.validTag(tag)) throw new IllegalArgumentException("Not Valid Tag");
         List<Recipe> rtn = new ArrayList<>();
         List<Recipe> all = getAllRecipes();
         for(Recipe r: all){
@@ -111,7 +112,29 @@ public class AccountContainer {
         }
         return rtn;
     }
-    public List<Recipe> getRecipeByMultiTags(String[] tags){return null;}
+    public List<Recipe> getRecipeByMultiTags(String[] tags){
+        for(String x: tags)
+            if(!TagLib.validTag(x)) throw new IllegalArgumentException(x + " is not a valid tag.");
+        List<Recipe> rtn = new ArrayList<>();
+        List<Recipe> all = getAllRecipes();
+        boolean add = true;
+        for(Recipe r: all){
+            add = true;
+            if(tags.length > r.numTags()){
+                add = false;
+            }
+            else
+                for(int x = 0; x < tags.length; x++){
+                    if(!r.hasTag(tags[x])) {
+                        add = false;
+                        break;
+                    }
+                }
+            if(add)
+                rtn.add(r);
+        }
+        return rtn;
+    }
 
     //get recipes as "tuples" with name and user - mostly for testing purposes
     public String[][] getRecipeListTuples(List<Recipe> recipes) {

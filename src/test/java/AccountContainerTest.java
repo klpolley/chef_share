@@ -573,7 +573,7 @@ public class AccountContainerTest {
         assertEquals(0,namesTemp.size());
 
 
-        names = new String[] {"Thing With Eggs", "Thing With Eggs", "XEggs"};
+        names = new String[] {"Thing With Eggs", "Thing With SO MANY Eggs", "XEggs"};
         for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
         tags = new String[] {"tag","two"};
         subList = accounts.getRecipeByMultiTags(tags);
@@ -589,36 +589,36 @@ public class AccountContainerTest {
         tags = new String[] {"two","one"};
         subList = accounts.getRecipeByMultiTags(tags);
         assertEquals(1, subList.size());
-        assertEquals("XEggs", subList.get(1).getName());
+        assertEquals("XEggs", subList.get(0).getName());
 
 
         tags = new String[] {"one","two"};
         subList = accounts.getRecipeByMultiTags(tags);
         assertEquals(1, subList.size());
-        assertEquals("XEggs", subList.get(1).getName());
+        assertEquals("XEggs", subList.get(0).getName());
 
 
         tags = new String[] {"one", "double"};
         subList = accounts.getRecipeByMultiTags(tags);
         assertEquals(1, subList.size());
-        assertEquals("Thing With Eggs", subList.get(1).getName());
-        assertEquals("username2", subList.get(1).getAuthor());
+        assertEquals("Thing With Eggs", subList.get(0).getName());
+        assertEquals("username2", subList.get(0).getAuthor());
 
         tags = new String[] {"two", "double"};
         subList = accounts.getRecipeByMultiTags(tags);
         assertEquals(1, subList.size());
-        assertEquals("Thing With Eggs", subList.get(1).getName());
-        assertEquals("username1", subList.get(1).getAuthor());
+        assertEquals("Thing With Eggs", subList.get(0).getName());
+        assertEquals("username1", subList.get(0).getAuthor());
 
         tags = new String[] {"tag", "one", "two"};
         subList = accounts.getRecipeByMultiTags(tags);
         assertEquals(1, subList.size());
-        assertEquals("XEggs", subList.get(1).getName());
+        assertEquals("XEggs", subList.get(0).getName());
 
         tags = new String[] {"tag","two", "double"};
         subList = accounts.getRecipeByMultiTags(tags);
         assertEquals(1, subList.size());
-        assertEquals("Thing With Eggs", subList.get(1).getName());
+        assertEquals("Thing With Eggs", subList.get(0).getName());
 
         tags = new String[]{"tag", "two", "woot"};
         subList = accounts.getRecipeByMultiTags(tags);
