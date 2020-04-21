@@ -620,6 +620,14 @@ public class AccountContainerTest {
         assertEquals(1, subList.size());
         assertEquals("Thing With Eggs", subList.get(1).getName());
 
+        tags = new String[]{"tag", "two", "woot"};
+        subList = accounts.getRecipeByMultiTags(tags);
+        assertEquals(0, subList.size());
+
+        tags = new String[]{"woot","tag", "two" };
+        subList = accounts.getRecipeByMultiTags(tags);
+        assertEquals(0, subList.size());
+
         tags = new String[] {"illegal 2ag", "validTag"};
         String[] finalTags = tags;
         assertThrows(IllegalArgumentException.class, ()-> accounts.getRecipeByMultiTags(finalTags));
