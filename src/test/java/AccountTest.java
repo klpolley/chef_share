@@ -351,6 +351,9 @@ public class AccountTest {
 
     @Test
     void ingredientInInventoryTest() {
+
+        //also tests adding and removing from inventory
+
         Account acct = new Account("username", "password", "");
 
         Food food = new Food("Banana", 100);
@@ -399,5 +402,49 @@ public class AccountTest {
 
         assertFalse(acct.ingredientInInventory("Pear", 4, "g"));
         assertFalse(acct.ingredientInInventory("Peach", 5, "lb"));
+
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Peach", 1, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 1, "tsp"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 6, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Apple", 1, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Orange", 2.01, "g"));
+
+        acct.removeFromInventory("Banana", 2, "g");
+
+        shouldBe = "5.0 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe, acct.printInventory());
+
+        acct.removeFromInventory("Apple", 1.5, "lb");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        acct.removeFromInventory("Banana", 2, "cup");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        acct.removeFromInventory("Orange", 2, "g");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 2, "cup"));
+
+        acct.removeFromInventory("Apple", 3.5, "lb");
+        acct.removeFromInventory("Banana", 2, "g");
+
+        assertEquals("",  acct.printInventory());
+
+
     }
 }
