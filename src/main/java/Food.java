@@ -81,4 +81,24 @@ public class Food {
     public int hashCode() {
         return Objects.hash(name, calories, density);
     }
+
+    //JSON functions:
+
+    public Food(){}
+
+    public void setName(String name){
+        if (name == "" || name ==" "){
+            throw new IllegalArgumentException("food name cannot be empty");
+        }
+        else this.name = name;
+    }
+
+    public void setCalories(double calories){
+        if (!isCalorieValid(calories)){
+            throw new IllegalArgumentException("calories must be a positive value greater than 0");
+        }
+        else this.calories = calories;
+    }
+
+    public void setDensity(double density){this.density = density;}
 }

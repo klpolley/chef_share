@@ -1,0 +1,20 @@
+{
+  "libraryList" : {
+    "pickle" : {
+      "name" : "pickle",
+      "calories" : 550,
+      "density" : 0
+    },
+    "cookie" : {
+      "name" : "cookie",
+      "calories" : 800,
+      "density" : 0
+    },
+    "banana" : {
+      "name" : "banana",
+      "calories" : 250,
+      "density" : 0
+    }
+  },
+  "length" : 3
+}
