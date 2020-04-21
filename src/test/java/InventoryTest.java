@@ -58,4 +58,9 @@ public class InventoryTest {
         assertTrue(i.haveIngredient(ingredient3));
     }
 
+    @Test
+    void removeIngredientTest() {
+
+    }
+
 }

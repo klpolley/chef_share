@@ -13,6 +13,7 @@ public class Account {
     private String biography;
     private HashMap<String, Recipe> recipeList;
     private shoppingList shopping;
+    private Inventory inventory;
     private ArrayList <Recipe> cookedRecipesList;
 
     public Account(String username, String password, String bio) throws IllegalArgumentException {
@@ -24,6 +25,7 @@ public class Account {
         this.recipeList = new HashMap<>();
         this.shopping = new shoppingList();
         this.cookedRecipesList = new ArrayList<Recipe>();
+        this.inventory = new Inventory();
 
     }
 
@@ -189,5 +191,24 @@ public class Account {
         cookedRecipesList.add(recipeCooked);
     }
 
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
+    public String printInventory() {
+        return inventory.toString();
+    }
+
+    public void addToInventory(Ingredient i) {
+        inventory.addIngredient(i);
+    }
+
+    public void removeFromInventory(String name, double amount, String unit) {
+        inventory.removeIngredient(name, amount, unit);
+    }
+
+    public boolean ingredientInInventory(String name, double amount, String unit) {
+        return false;
+    }
 
 }
