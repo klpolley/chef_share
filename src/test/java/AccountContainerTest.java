@@ -422,6 +422,7 @@ public class AccountContainerTest {
         recipe = new Recipe("test");
         recipe.addTag("tag");
         recipe.addTag("one");
+        current.createRecipe(recipe);
 
         accounts.logout();
         accounts.login("username3", "password");
@@ -450,48 +451,52 @@ public class AccountContainerTest {
         recipe = new Recipe("Never See");
         current.createRecipe(recipe);
 
+
+
         String[] names = new String[] {"Thing With Eggs", "Thing With SO MANY Eggs", "XEggs", "test"};
-        boolean seenOnce = false;
         HashSet<String> namesTemp = new HashSet<>();
         for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
-
         List<Recipe> subList = accounts.getRecipeByTag("tag");
 
+        assertEquals(4, subList.size());
         for(int x = 0; x < subList.size(); x++){
-            assertTrue(namesTemp.contains(subList.get(x)));
-            namesTemp.remove(subList.get(x));
+            assertTrue(namesTemp.contains(subList.get(x).getName()));
+            namesTemp.remove(subList.get(x).getName());
         }
-        assertTrue(namesTemp.size() == 0);
+        assertEquals(0,namesTemp.size());
 
 
         names = new String[] {"Thing With Eggs", "XEggs", "test"};
         for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
-
         subList = accounts.getRecipeByTag("one");
 
+        assertEquals(3, subList.size());
         for(int x = 0; x < subList.size(); x++){
-            assertTrue(namesTemp.contains(subList.get(x)));
-            namesTemp.remove(subList.get(x));
+            assertTrue(namesTemp.contains(subList.get(x).getName()));
+            namesTemp.remove(subList.get(x).getName());
         }
-        assertTrue(namesTemp.size() == 0);
+        assertEquals(0,namesTemp.size());
+
+
 
         names = new String[] {"Thing With Eggs", "XEggs", "Thing With SO MANY Eggs"};
         for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
-
         subList = accounts.getRecipeByTag("two");
 
+        assertEquals(3, subList.size());
         for(int x = 0; x < subList.size(); x++){
-            assertTrue(namesTemp.contains(subList.get(x)));
-            namesTemp.remove(subList.get(x));
+            assertTrue(namesTemp.contains(subList.get(x).getName()));
+            namesTemp.remove(subList.get(x).getName());
         }
-        assertTrue(namesTemp.size() == 0);
+        assertEquals(0,namesTemp.size());
+
+
 
         subList = accounts.getRecipeByTag("double");
-
-        assertTrue(subList.size() > 1);
+        assertEquals(2, subList.size());
 
         for(int x = 0; x < subList.size(); x ++){
-            assertEquals(subList.get(x), "Thing With Eggs");
+            assertEquals(subList.get(x).getName(), "Thing With Eggs");
         }
 
         subList = accounts.getRecipeByTag("notHere");

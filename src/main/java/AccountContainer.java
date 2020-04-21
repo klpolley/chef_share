@@ -102,7 +102,15 @@ public class AccountContainer {
         return all;
     }
 
-    public List<Recipe> getRecipeByTag(String tag){return null;}
+    public List<Recipe> getRecipeByTag(String tag){
+        List<Recipe> rtn = new ArrayList<>();
+        List<Recipe> all = getAllRecipes();
+        for(Recipe r: all){
+            if(r.hasTag(tag))
+                rtn.add(r);
+        }
+        return rtn;
+    }
     public List<Recipe> getRecipeByMultiTags(String[] tags){return null;}
 
     //get recipes as "tuples" with name and user - mostly for testing purposes
