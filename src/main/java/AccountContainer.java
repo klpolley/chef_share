@@ -102,6 +102,9 @@ public class AccountContainer {
         return all;
     }
 
+    public List<Recipe> getRecipeByTag(String tag){return null;}
+    public List<Recipe> getRecipeByMultiTags(String[] tags){return null;}
+
     //get recipes as "tuples" with name and user - mostly for testing purposes
     public String[][] getRecipeListTuples(List<Recipe> recipes) {
         String[][] tuples = new String[recipes.size()][2];

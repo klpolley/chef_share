@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -398,6 +399,103 @@ public class AccountContainerTest {
                 "2: egg 2\n" +
                 "3: egg 3\n";
         assertEquals(shouldBe, recPrint);
+    }
+
+    @Test
+    void getRecipeWithTagTest(){
+        //GET SOME ACCOUNTS WITH SOME RECIPES AND SO MANY EGGS
+        //account creation, login and recipe creation out of order to test sorting
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username2", "password", "");
+        accounts.createAccount("username1", "password", "");
+        accounts.createAccount("username3", "password", "");
+
+        accounts.login("username1", "password");
+        Account current = accounts.getCurrentAccount();
+
+        Recipe recipe = new Recipe("Thing With Eggs");
+        recipe.addTag("tag");
+        recipe.addTag("two");
+        recipe.addTag("double");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("test");
+        recipe.addTag("tag");
+        recipe.addTag("one");
+
+        accounts.logout();
+        accounts.login("username3", "password");
+        current = accounts.getCurrentAccount();
+
+        recipe = new Recipe("Thing With SO MANY Eggs");
+        recipe.addTag("tag");
+        recipe.addTag("two");
+        current.createRecipe(recipe);
+
+        accounts.logout();
+        accounts.login("username2", "password");
+        current = accounts.getCurrentAccount();
+
+        recipe = new Recipe("Thing With Eggs");
+        recipe.addTag("one");
+        recipe.addTag("double");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("XEggs");
+        recipe.addTag("tag");
+        recipe.addTag("one");
+        recipe.addTag("two");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("Never See");
+        current.createRecipe(recipe);
+
+        String[] names = new String[] {"Thing With Eggs", "Thing With SO MANY Eggs", "XEggs", "test"};
+        boolean seenOnce = false;
+        HashSet<String> namesTemp = new HashSet<>();
+        for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
+
+        List<Recipe> subList = accounts.getRecipeByTag("tag");
+
+        for(int x = 0; x < subList.size(); x++){
+            assertTrue(namesTemp.contains(subList.get(x)));
+            namesTemp.remove(subList.get(x));
+        }
+        assertTrue(namesTemp.size() == 0);
+
+
+        names = new String[] {"Thing With Eggs", "XEggs", "test"};
+        for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
+
+        subList = accounts.getRecipeByTag("one");
+
+        for(int x = 0; x < subList.size(); x++){
+            assertTrue(namesTemp.contains(subList.get(x)));
+            namesTemp.remove(subList.get(x));
+        }
+        assertTrue(namesTemp.size() == 0);
+
+        names = new String[] {"Thing With Eggs", "XEggs", "Thing With SO MANY Eggs"};
+        for(int x = 0; x < names.length; x ++) namesTemp.add(names[x]);
+
+        subList = accounts.getRecipeByTag("two");
+
+        for(int x = 0; x < subList.size(); x++){
+            assertTrue(namesTemp.contains(subList.get(x)));
+            namesTemp.remove(subList.get(x));
+        }
+        assertTrue(namesTemp.size() == 0);
+
+        subList = accounts.getRecipeByTag("double");
+
+        assertTrue(subList.size() > 1);
+
+        for(int x = 0; x < subList.size(); x ++){
+            assertEquals(subList.get(x), "Thing With Eggs");
+        }
+
+        subList = accounts.getRecipeByTag("notHere");
+        assertEquals(0, subList.size());
     }
 
 }
