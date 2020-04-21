@@ -348,4 +348,103 @@ public class AccountTest {
         assertEquals(4,acct.numOfCooked());
 
     }
+
+    @Test
+    void ingredientInInventoryTest() {
+
+        //also tests adding and removing from inventory
+
+        Account acct = new Account("username", "password", "");
+
+        Food food = new Food("Banana", 100);
+        Food food2 = new Food("Orange", 100);
+        Food food3 = new Food("Apple", 100);
+
+        Ingredient ing1 = new Ingredient(food, 1, "g");
+        acct.addToInventory(ing1);
+        assertTrue(acct.getInventory().haveIngredient(ing1));
+
+        Ingredient ing2 = new Ingredient(food, 2, "cup");
+        acct.addToInventory(ing2);
+        assertTrue(acct.getInventory().haveIngredient(ing2));
+
+        Ingredient ing3 = new Ingredient(food, 3, "g");
+        acct.addToInventory(ing3);
+
+        Ingredient ing4 = new Ingredient(food2, 2, "g");
+        acct.addToInventory(ing4);
+
+        Ingredient ing5 = new Ingredient(food3, 5, "lb");
+        acct.addToInventory(ing5);
+
+        String shouldBe = "5.0 lb\nApple\n" +
+                "4.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
+
+        assertEquals(shouldBe, acct.printInventory());
+
+        assertTrue(acct.ingredientInInventory("Banana", 2, "g"));
+        assertTrue(acct.ingredientInInventory("Banana", 2, "cup"));
+        assertTrue(acct.ingredientInInventory("Orange", 1, "g"));
+        assertTrue(acct.ingredientInInventory("Orange", 2, "g"));
+        assertTrue(acct.ingredientInInventory("Apple", 5, "lb"));
+        assertTrue(acct.ingredientInInventory("Apple", 3, "lb"));
+        assertTrue(acct.ingredientInInventory("Apple", 1, "lb"));
+
+        assertFalse(acct.ingredientInInventory("Banana", 1, "lb"));
+        assertFalse(acct.ingredientInInventory("Banana", 5, "g"));
+        assertFalse(acct.ingredientInInventory("Banana", 3, "cup"));
+        assertFalse(acct.ingredientInInventory("Orange", 3, "cup"));
+        assertFalse(acct.ingredientInInventory("Orange", 3, "g"));
+        assertFalse(acct.ingredientInInventory("Apple", 3, "cup"));
+        assertFalse(acct.ingredientInInventory("Apple", 6, "lb"));
+
+        assertFalse(acct.ingredientInInventory("Pear", 4, "g"));
+        assertFalse(acct.ingredientInInventory("Peach", 5, "lb"));
+
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Peach", 1, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 1, "tsp"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 6, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Apple", 1, "g"));
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Orange", 2.01, "g"));
+
+        acct.removeFromInventory("Banana", 2, "g");
+
+        shouldBe = "5.0 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe, acct.printInventory());
+
+        acct.removeFromInventory("Apple", 1.5, "lb");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        acct.removeFromInventory("Banana", 2, "cup");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n" +
+                "2.0 g\nOrange\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        acct.removeFromInventory("Orange", 2, "g");
+
+        shouldBe = "3.5 lb\nApple\n" +
+                "2.0 g\nBanana\n";
+        assertEquals(shouldBe,  acct.printInventory());
+
+        assertThrows(IllegalArgumentException.class, ()->acct.removeFromInventory("Banana", 2, "cup"));
+
+        acct.removeFromInventory("Apple", 3.5, "lb");
+        acct.removeFromInventory("Banana", 2, "g");
+
+        assertEquals("",  acct.printInventory());
+
+
+    }
 }

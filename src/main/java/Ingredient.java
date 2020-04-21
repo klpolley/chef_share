@@ -34,8 +34,12 @@ public class Ingredient implements Comparable<Ingredient> {
 
     public String getUnit(){ return unit;    }
 
-    public String toString(){
+    public String toStringCal(){
         return amount + " " + unit + "\n" + food.getName() + "\n" + getCalories() + " Calories";
+    }
+
+    public String toString() {
+        return amount + " " + unit + "\n" + food.getName();
     }
 
     private static DecimalFormat calReturn = new DecimalFormat("0.00");
