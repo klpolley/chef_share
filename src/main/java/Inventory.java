@@ -58,7 +58,22 @@ public class Inventory {
 
 
     public void removeIngredient(String name, double amount, String unit) {
+        if (!availableInventory.containsKey(name)) throw new IllegalArgumentException("Food not in inventory");
+        if (!validIngredient(name, amount, unit)) throw new IllegalArgumentException("Amount and/or unit not in inventory");
 
+        Ingredient toRemove = null;
+        for (Ingredient i:availableInventory.get(name)) {
+            if (i.getUnit().equals(unit)) {
+                i.setAmount(i.getAmount()-amount);
+                if (i.getAmount() == 0) {
+                    toRemove = i;
+                }
+                break;
+            }
+        }
+        if (toRemove != null) {
+            availableInventory.get(name).remove(toRemove);
+        }
     }
 
     public boolean validIngredient (String name, double amount, String unit) {
