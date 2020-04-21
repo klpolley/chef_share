@@ -164,4 +164,17 @@ public class Recipe implements Comparable<Recipe> {
     public int numTags() {return tags.size();}
     public Iterator<String> getTags(){return tags.iterator();}
 
+
+    //FOR JSON
+
+    public Recipe() {
+        this.tags = new HashSet<>();
+    }
+    public void setSteps(List<String> steps) {
+        this.steps = steps;
+    }
+    public void setIngredients(List<Ingredient> ings) {
+        this.ingredients = ings;
+    }
+
 }

@@ -213,4 +213,18 @@ public class Ingredient implements Comparable<Ingredient> {
     public int hashCode() {
         return Objects.hash(food, amount, unit);
     }
+
+
+    //For json
+    public Ingredient() {
+
+    }
+
+    public void setFood(Food food) {
+        this.food = food;
+    }
+    public void setUnit(String unit) {
+        if(!validUnit(unit)) throw new IllegalArgumentException("Invalid Unit");
+        this.unit = unit;
+    }
 }
