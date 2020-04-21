@@ -37,7 +37,6 @@ public class Inventory {
             }
         }
         return false;
-
     }
 
     public String toString() {
@@ -63,7 +62,18 @@ public class Inventory {
     }
 
     public boolean validIngredient (String name, double amount, String unit) {
-        return false;
+        if (availableInventory.containsKey(name)) {
+            for (Ingredient i:availableInventory.get(name)) {
+                if (i.getUnit().equals(unit)) {
+                    if (i.getAmount() >= amount) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
 
 

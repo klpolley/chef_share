@@ -208,7 +208,7 @@ public class Account {
     }
 
     public boolean ingredientInInventory(String name, double amount, String unit) {
-        return false;
+        return inventory.validIngredient(name, amount, unit);
     }
 
 }

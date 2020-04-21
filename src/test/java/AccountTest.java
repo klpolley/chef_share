@@ -374,10 +374,10 @@ public class AccountTest {
         Ingredient ing5 = new Ingredient(food3, 5, "lb");
         acct.addToInventory(ing5);
 
-        String shouldBe = "5.0 lb\nApple\n1.0 Calories\n" +
-                "4.0 g\nBanana\n1.0 Calories\n" +
-                "2.0 cup\nBanana\n1.0 Calories\n" +
-                "2.0 g\nOrange\n1.0 Calories\n";
+        String shouldBe = "5.0 lb\nApple\n" +
+                "4.0 g\nBanana\n" +
+                "2.0 cup\nBanana\n" +
+                "2.0 g\nOrange\n";
 
         assertEquals(shouldBe, acct.printInventory());
 

@@ -31,7 +31,7 @@ public class InventoryTest {
         Food food = new Food("Banana", 100);
         Ingredient ingredient = new Ingredient(food, 1, "g");
         i.addIngredient(ingredient);
-        assertEquals("1.0 g\nBanana\n1.0 Calories\n", i.toString());
+        assertEquals("1.0 g\nBanana\n", i.toString());
     }
 
     @Test
