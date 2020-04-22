@@ -176,4 +176,8 @@ public class AccountContainer {
         return toprint;
     }
 
+    public Recipe getSelectedRecipe(int selection, List<Recipe> allRecipes) {
+        return allRecipes.get(selection-1);
+    }
+
 }

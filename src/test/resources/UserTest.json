@@ -1,0 +1,110 @@
+[
+{
+  "name" : "Lasagna",
+  "ingredients": [
+    {
+      "food": {
+        "name": "Noodles",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 1,
+      "unit": "lb"
+    },
+    {
+      "food": {
+        "name": "Cheese",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 3,
+      "unit": "cup"
+    },
+    {
+      "food": {
+        "name": "Sauce",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 4,
+      "unit": "cup"
+    }
+  ],
+  "steps" : [
+    "Cook noodles",
+    "Layer noodles, sauce, and cheese in pan",
+    "Bake"
+  ]
+}, {
+  "name" : "Salad",
+  "ingredients": [
+    {
+      "food": {
+        "name": "Lettuce",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 2,
+      "unit": "cup"
+    },
+    {
+      "food": {
+        "name": "Tomato",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 1,
+      "unit": "g"
+    },
+    {
+      "food": {
+        "name": "Carrot",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 3,
+      "unit": "g"
+    },
+    {
+      "food": {
+        "name": "Dressing",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 2,
+      "unit": "tbsp"
+    }
+  ],
+  "steps" : [
+    "Chop veggies",
+    "Add salad dressing"
+  ]
+}, {
+  "name" : "Sundae",
+  "ingredients": [
+    {
+      "food": {
+        "name": "Ice Cream",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 1,
+      "unit": "lb"
+    },
+    {
+      "food": {
+        "name": "Hot Fudge",
+        "calories": 100,
+        "density": 1
+      },
+      "amount": 1,
+      "unit": "cup"
+    }
+  ],
+  "steps" : [
+    "put sauce on ice cream and EAT"
+  ]
+}
+
+
+]

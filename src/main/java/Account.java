@@ -128,6 +128,12 @@ public class Account {
         recipeList.put(In.getName(), In);
     }
 
+    public void addRecipe(Recipe r) {
+        if(recipeList.containsKey(r.getName())) throw new IllegalArgumentException("Recipe already Exits");
+        r.setAuthor(username);
+        recipeList.put(r.getName(), r);
+    }
+
     public String recipeListToString(){
         if(recipeList.size() <= 0) return "";
         Set<String> set = recipeList.keySet();
@@ -174,6 +180,12 @@ public class Account {
 
     public String printShoppingList() {
         return shopping.printList();
+    }
+
+    public void addRecipeToShoppingList(Recipe r) {
+        for (Ingredient i:r.getIngredients()) {
+            shopping.addIngredient(i);
+        }
     }
 
     public void addToShoppingList(Ingredient ingr) {
