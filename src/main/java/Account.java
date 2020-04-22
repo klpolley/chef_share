@@ -117,19 +117,19 @@ public class Account {
     }
 
     public void createRecipe(String name) throws IllegalArgumentException{
-        if(recipeList.containsKey(name)) throw new IllegalArgumentException("Recipe already Exits");
+        if(recipeList.containsKey(name)) throw new IllegalArgumentException("Recipe already Exists");
         Recipe r = new Recipe(name);
         r.setAuthor(username);
         recipeList.put(name, new Recipe(name));
     }
     public void createRecipe(Recipe In) throws IllegalArgumentException{
-        if(recipeList.containsKey(In.getName())) throw new IllegalArgumentException("Recipe already Exits");
+        if(recipeList.containsKey(In.getName())) throw new IllegalArgumentException("Recipe already Exists");
         In.setAuthor(username);
         recipeList.put(In.getName(), In);
     }
 
     public void addRecipe(Recipe r) {
-        if(recipeList.containsKey(r.getName())) throw new IllegalArgumentException("Recipe already Exits");
+        if(recipeList.containsKey(r.getName())) throw new IllegalArgumentException("Recipe already Exists");
         r.setAuthor(username);
         recipeList.put(r.getName(), r);
     }
