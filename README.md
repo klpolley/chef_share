@@ -19,8 +19,10 @@ https://docs.google.com/document/d/1Z9GJT0URHYTmXSVQR5WcModrNoEBUfHkERStZJRrXzQ/
 Sprint Goal: set up basic ingredient + recipe management infrastructure so it is ready to get a UI in the next sprint
 ### UML Diagrams
 https://drive.google.com/drive/folders/1KMWKsTU07OmiZ4xdK5DvQgNArON2ZyHv?usp=sharing
-
-
+### Review Document
+https://docs.google.com/document/d/1FWC3ea5qW3YsWvNdHE4RRpcuwdxlbG3DZqU2i1r9eXs/edit?usp=sharing
+### Retrospective Document
+https://docs.google.com/document/d/1_eHRFXzxO_492m18b0lBXPwL9wE49XwTfu0ahykV0HM/edit?usp=sharing
 
 
 
