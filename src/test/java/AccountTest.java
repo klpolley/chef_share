@@ -447,4 +447,45 @@ public class AccountTest {
 
 
     }
+
+    @Test
+    void ingredientFromShoppingToInventoryTest(){
+        Account acct = new Account("username", "password", "");
+
+        Food f = new Food("Broccoli", 100);
+        Ingredient i = new Ingredient(f, 1, "cup");
+
+        Food f3 = new Food("Eggs", 100);
+        Ingredient i2 = new Ingredient(f3, 2, "g");
+
+        Food f2 = new Food("Chocolate", 200);
+        Ingredient i3 = new Ingredient(f2, 3, "tbsp");
+
+        Food f4 = new Food("Apples", 100);
+        Ingredient i4 = new Ingredient(f4, 5, "tbsp");
+
+        acct.addToShoppingList(i);
+        acct.addToShoppingList(i2);
+        acct.addToShoppingList(i3);
+        acct.addToShoppingList(i4);
+
+        assertEquals(4, acct.getShoppingList().getLength());
+
+        acct.ingredientFromShoppingToInventory("Broccoli",1,"cup", 100);
+        assertEquals(3, acct.getShoppingList().getLength());
+        assertTrue(acct.ingredientInInventory("Broccoli",1,"cup"));
+
+        acct.ingredientFromShoppingToInventory("Eggs",2,"g", 100);
+        assertEquals(2, acct.getShoppingList().getLength());
+        assertTrue(acct.ingredientInInventory("Eggs",2,"g"));
+
+        acct.ingredientFromShoppingToInventory("Chocolate",3,"tbsp", 200);
+        assertEquals(1, acct.getShoppingList().getLength());
+        assertTrue(acct.ingredientInInventory("Chocolate",3,"tbsp"));
+
+        acct.ingredientFromShoppingToInventory("Apples",5,"tbsp", 100);
+        assertEquals(0, acct.getShoppingList().getLength());
+        assertTrue(acct.ingredientInInventory("Apples",5,"tbsp"));
+
+    }
 }
