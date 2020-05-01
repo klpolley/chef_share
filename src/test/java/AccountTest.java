@@ -487,5 +487,33 @@ public class AccountTest {
         assertEquals(0, acct.getShoppingList().getLength());
         assertTrue(acct.ingredientInInventory("Apples",5,"tbsp"));
 
+    void cookRecipeTest() throws InsufficientIngredientsException {
+        Account acct = new Account("username", "password", "");
+        Recipe rec = new Recipe("recipe");
+
+        Food food = new Food("Banana", 100);
+        Food food2 = new Food("Orange", 100);
+        Food food3 = new Food("Apple", 100);
+
+        Ingredient ing1 = new Ingredient(food, 1, "g");
+        acct.addToInventory(ing1);
+
+
+        Ingredient ing2 = new Ingredient(food2, 2, "g");
+        acct.addToInventory(ing2);
+        rec.addIngredient(ing2);
+
+        Ingredient ing3 = new Ingredient(food3, 5, "lb");
+
+
+        acct.cookRecipe(rec);
+
+        assertTrue(acct.ingredientInInventory(ing1));
+        assertFalse(acct.ingredientInInventory(ing2));
+
+        acct.addToInventory(ing1);
+        rec.addIngredient(ing3);
+
+        assertThrows(InsufficientIngredientsException.class, ()->acct.cookRecipe(rec));
     }
 }

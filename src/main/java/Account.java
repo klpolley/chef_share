@@ -1,10 +1,5 @@
 import javax.print.attribute.HashDocAttributeSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Collections;
+import java.util.*;
 
 public class Account {
 
@@ -219,6 +214,13 @@ public class Account {
         inventory.removeIngredient(name, amount, unit);
     }
 
+    public void removeFromInventory(Ingredient ingredient) {
+        String name = ingredient.getName();
+        double amount = ingredient.getAmount();
+        String unit = ingredient.getUnit();
+        inventory.removeIngredient(name, amount, unit);
+    }
+
     public boolean ingredientInInventory(String name, double amount, String unit) {
         return inventory.validIngredient(name, amount, unit);
     }
@@ -234,6 +236,19 @@ public class Account {
         shopping.removeIngredient(name, amount, unit);
         inventory.addIngredient(i1);
 
+    public boolean ingredientInInventory(Ingredient ingredient) {
+        return inventory.haveIngredient(ingredient);
+    }
+
+    public void cookRecipe(Recipe recipe) throws InsufficientIngredientsException {
+        Collection<Ingredient> recipeIngredients = recipe.getIngredients();
+        Collection<Ingredient> insufficientIngredients = new ArrayList<Ingredient>();
+        for (Ingredient i:
+             recipeIngredients) {
+            if(ingredientInInventory(i))
+                removeFromInventory(i);
+            else throw new InsufficientIngredientsException(insufficientIngredients);
+        }
     }
 
 }
