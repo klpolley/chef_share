@@ -225,7 +225,7 @@ public class Account {
         return inventory.validIngredient(name, amount, unit);
     }
 
-    public void ingredientFromShoppingToInventory(String name, double amount, String unit){
+    public void ingredientFromShoppingToInventory(String name, double amount, String unit) {
         int index = shopping.getIngredientIndex(name);
         Ingredient i = shopping.getIngredient(index);
 
@@ -235,6 +235,8 @@ public class Account {
 
         shopping.removeIngredient(name, amount, unit);
         inventory.addIngredient(i1);
+
+    }
 
     public boolean ingredientInInventory(Ingredient ingredient) {
         return inventory.haveIngredient(ingredient);
