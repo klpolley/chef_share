@@ -223,11 +223,12 @@ public class Account {
         return inventory.validIngredient(name, amount, unit);
     }
 
-    public void ingredientFromShoppingToInventory(String name, double amount, String unit, double calories){
-        //int index = shopping.getIngredientIndex(name);
-        //Ingredient i = shopping.getIngredient(index);
+    public void ingredientFromShoppingToInventory(String name, double amount, String unit){
+        int index = shopping.getIngredientIndex(name);
+        Ingredient i = shopping.getIngredient(index);
 
-        Food f = new Food(name,calories);
+        //Food f = new Food(name,calories);
+        Food f = i.getFood();
         Ingredient i1 = new Ingredient(f, amount, unit);
 
         shopping.removeIngredient(name, amount, unit);

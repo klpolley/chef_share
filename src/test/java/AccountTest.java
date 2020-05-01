@@ -471,19 +471,19 @@ public class AccountTest {
 
         assertEquals(4, acct.getShoppingList().getLength());
 
-        acct.ingredientFromShoppingToInventory("Broccoli",1,"cup", 100);
+        acct.ingredientFromShoppingToInventory("Broccoli",1,"cup");
         assertEquals(3, acct.getShoppingList().getLength());
         assertTrue(acct.ingredientInInventory("Broccoli",1,"cup"));
 
-        acct.ingredientFromShoppingToInventory("Eggs",2,"g", 100);
+        acct.ingredientFromShoppingToInventory("Eggs",2,"g");
         assertEquals(2, acct.getShoppingList().getLength());
         assertTrue(acct.ingredientInInventory("Eggs",2,"g"));
 
-        acct.ingredientFromShoppingToInventory("Chocolate",3,"tbsp", 200);
+        acct.ingredientFromShoppingToInventory("Chocolate",3,"tbsp");
         assertEquals(1, acct.getShoppingList().getLength());
         assertTrue(acct.ingredientInInventory("Chocolate",3,"tbsp"));
 
-        acct.ingredientFromShoppingToInventory("Apples",5,"tbsp", 100);
+        acct.ingredientFromShoppingToInventory("Apples",5,"tbsp");
         assertEquals(0, acct.getShoppingList().getLength());
         assertTrue(acct.ingredientInInventory("Apples",5,"tbsp"));
 
