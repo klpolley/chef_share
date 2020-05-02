@@ -238,6 +238,10 @@ public class Account {
 
     }
 
+    public void transferToInventory(){
+
+    }
+
     public boolean ingredientInInventory(Ingredient ingredient) {
         return inventory.haveIngredient(ingredient);
     }
