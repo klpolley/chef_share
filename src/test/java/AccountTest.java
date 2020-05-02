@@ -551,7 +551,7 @@ public class AccountTest {
         assertTrue(acct.ingredientInInventory("Chocolate", 3, "tbsp"));
         assertTrue(acct.ingredientInInventory("Apples", 5, "tbsp"));
 
-        String shouldBe =  "1.0cup Broccoli\n2.0g Eggs\n3.0tbsp Chocolate\n5.0tbsp Apples\n";
-        assertEquals(shouldBe, acct.printInventory());
+        String inventShould = "5.0 tbsp\nApples\n1.0 cup\nBroccoli\n3.0 tbsp\nChocolate\n2.0 g\nEggs\n";
+        assertEquals(inventShould, acct.printInventory());
     }
 }

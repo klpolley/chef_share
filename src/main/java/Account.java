@@ -239,7 +239,18 @@ public class Account {
     }
 
     public void transferToInventory(){
+        while(shopping.getLength() > 0){
+            Ingredient ing = shopping.getIngredient(0);
+            String name = ing.getName();
+            double amount = ing.getAmount();
+            String unit = ing.getUnit();
 
+            Food f = ing.getFood();
+            Ingredient ingAdd = new Ingredient(f,amount,unit);
+
+            shopping.removeIngredient(name,amount,unit);
+            inventory.addIngredient(ingAdd);
+        }
     }
 
     public boolean ingredientInInventory(Ingredient ingredient) {
