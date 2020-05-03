@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class ChefShare {
 
     private AccountContainer accounts;
@@ -20,6 +22,18 @@ public class ChefShare {
 
     public void addAccount(String user, String pass, String bio) throws IllegalArgumentException {
         accounts.createAccount(user, pass, bio);
+    }
+
+    public List<Recipe> getRecipeListByNameSearch(String search) {
+        return accounts.getRecipesByName(search);
+    }
+
+    public String printRecipeList(List<Recipe> r) {
+        return accounts.getRecipeListString(r);
+    }
+
+    public String printRecipeSelection(int selection, List<Recipe> recipes) {
+        return accounts.printSelectedRecipe(selection, recipes);
     }
 
 }

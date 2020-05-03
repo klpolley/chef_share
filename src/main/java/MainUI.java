@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.*;
 
 public class MainUI {
 
@@ -136,7 +137,83 @@ public class MainUI {
     }
 
     public void recipeView(BufferedReader reader) {
-        System.out.println("Recipes Reached");
+        System.out.println("Recipes: add, edit, delete, view, search.");
+
+        String command = "";
+
+        try {
+            command = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+
+        while (!command.equals("back")) {
+
+            if (command.equals("search")) {
+                recipeView(reader);
+            }
+            else {
+                System.out.println("Invalid command.");
+            }
+
+            System.out.println("Recipes: add, edit, delete, view, search.");
+
+            try {
+                command = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+        }
+
+        accountHome(reader);
+    }
+
+    public void searchRecipes(BufferedReader reader) {
+        System.out.println("Enter search term or recipe name.");
+
+        String search = "";
+
+        try {
+            search = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+
+        List<Recipe> matches = app.getRecipeListByNameSearch(search);
+
+        System.out.println(app.printRecipeList(matches));
+
+        System.out.println("Enter recipe number to view. Enter 'done' to leave search.");
+
+        String select = "";
+
+        try {
+            select = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+
+        while (!select.equals("done")) {
+
+            try {
+                int num = Integer.parseInt(select);
+                app.printRecipeSelection(num, matches);
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter an integer.");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Please enter a number from the list.");
+            }
+
+            System.out.println("Enter recipe number to view. Enter 'done' to leave search.");
+
+            try {
+                select = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+        }
+
+        recipeView(reader);
     }
 
     public void inventoryView(BufferedReader reader) {
