@@ -84,4 +84,8 @@ public class shoppingList {
         }
         return str;
     }
+
+    public static double unitConversion(String unitFrom, String unitTo, double amount) throws IllegalArgumentException{
+        return -123.0;
+    }
 }

@@ -263,5 +263,11 @@ public class shoppingListTest {
 
     }
 
+    @Test
+    void unitConversionTest(){
+        assertEquals(1, shoppingList.unitConversion("oz", "lbs", 16), 10);
+        assertEquals(1.125, shoppingList.unitConversion("oz", "lbs", 18), 10);
+    }
+
 
 }
