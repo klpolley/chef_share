@@ -518,4 +518,40 @@ public class AccountTest {
 
         assertThrows(InsufficientIngredientsException.class, ()->acct.cookRecipe(rec));
     }
+
+    @Test
+    void transferEntireShoppingTest(){
+        Account acct = new Account("username", "password", "");
+
+        Food f = new Food("Broccoli", 100);
+        Ingredient i = new Ingredient(f, 1, "cup");
+
+        Food f3 = new Food("Eggs", 100);
+        Ingredient i2 = new Ingredient(f3, 2, "g");
+
+        Food f2 = new Food("Chocolate", 200);
+        Ingredient i3 = new Ingredient(f2, 3, "tbsp");
+
+        Food f4 = new Food("Apples", 100);
+        Ingredient i4 = new Ingredient(f4, 5, "tbsp");
+
+        acct.addToShoppingList(i);
+        acct.addToShoppingList(i2);
+        acct.addToShoppingList(i3);
+        acct.addToShoppingList(i4);
+
+        assertEquals(4, acct.getShoppingList().getLength());
+
+        acct.transferToInventory();
+
+        assertEquals(0, acct.getShoppingList().getLength());
+
+        assertTrue(acct.ingredientInInventory("Broccoli", 1, "cup"));
+        assertTrue(acct.ingredientInInventory("Eggs", 2, "g"));
+        assertTrue(acct.ingredientInInventory("Chocolate", 3, "tbsp"));
+        assertTrue(acct.ingredientInInventory("Apples", 5, "tbsp"));
+
+        String inventShould = "5.0 tbsp\nApples\n1.0 cup\nBroccoli\n3.0 tbsp\nChocolate\n2.0 g\nEggs\n";
+        assertEquals(inventShould, acct.printInventory());
+    }
 }
