@@ -265,8 +265,75 @@ public class shoppingListTest {
 
     @Test
     void unitConversionTest(){
-        assertEquals(1, shoppingList.unitConversion("oz", "lbs", 16), 10);
-        assertEquals(1.125, shoppingList.unitConversion("oz", "lbs", 18), 10);
+        Food f1 = new Food("Test", 10, 10);
+        Ingredient i1 = new Ingredient(f1, 16, "oz");
+        assertEquals(1, shoppingList.unitConversion("lbs", i1), 10);
+        i1 = new Ingredient(f1, 16, "oz");
+        assertEquals(453.6, shoppingList.unitConversion("g", i1), 10);
+        i1 = new Ingredient(f1, 16, "oz");
+        assertEquals(9.20, shoppingList.unitConversion("teaspoon", i1), 10);
+
+        i1 = new Ingredient(f1, 1000, "g");
+        assertEquals(1, shoppingList.unitConversion("kg", i1), 10);
+        i1 = new Ingredient(f1, 160, "g");
+        assertEquals(5.64, shoppingList.unitConversion("oz", i1), 10);
+        i1 = new Ingredient(f1, 160, "g");
+        assertEquals(3.25, shoppingList.unitConversion("teaspoon", i1), 10);
+        i1 = new Ingredient(f1, 1300, "g");
+        assertEquals(4.40, shoppingList.unitConversion("fl oz", i1), 10);
+        i1 = new Ingredient(f1, 16, "g");
+        assertEquals(1.6, shoppingList.unitConversion("ml", i1), 10);
+
+        i1 = new Ingredient(f1,768 , "teaspoon");
+        assertEquals(256, shoppingList.unitConversion("tablespoon", i1), 10);
+        i1 = new Ingredient(f1,768 , "teaspoon");
+        assertEquals(16, shoppingList.unitConversion("cup", i1), 10);
+        i1 = new Ingredient(f1,768 , "teaspoon");
+        assertEquals(8, shoppingList.unitConversion("pint", i1), 10);
+        i1 = new Ingredient(f1,768 , "teaspoon");
+        assertEquals(4, shoppingList.unitConversion("quart", i1), 10);
+        i1 = new Ingredient(f1,768 , "teaspoon");
+        assertEquals(1, shoppingList.unitConversion("gal", i1), 10);
+
+
+        Ingredient finalI = i1;
+        assertThrows(IllegalArgumentException.class, ()-> shoppingList.unitConversion("invalidUnit", finalI));
+        assertThrows(IllegalArgumentException.class, ()-> shoppingList.unitConversion("cup", null));
+    }
+
+    @Test
+    void unitSimpTest(){
+        String[] units = {"gram","g", "kilogram","kg",  "ounce","oz", "pound", "lb", "#", "gallon","gal", "quart","q", "qt", "pint","p", "pt", "cup", "c",
+                "tablespoon","T", "tbs", "tbl", "tbsp", "tbs.", "tbl.", "tbsp.","teaspoon","t", "tsp","tsp.", "fluid ounce", "fl oz","milliliter","millilitre","cc", "ml", "liter",  "litre","l"};
+        for(int x = 0; x < units.length; x++){
+            if(x < 2)
+                assertEquals(0, shoppingList.unitSimp(units[x]));
+            else if(x < 4)
+                assertEquals(1, shoppingList.unitSimp(units[x]));
+            else if(x < 6)
+                assertEquals(2, shoppingList.unitSimp(units[x]));
+            else if(x < 9)
+                assertEquals(3, shoppingList.unitSimp(units[x]));
+            else if(x < 11)
+                assertEquals(4, shoppingList.unitSimp(units[x]));
+            else if(x < 14)
+                assertEquals(5, shoppingList.unitSimp(units[x]));
+            else if(x < 16)
+                assertEquals(6, shoppingList.unitSimp(units[x]));
+            else if(x < 24)
+                assertEquals(7, shoppingList.unitSimp(units[x]));
+            else if(x < 28)
+                assertEquals(8, shoppingList.unitSimp(units[x]));
+            else if(x < 30)
+                assertEquals(9, shoppingList.unitSimp(units[x]));
+            else if(x < 34)
+                assertEquals(10, shoppingList.unitSimp(units[x]));
+            else
+                assertEquals(11, shoppingList.unitSimp(units[x]));
+        }
+
+        assertEquals(-1, shoppingList.unitSimp("unit"));
+        assertEquals(-1, shoppingList.unitSimp(""));
     }
 
 
