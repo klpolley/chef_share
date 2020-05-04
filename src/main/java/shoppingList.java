@@ -86,6 +86,10 @@ public class shoppingList {
         return str;
     }
 
+    public enum Unit{
+        GRAM, KILOGRAM, OUNCE, POUND, GALLON, QUART, PINT, CUP, TABLESPOON, TEASPOON, FLUID_OUNCE, MILLILITER, LITER, NONE
+    }
+
     public static HashMap<Integer, HashMap<Integer, Double>> unitMultCreate(){
         HashMap<Integer, HashMap<Integer, Double>> returnMap = new HashMap<>();
 
@@ -240,28 +244,28 @@ public class shoppingList {
         return from.getAmount() * unitMult.get(unitSimp(from.getUnit())).get(unitSimp(unitTo));
     }
 
-    public static int unitSimp(String unitIn){
-        if(!Ingredient.validUnit(unitIn)) return -1;
+    public static Unit unitSimp(String unitIn){
+        if(!Ingredient.validUnit(unitIn)) return Unit.NONE;
         if(unitIn.equals("litre"))
-            return 12;
+            return Unit.LITER;
         if(unitIn.equals("millilitre"))
-            return 11;
+            return Unit.MILLILITER;
         if(unitIn.equals("t"))
-            return 9;
+            return Unit.TEASPOON;
         if(unitIn.equals("T"))
-            return 8;
+            return Unit.TABLESPOON;
         String[] unitList = {"gram", "kilogram", "ounce", "pound", "gallon", "quart", "pint", "cup", "tablespoon", "teaspoon", "fluid ounce", "milliliter", "liter"};
         String[] abvList = {"g","kg","oz","lb","gal","q","p","c","tbs","tsp","fl oz","ml","l","","","","#","","qt","pt","","tbl","","","cc","","","","","lbs","","","","","tbsp"};
         if(unitIn.indexOf(".") != -1)
             unitIn = unitIn.replace(".","");
         for(int x = 0; x < unitList.length; x++){
             if(unitIn.equals(unitList[x]))
-                return x;
+                return Unit.values()[x];
         }
         for(int x = 0; x < abvList.length; x++){
             if(unitIn.equals(abvList[x]))
-                return x%13;
+                return Unit.values()[x%13];
         }
-        return -1;
+        return Unit.NONE;
     }
 }
