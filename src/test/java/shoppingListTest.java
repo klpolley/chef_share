@@ -267,7 +267,7 @@ public class shoppingListTest {
     void unitConversionTest(){
         Food f1 = new Food("Test", 10, 10);
         Ingredient i1 = new Ingredient(f1, 16, "oz");
-        assertEquals(1, shoppingList.unitConversion("lbs", i1), 10);
+        assertEquals(1, shoppingList.unitConversion("lb", i1), 10);
         i1 = new Ingredient(f1, 16, "oz");
         assertEquals(453.6, shoppingList.unitConversion("g", i1), 10);
         i1 = new Ingredient(f1, 16, "oz");
@@ -303,7 +303,7 @@ public class shoppingListTest {
 
     @Test
     void unitSimpTest(){
-        String[] units = {"gram","g", "kilogram","kg",  "ounce","oz", "pound", "lb", "#", "gallon","gal", "quart","q", "qt", "pint","p", "pt", "cup", "c",
+        String[] units = {"gram","g", "kilogram","kg",  "ounce","oz", "pound", "lb", "#", "gallon","gal", "quart","q", "qt", "pint","p", "pt", "cup", "c",//18
                 "tablespoon","T", "tbs", "tbl", "tbsp", "tbs.", "tbl.", "tbsp.","teaspoon","t", "tsp","tsp.", "fluid ounce", "fl oz","milliliter","millilitre","cc", "ml", "liter",  "litre","l"};
         for(int x = 0; x < units.length; x++){
             if(x < 2)
@@ -318,18 +318,20 @@ public class shoppingListTest {
                 assertEquals(4, shoppingList.unitSimp(units[x]));
             else if(x < 14)
                 assertEquals(5, shoppingList.unitSimp(units[x]));
-            else if(x < 16)
+            else if(x < 17)
                 assertEquals(6, shoppingList.unitSimp(units[x]));
-            else if(x < 24)
+            else if(x < 19)
                 assertEquals(7, shoppingList.unitSimp(units[x]));
-            else if(x < 28)
+            else if(x < 27)
                 assertEquals(8, shoppingList.unitSimp(units[x]));
-            else if(x < 30)
+            else if(x < 31)
                 assertEquals(9, shoppingList.unitSimp(units[x]));
-            else if(x < 34)
+            else if(x < 33)
                 assertEquals(10, shoppingList.unitSimp(units[x]));
-            else
+            else if(x < 37)
                 assertEquals(11, shoppingList.unitSimp(units[x]));
+            else
+                assertEquals(12, shoppingList.unitSimp(units[x]));
         }
 
         assertEquals(-1, shoppingList.unitSimp("unit"));

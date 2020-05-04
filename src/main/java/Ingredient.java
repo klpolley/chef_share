@@ -34,6 +34,8 @@ public class Ingredient implements Comparable<Ingredient> {
 
     public String getUnit(){ return unit;    }
 
+    public Food getFood(){return food;}
+
     public String toStringCal(){
         return amount + " " + unit + "\n" + food.getName() + "\n" + getCalories() + " Calories";
     }
@@ -84,7 +86,7 @@ public class Ingredient implements Comparable<Ingredient> {
     }
 
 
-    private static boolean isVolumeUnit(String unitIn){
+    public static boolean isVolumeUnit(String unitIn){
         String[] unitList = {"gallon", "quart", "pint", "cup", "tablespoon", "teaspoon", "fluid ounce", "milliliter", "millilitre", "liter", "litre"};
         for(int x = 0; x < unitList.length; x++){
             if(unitIn.equalsIgnoreCase(unitList[x]))
