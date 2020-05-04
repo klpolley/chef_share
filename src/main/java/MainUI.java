@@ -86,6 +86,7 @@ public class MainUI {
     }
 
     public void logout(BufferedReader reader) {
+        app.logout();
         welcome(reader);
     }
 
@@ -137,7 +138,7 @@ public class MainUI {
     }
 
     public void recipeView(BufferedReader reader) {
-        System.out.println("Recipes: add, edit, delete, view, search.");
+        System.out.println("Recipes: add, edit, delete, view, search. 'back' to return.");
 
         String command = "";
 
@@ -150,13 +151,13 @@ public class MainUI {
         while (!command.equals("back")) {
 
             if (command.equals("search")) {
-                recipeView(reader);
+                searchRecipes(reader);
             }
             else {
                 System.out.println("Invalid command.");
             }
 
-            System.out.println("Recipes: add, edit, delete, view, search.");
+            System.out.println("Recipes: add, edit, delete, view, search. 'back' to return.");
 
             try {
                 command = reader.readLine();
@@ -197,7 +198,7 @@ public class MainUI {
 
             try {
                 int num = Integer.parseInt(select);
-                app.printRecipeSelection(num, matches);
+                System.out.println(app.printRecipeSelection(num, matches));
             } catch (NumberFormatException e) {
                 System.out.println("Please enter an integer.");
             } catch (IndexOutOfBoundsException e) {

@@ -16,6 +16,10 @@ public class ChefShare {
         accounts.login(username, password);
     }
 
+    public void logout() throws IllegalStateException {
+        accounts.logout();
+    }
+
     public Account getCurrentUser() {
         return accounts.getCurrentAccount();
     }
@@ -34,6 +38,10 @@ public class ChefShare {
 
     public String printRecipeSelection(int selection, List<Recipe> recipes) {
         return accounts.printSelectedRecipe(selection, recipes);
+    }
+
+    public void createRecipe(Recipe r) {
+        accounts.getCurrentAccount().createRecipe(r);
     }
 
 }
