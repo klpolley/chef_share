@@ -251,7 +251,7 @@ public class shoppingList {
         if(unitIn.equals("T"))
             return 8;
         String[] unitList = {"gram", "kilogram", "ounce", "pound", "gallon", "quart", "pint", "cup", "tablespoon", "teaspoon", "fluid ounce", "milliliter", "liter"};
-        String[] abvList = {"g","kg","oz","lb","gal","q","p","c","tbs","tsp","fl oz","ml","l","","","","#","","qt","pt","","tbl","","","cc","","","","","","","","","","tbsp"};
+        String[] abvList = {"g","kg","oz","lb","gal","q","p","c","tbs","tsp","fl oz","ml","l","","","","#","","qt","pt","","tbl","","","cc","","","","","lbs","","","","","tbsp"};
         if(unitIn.indexOf(".") != -1)
             unitIn = unitIn.replace(".","");
         for(int x = 0; x < unitList.length; x++){
