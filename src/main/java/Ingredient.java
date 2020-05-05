@@ -64,7 +64,7 @@ public class Ingredient implements Comparable<Ingredient> {
      */
     public static boolean validUnit(String unitIn){
         String[] unitList = {"gram", "kilogram", "ounce", "pound", "gallon", "quart", "pint", "cup", "tablespoon", "teaspoon", "fluid ounce", "milliliter", "millilitre", "liter", "litre"};
-        String[] abvList = {"g","kg","oz","lb","#","gal","q","qt","p","pt","c","tbs","tbl","tbsp","tsp","fl oz","cc","ml","l"};
+        String[] abvList = {"g","kg","oz","lb","#","gal","q","qt","p","pt","c","tbs","tbl","tbsp","tsp","fl oz","cc","ml","l", "lbs"};
         if(unitIn.equals("T") || unitIn.equals("t")) return true;
         unitIn = unitIn.toLowerCase();
         if(unitIn.contains("tbs")||unitIn.contains("tbl")||unitIn.contains("tbsp")||unitIn.contains("tsp")) {
@@ -86,7 +86,7 @@ public class Ingredient implements Comparable<Ingredient> {
     }
 
 
-    private static boolean isVolumeUnit(String unitIn){
+    public static boolean isVolumeUnit(String unitIn){
         String[] unitList = {"gallon", "quart", "pint", "cup", "tablespoon", "teaspoon", "fluid ounce", "milliliter", "millilitre", "liter", "litre"};
         for(int x = 0; x < unitList.length; x++){
             if(unitIn.equalsIgnoreCase(unitList[x]))

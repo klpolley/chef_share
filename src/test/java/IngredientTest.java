@@ -36,6 +36,7 @@ public class IngredientTest {
         assertTrue(Ingredient.validUnit("oz"));
         assertTrue(Ingredient.validUnit("lb"));
         assertTrue(Ingredient.validUnit("#"));
+        assertTrue(Ingredient.validUnit("lbs"));
         assertTrue(Ingredient.validUnit("gal"));
         assertTrue(Ingredient.validUnit("q"));
         assertTrue(Ingredient.validUnit("qt"));
