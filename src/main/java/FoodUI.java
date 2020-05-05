@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class FoodUI {
@@ -28,15 +29,12 @@ public class FoodUI {
             else if (command.equals("add")) {
                 add(reader);
             }
-            /*else if (command.equals("delete")) {
-                delete(reader);
-            }*/
             else if (command.equals("view")) {
                 view(reader);
             }
-            /*else if (command.equals("edit")) {
+            else if (command.equals("edit")) {
                 edit(reader);
-            }*/
+            }
             else {
                 System.out.println("Invalid command.");
             }
@@ -55,12 +53,12 @@ public class FoodUI {
         System.out.println("Food Menu:");
         System.out.println("help");
         System.out.println("add");
-        //System.out.println("delete");
         System.out.println("view");
-        //System.out.println("edit");
+        System.out.println("edit");
+        System.out.println("back");
     }
 
-    private void add(BufferedReader reader){
+    private Food add(BufferedReader reader){
         try {
             System.out.println("Enter the name of the food.");
             String name = reader.readLine();
@@ -71,7 +69,40 @@ public class FoodUI {
 
             Food f = new Food(name, calories, density);
             app.addFood(f);
+            return f;
 
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+            return null;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid Calorie or Density value.");
+            return null;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error:  " + e.getMessage());
+            return null;
+        } catch (IllegalStateException e) {
+            System.out.println("How did you even get here?");
+            return null;
+        }
+    }
+
+    private void view(BufferedReader reader){
+        Food f = search(reader);
+        if(f != null)
+            System.out.println(f.details());
+    }
+
+    private void edit(BufferedReader reader){
+        try {
+            Food foodToEdit = search(reader);
+            System.out.println("Please enter a new calorie value for \"" + foodToEdit.getName() + "\"");
+            double calories = Double.parseDouble(reader.readLine());
+            System.out.println("Please enter a new density value for \"" + foodToEdit.getName() + "\"");
+            double density = Double.parseDouble(reader.readLine());
+
+            foodToEdit.setCalories(calories);
+            foodToEdit.setDensity(density);
+            app.addFood(foodToEdit);
         } catch (IOException e) {
             System.out.println("Error reading input.");
             return;
@@ -85,20 +116,6 @@ public class FoodUI {
             System.out.println("How did you even get here?");
             return;
         }
-    }
-
-    private void delete(BufferedReader reader){
-        //No backend function for delete yet
-    }
-
-    private void view(BufferedReader reader){
-        Food f = search(reader);
-        if(f != null)
-            System.out.println(f.details());
-    }
-
-    private void edit(BufferedReader reader){
-        //No backend function for edit, and no way to replicate it with deleting old one and adding a new one
     }
 
     private Food search(BufferedReader reader){
@@ -140,6 +157,41 @@ public class FoodUI {
              a) {
             System.out.println(f.getName());
         }
+    }
+
+    public Food foodTool(BufferedReader reader){
+        System.out.println("Please enter \"create\" to create a new food, or \"select\" to select an existing food");
+
+        String command = "";
+        Food result = null;
+
+        try {
+            command = reader.readLine().toLowerCase();
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+
+        while (result == null) {
+            if (command.equals("create")) {
+                result = add(reader);
+            }
+            else if (command.equals("select")) {
+                result = search(reader);
+            }
+            else {
+                System.out.println("Invalid command.");
+            }
+
+            System.out.println("Please enter \"create\" to create a new food, or \"select\" to select an existing food");
+
+            try {
+                command = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+        }
+
+        return result;
     }
 
 }
