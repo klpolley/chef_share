@@ -635,4 +635,58 @@ public class AccountContainerTest {
         String[] finalTags2 = tags;
         assertThrows(IllegalArgumentException.class, ()-> accounts.getRecipeByMultiTags(finalTags2));
     }
+
+    @Test
+    void getRecipesByNameTest() {
+        //GET SOME ACCOUNTS WITH SOME RECIPES AND SO MANY EGGS
+        //account creation, login and recipe creation out of order to test sorting
+        AccountContainer accounts = new AccountContainer();
+        accounts.createAccount("username2", "password", "");
+        accounts.createAccount("username1", "password", "");
+        accounts.createAccount("username3", "password", "");
+
+        accounts.login("username1", "password");
+        Account current = accounts.getCurrentAccount();
+
+        Recipe recipe = new Recipe("Thing With Eggs");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("test");
+        current.createRecipe(recipe);
+
+        accounts.logout();
+        accounts.login("username3", "password");
+        current = accounts.getCurrentAccount();
+
+        recipe = new Recipe("Thing With SO MANY Eggs");
+        current.createRecipe(recipe);
+
+        accounts.logout();
+        accounts.login("username2", "password");
+        current = accounts.getCurrentAccount();
+
+        recipe = new Recipe("Thing With Eggs");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("XEggs");
+        current.createRecipe(recipe);
+
+        recipe = new Recipe("Never See");
+        current.createRecipe(recipe);
+
+        List<Recipe> matches = accounts.getRecipesByName("egg");
+        assertEquals(4, matches.size());
+
+        matches = accounts.getRecipesByName("Thing With Eggs");
+        assertEquals(2, matches.size());
+
+        matches = accounts.getRecipesByName("so many Eggs");
+        assertEquals(1, matches.size());
+
+        matches = accounts.getRecipesByName("x");
+        assertEquals(1, matches.size());
+
+
+
+    }
 }

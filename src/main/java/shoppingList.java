@@ -48,6 +48,10 @@ public class shoppingList {
         return index;
     }
 
+    public Ingredient getIngredient(int index){
+        return shoppingList.get(index);
+    }
+
     public double getAmount(int index){
         return shoppingList.get(index).getAmount();
     }

@@ -87,7 +87,7 @@ public class AccountContainer {
     //returns list of all recipe objects from all accounts
     //add methods for getting filtered lists with only some recipes
     //other methods take list parameters so you can perform same functions
-    //on different lists, not just all recipesf
+    //on different lists, not just all recipes
     //recipes sorted by name, then account
     public List<Recipe> getAllRecipes() {
         List<Recipe> all = new ArrayList<>();
@@ -136,6 +136,19 @@ public class AccountContainer {
         return rtn;
     }
 
+    public List<Recipe> getRecipesByName(String search) {
+        List<Recipe> all = getAllRecipes();
+        List<Recipe> match = new ArrayList();
+
+        for (Recipe r:all) {
+            if(r.getName().toLowerCase().contains(search.toLowerCase())) {
+                match.add(r);
+            }
+        }
+
+        return match;
+    }
+
     //get recipes as "tuples" with name and user - mostly for testing purposes
     public String[][] getRecipeListTuples(List<Recipe> recipes) {
         String[][] tuples = new String[recipes.size()][2];
@@ -179,5 +192,7 @@ public class AccountContainer {
     public Recipe getSelectedRecipe(int selection, List<Recipe> allRecipes) {
         return allRecipes.get(selection-1);
     }
+
+
 
 }

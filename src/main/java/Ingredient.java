@@ -22,6 +22,8 @@ public class Ingredient implements Comparable<Ingredient> {
         return this.food.getName().compareTo(other.food.getName());
     }
 
+    public Food getFood() { return food; }
+
     public double getAmount() {
         return amount;
     }
@@ -33,8 +35,6 @@ public class Ingredient implements Comparable<Ingredient> {
     }
 
     public String getUnit(){ return unit;    }
-
-    public Food getFood(){return food;}
 
     public String toStringCal(){
         return amount + " " + unit + "\n" + food.getName() + "\n" + getCalories() + " Calories";
