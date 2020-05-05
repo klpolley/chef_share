@@ -240,11 +240,16 @@ public class shoppingListTest {
         assertEquals(3, myList.getLength());
         assertEquals(60,myList.getAmount(2));
 
+        Ingredient i4 = new Ingredient(food2, 30 , "t");
+        myList.addIngredient(i4);
+        assertEquals(3, myList.getLength());
+        assertEquals(307.85,myList.getAmount(1), 0.001);
 
-        //remove with wrong units (ingredient does not exist)
-        assertThrows(IllegalArgumentException.class, ()->myList.removeIngredient("Broccoli",6,"g"));
-        assertThrows(IllegalArgumentException.class, ()->myList.removeIngredient("rice",50,"oz"));
+        myList.removeIngredient("rice", 10, "tablespoon");
+        assertEquals(3, myList.getLength());
+        assertEquals(50,myList.getAmount(1), 0.001);
 
+        assertThrows(IllegalArgumentException.class, ()-> myList.removeIngredient("Broccoli", 10, "T"));
         //remove 0
         myList.removeIngredient("Broccoli",0,"oz");
         assertEquals(3, myList.getLength());
