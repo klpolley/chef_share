@@ -23,13 +23,12 @@ public class shoppingList {
             length++;
             shoppingList.add(ingredientIn);
         }else{
-            String unit = getUnit(index);
-            if (unit.equals(ingredientIn.getUnit())){
-                shoppingList.get(index).setAmount(shoppingList.get(index).getAmount()+ingredientIn.getAmount());
-            }else{
-                length++;
-                shoppingList.add(ingredientIn);
+            if(unitSimp(ingredientIn.getUnit()) == unitSimp(getUnit(index)))
+                shoppingList.get(index).setAmount(shoppingList.get(index).getAmount() + ingredientIn.getAmount());
+            else{
+                shoppingList.get(index).setAmount(shoppingList.get(index).getAmount() + unitConversion(getUnit(index), ingredientIn));
             }
+            shoppingList.get(index).setAmount(Double.parseDouble(df.format(shoppingList.get(index).getAmount())));
         }
     }
 
@@ -58,25 +57,28 @@ public class shoppingList {
     }
 
     public void removeIngredient(String ingredientNameIn, double amount, String unit) throws IllegalArgumentException{
-
+        if (amount < 0) throw new IllegalArgumentException("Cannot remove negative amounts of food");
         int index = getIngredientIndex(ingredientNameIn);
 
         if (index == -1){
             throw new IllegalArgumentException("Ingredient is not in your shopping list.");
-        }else if (amount >= 0 && amount <= shoppingList.get(index).getAmount()){
-            String unitOf = getUnit(index);
-            if (unitOf.equals(unit)) {
-                shoppingList.get(index).setAmount(shoppingList.get(index).getAmount() - amount);
-                if (shoppingList.get(index).getAmount() == 0) {
-                    shoppingList.remove(index);
-                    length--;
-                }
-            }else{
-                throw new IllegalArgumentException("You don't have an ingredient with those units.");
-            }
-        } else{
-            throw new IllegalArgumentException("That is not a correct amount to remove.");
         }
+        else if(unitSimp(unit) == unitSimp(getUnit(index))){
+            if(amount > shoppingList.get(index).getAmount()) throw new IllegalArgumentException("cannot remove more food than you have");
+            shoppingList.get(index).setAmount(shoppingList.get(index).getAmount() - amount);
+        }
+        else{
+            amount = unitConversion(shoppingList.get(index).getUnit(), new Ingredient(shoppingList.get(index).getFood(), amount, unit));
+            if(amount > shoppingList.get(index).getAmount()) throw new IllegalArgumentException("cannot remove more food than you have");
+            shoppingList.get(index).setAmount(shoppingList.get(index).getAmount() - amount);
+        }
+        if(!(shoppingList.get(index).getAmount() > 0)){
+            shoppingList.remove(index);
+            length--;
+        }
+        else
+            shoppingList.get(index).setAmount(Double.parseDouble(df.format(shoppingList.get(index).getAmount())));
+
     }
 
     public String printList() {
