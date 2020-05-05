@@ -191,12 +191,19 @@ public class shoppingListTest {
         Ingredient i6 = new Ingredient(food3, 10, "oz");
         myList.addIngredient((i6));
 
-        assertEquals(6, myList.getLength());
+        assertEquals(3, myList.getLength());
 
-        assertEquals(10, myList.getAmount(3));
-        assertEquals(10, myList.getAmount(4));
-        assertEquals(10, myList.getAmount(5));
+        assertEquals(26.35, myList.getAmount(0), 0.001);
+        assertEquals(393.50, myList.getAmount(1), 0.001);
+        assertEquals(378.50, myList.getAmount(2), 0.001);
 
+        Ingredient i7 = new Ingredient(food, 10, "T");
+        Ingredient i8 = new Ingredient(food2, 10, "T");
+
+        myList.addIngredient(i8);
+        assertEquals(3, myList.getLength());
+        assertEquals(651.35, myList.getAmount(1), 0.001);
+        assertThrows(IllegalArgumentException.class, ()->myList.addIngredient(i7));
     }
 
     @Test
