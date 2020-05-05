@@ -29,7 +29,7 @@ public class MainUI {
         String command = "";
 
         try {
-            command = reader.readLine();
+            command = reader.readLine().toLowerCase();
         } catch (IOException e) {
             System.out.println("Error reading input.");
         }
@@ -97,7 +97,7 @@ public class MainUI {
         String command = "";
 
         try {
-            command = reader.readLine();
+            command = reader.readLine().toLowerCase();
         } catch (IOException e) {
             System.out.println("Error reading input.");
         }
@@ -109,6 +109,7 @@ public class MainUI {
                 System.out.println("recipes");
                 System.out.println("inventory");
                 System.out.println("shopping list");
+                System.out.println("food");
                 System.out.println("logout");
             }
             else if (command.equals("recipes")) {
@@ -120,6 +121,9 @@ public class MainUI {
             else if (command.equals("shopping list")) {
                 shoppingListView(reader);
             }
+            else if (command.equals("food")) {
+                foodView(reader);
+            }
             else {
                 System.out.println("Invalid command.");
             }
@@ -127,7 +131,7 @@ public class MainUI {
             System.out.println("Enter command. Enter 'help' to view available commands.");
 
             try {
-                command = reader.readLine();
+                command = reader.readLine().toLowerCase();
             } catch (IOException e) {
                 System.out.println("Error reading input.");
             }
@@ -223,6 +227,11 @@ public class MainUI {
 
     public void shoppingListView(BufferedReader reader) {
         System.out.println("Shopping List Reached");
+    }
+
+    public void foodView(BufferedReader reader) {
+        FoodUI f = new FoodUI(app);
+        f.foodMenu(reader);
     }
 
 

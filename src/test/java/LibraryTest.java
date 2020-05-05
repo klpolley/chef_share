@@ -34,19 +34,19 @@ public class LibraryTest {
         foodLibrary.addFood(banana);
         assertEquals(3, foodLibrary.getLength());
     }
-        @Test
-        void isFoodPresentTest() throws IOException {
+    @Test
+    void isFoodPresentTest() throws IOException {
 
-            Library foodLibrary = JsonUtil.fromJsonFile("src/test/resources/LibraryTest.json", Library.class);
+        Library foodLibrary = JsonUtil.fromJsonFile("src/test/resources/LibraryTest.json", Library.class);
 
-            //test foods that are present
-            assertTrue(foodLibrary.isFoodPresent("pickle"));
-            assertTrue(foodLibrary.isFoodPresent("cookie"));
-            assertTrue(foodLibrary.isFoodPresent("banana"));
-            //test foods that aren't present
-            assertFalse(foodLibrary.isFoodPresent("apple"));
-            assertFalse(foodLibrary.isFoodPresent("cheese"));
-            assertFalse(foodLibrary.isFoodPresent("bananas")); //checking that very close string isn't considered true
+        //test foods that are present
+        assertTrue(foodLibrary.isFoodPresent("pickle"));
+        assertTrue(foodLibrary.isFoodPresent("cookie"));
+        assertTrue(foodLibrary.isFoodPresent("banana"));
+        //test foods that aren't present
+        assertFalse(foodLibrary.isFoodPresent("apple"));
+        assertFalse(foodLibrary.isFoodPresent("cheese"));
+        assertFalse(foodLibrary.isFoodPresent("bananas")); //checking that very close string isn't considered true
 
     }
 

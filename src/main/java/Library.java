@@ -29,6 +29,35 @@ public class Library {
         }
     }
 
+    public Food getFood(String foodName){
+        if(isFoodPresent(foodName)){
+            return libraryList.get(foodName);
+        }
+        else return null;
+    }
+
+    public ArrayList<Food> search(String nameSnippet){
+        Iterator it = libraryList.entrySet().iterator();
+        ArrayList<Food> results = new ArrayList<Food>();
+        while (it.hasNext()){
+            Map.Entry entry = (Map.Entry) it.next();
+            if(((String)entry.getKey()).contains(nameSnippet)){
+                results.add((Food)entry.getValue());
+            }
+        }
+        return results;
+    }
+
+    public String listAllFood(){
+        Iterator it = libraryList.entrySet().iterator();
+        String results = "";
+        while (it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            results += (String)pair.getKey() + "\n";
+        }
+        return results;
+    }
+
     //JSON functions:
 
     public void setLibraryList(HashMap<String, Food> foodMap) {
