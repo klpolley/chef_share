@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChefShare {
 
@@ -14,6 +15,10 @@ public class ChefShare {
 
     public void login(String username, String password) throws IllegalArgumentException, IllegalStateException {
         accounts.login(username, password);
+    }
+
+    public void logout() throws IllegalStateException {
+        accounts.logout();
     }
 
     public Account getCurrentUser() {
@@ -42,6 +47,22 @@ public class ChefShare {
 
     public String listAllFood(){
         return foods.listAllFood();
+    }
+
+    public List<Recipe> getRecipeListByNameSearch(String search) {
+        return accounts.getRecipesByName(search);
+    }
+
+    public String printRecipeList(List<Recipe> r) {
+        return accounts.getRecipeListString(r);
+    }
+
+    public String printRecipeSelection(int selection, List<Recipe> recipes) {
+        return accounts.printSelectedRecipe(selection, recipes);
+    }
+
+    public void createRecipe(Recipe r) {
+        accounts.getCurrentAccount().createRecipe(r);
     }
 
 }

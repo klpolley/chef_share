@@ -263,5 +263,35 @@ public class shoppingListTest {
 
     }
 
+    @Test
+    void getIngredientTest(){
+        shoppingList myList = new shoppingList();
+
+        Food food = new Food("Broccoli", 34);
+        Ingredient i1 = new Ingredient(food, 16, "oz");
+
+        Food food2 = new Food("rice",111, 1.452);
+        Ingredient i2 = new Ingredient(food2, 100, "g");
+
+        Food food3 = new Food("apple", 70, 1.987);
+        Ingredient i3 = new Ingredient(food3, 85, "g");
+
+
+        myList.addIngredient(i1);
+
+        myList.addIngredient(i2);
+
+        myList.addIngredient(i3);
+
+        Ingredient i1Check = myList.getIngredient(0);
+        assertEquals(0,i1.compareTo(i1Check));
+
+        Ingredient i2Check = myList.getIngredient(1);
+        assertEquals(0,i2.compareTo(i2Check));
+
+        Ingredient i3Check = myList.getIngredient(2);
+        assertEquals(0,i3.compareTo(i3Check));
+    }
+
 
 }

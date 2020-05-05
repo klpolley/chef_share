@@ -22,6 +22,8 @@ public class Ingredient implements Comparable<Ingredient> {
         return this.food.getName().compareTo(other.food.getName());
     }
 
+    public Food getFood() { return food; }
+
     public double getAmount() {
         return amount;
     }
