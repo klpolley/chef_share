@@ -267,33 +267,43 @@ public class shoppingListTest {
     void unitConversionTest(){
         Food f1 = new Food("Test", 10, 10);
         Ingredient i1 = new Ingredient(f1, 16, "oz");
-        assertEquals(1, shoppingList.unitConversion("lb", i1), 10);
+        assertEquals(1, shoppingList.unitConversion("lb", i1), 0.001);
         i1 = new Ingredient(f1, 16, "oz");
-        assertEquals(453.6, shoppingList.unitConversion("g", i1), 10);
+        assertEquals(453.6, shoppingList.unitConversion("g", i1), 0.001);
         i1 = new Ingredient(f1, 16, "oz");
-        assertEquals(9.20, shoppingList.unitConversion("teaspoon", i1), 10);
+        assertEquals(7.66, shoppingList.unitConversion("teaspoon", i1), 0.001);
 
         i1 = new Ingredient(f1, 1000, "g");
-        assertEquals(1, shoppingList.unitConversion("kg", i1), 10);
+        assertEquals(1, shoppingList.unitConversion("kg", i1), 0.001);
         i1 = new Ingredient(f1, 160, "g");
-        assertEquals(5.64, shoppingList.unitConversion("oz", i1), 10);
+        assertEquals(5.64, shoppingList.unitConversion("oz", i1), 0.001);
         i1 = new Ingredient(f1, 160, "g");
-        assertEquals(3.25, shoppingList.unitConversion("teaspoon", i1), 10);
+        assertEquals(2.70, shoppingList.unitConversion("teaspoon", i1), 0.001);
         i1 = new Ingredient(f1, 1300, "g");
-        assertEquals(4.40, shoppingList.unitConversion("fl oz", i1), 10);
+        assertEquals(4.58, shoppingList.unitConversion("fl oz", i1), 0.001);
         i1 = new Ingredient(f1, 16, "g");
-        assertEquals(1.6, shoppingList.unitConversion("ml", i1), 10);
+        assertEquals(1.6, shoppingList.unitConversion("ml", i1), 0.001);
 
         i1 = new Ingredient(f1,768 , "teaspoon");
-        assertEquals(256, shoppingList.unitConversion("tablespoon", i1), 10);
+        assertEquals(256, shoppingList.unitConversion("tablespoon", i1), 0.001);
         i1 = new Ingredient(f1,768 , "teaspoon");
-        assertEquals(16, shoppingList.unitConversion("cup", i1), 10);
+        assertEquals(16, shoppingList.unitConversion("cup", i1), 0.001);
         i1 = new Ingredient(f1,768 , "teaspoon");
-        assertEquals(8, shoppingList.unitConversion("pint", i1), 10);
+        assertEquals(8, shoppingList.unitConversion("pint", i1), 0.001);
         i1 = new Ingredient(f1,768 , "teaspoon");
-        assertEquals(4, shoppingList.unitConversion("quart", i1), 10);
+        assertEquals(4, shoppingList.unitConversion("quart", i1), 0.001);
         i1 = new Ingredient(f1,768 , "teaspoon");
-        assertEquals(1, shoppingList.unitConversion("gal", i1), 10);
+        assertEquals(1, shoppingList.unitConversion("gal", i1), 0.001);
+
+        i1 = new Ingredient(f1, 768, "ounce");
+        assertEquals(768, shoppingList.unitConversion("ounce", i1), 0.001);
+        i1 = new Ingredient(f1, 768, "ml");
+        assertEquals(768, shoppingList.unitConversion("ml", i1), 0.001);
+        i1 = new Ingredient(f1, 768, "ounce");
+        assertEquals(768, shoppingList.unitConversion("oz", i1), 0.001);
+
+        i1 = new Ingredient(f1, 10, "gram");
+        assertEquals(0.02, shoppingList.unitConversion("pound", i1), 0.001);
 
 
         Ingredient finalI = i1;
