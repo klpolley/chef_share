@@ -153,6 +153,9 @@ public class MainUI {
             if (command.equals("search")) {
                 searchRecipes(reader);
             }
+            if (command.equals("view")) {
+                viewMyRecipes(reader);
+            }
             else {
                 System.out.println("Invalid command.");
             }
@@ -169,8 +172,19 @@ public class MainUI {
         accountHome(reader);
     }
 
+    public void viewMyRecipes(BufferedReader reader) {
+        System.out.println("Your Recipes");
+
+        List<Recipe> myRecipes = app.getCurrentUserRecipes();
+        System.out.println(app.printRecipeList(myRecipes));
+
+        recipeSelector(reader, myRecipes);
+
+        recipeView(reader);
+    }
+
     public void searchRecipes(BufferedReader reader) {
-        System.out.println("Enter search term or recipe name.");
+        System.out.println("Enter search term or recipe name. Enter nothing to view all.");
 
         String search = "";
 
@@ -184,6 +198,12 @@ public class MainUI {
 
         System.out.println(app.printRecipeList(matches));
 
+        recipeSelector(reader, matches);
+
+        recipeView(reader);
+    }
+
+    public void recipeSelector(BufferedReader reader, List<Recipe> recipeList) {
         System.out.println("Enter recipe number to view. Enter 'done' to leave search.");
 
         String select = "";
@@ -198,7 +218,7 @@ public class MainUI {
 
             try {
                 int num = Integer.parseInt(select);
-                System.out.println(app.printRecipeSelection(num, matches));
+                System.out.println(app.printRecipeSelection(num, recipeList));
             } catch (NumberFormatException e) {
                 System.out.println("Please enter an integer.");
             } catch (IndexOutOfBoundsException e) {
@@ -213,8 +233,6 @@ public class MainUI {
                 System.out.println("Error reading input.");
             }
         }
-
-        recipeView(reader);
     }
 
     public void inventoryView(BufferedReader reader) {

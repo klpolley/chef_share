@@ -44,4 +44,8 @@ public class ChefShare {
         accounts.getCurrentAccount().createRecipe(r);
     }
 
+    public List<Recipe> getCurrentUserRecipes() {
+        return getCurrentUser().getRecipeList();
+    }
+
 }
