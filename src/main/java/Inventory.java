@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Inventory {
-    private HashMap<String, ArrayList<Ingredient>> availableInventory;
+    private HashMap<String, Ingredient> availableInventory;
 
     Inventory(){
         availableInventory = new HashMap<>();
@@ -13,30 +13,19 @@ public class Inventory {
 
     public void addIngredient(Ingredient i){
         String name = i.getName();
-        if (availableInventory.containsKey(name)) {
-            boolean add = true;
-            for (Ingredient ing:availableInventory.get(name)) {
-                if (ing.getUnit().equals(i.getUnit())) {
-                    ing.setAmount(ing.getAmount()+i.getAmount());
-                    add = false;
-                    break;
-                }
-            }
-            if (add) availableInventory.get(i.getName()).add(i);
-        } else {
-            ArrayList ings = new ArrayList();
-            ings.add(i);
-            availableInventory.put(i.getName(), ings);
+        if(!availableInventory.containsKey(i.getName())){
+            availableInventory.put(i.getName(), i);
+        }
+        else{
+            Ingredient temp = availableInventory.get(i.getName());
+            temp.setAmount(temp.getAmount() + shoppingList.unitConversion(temp.getUnit(), i));
+            availableInventory.put(i.getName(), temp);
         }
     }
 
     public boolean haveIngredient(Ingredient i){
-        if(availableInventory.containsKey(i.getName())) {
-            for (Ingredient ing:availableInventory.get(i.getName())) {
-                if (ing.equals(i)) return true;
-            }
-        }
-        return false;
+        if(!availableInventory.containsKey(i.getName())) return false;
+        return !(availableInventory.get(i.getName()).getAmount() < shoppingList.unitConversion(availableInventory.get(i.getName()).getUnit(), i));
     }
 
     public String toString() {
@@ -50,8 +39,7 @@ public class Inventory {
         Collections.sort(names);
 
         for (String n:names) {
-            for (Ingredient ing : availableInventory.get(n))
-                output += ing.toString() + "\n";
+            output += availableInventory.get(n).toString() + "\n";
         }
         return output;
     }
@@ -59,36 +47,29 @@ public class Inventory {
 
     public void removeIngredient(String name, double amount, String unit) {
         if (!availableInventory.containsKey(name)) throw new IllegalArgumentException("Food not in inventory");
-        if (!validIngredient(name, amount, unit)) throw new IllegalArgumentException("Amount and/or unit not in inventory");
+        double have = shoppingList.unitConversion(unit, availableInventory.get(name));
+        if(have < amount)throw new IllegalArgumentException("not enough food");
+        Ingredient edit = availableInventory.get(name);
+        edit.setAmount(edit.getAmount() - shoppingList.unitConversion(edit.getUnit(), new Ingredient(edit.getFood(), amount, unit)));
+        availableInventory.put(name, edit);
+        if(!(availableInventory.get(name).getAmount() > 0)) availableInventory.remove(name);
+    }
 
-        Ingredient toRemove = null;
-        for (Ingredient i:availableInventory.get(name)) {
-            if (i.getUnit().equals(unit)) {
-                i.setAmount(i.getAmount()-amount);
-                if (i.getAmount() == 0) {
-                    toRemove = i;
-                }
-                break;
-            }
-        }
-        if (toRemove != null) {
-            availableInventory.get(name).remove(toRemove);
-        }
+
+    public Ingredient getIngredient(String name) throws IllegalArgumentException{
+        if(!availableInventory.containsKey(name))throw new IllegalArgumentException("No Ingredient With name: " + name);
+        return availableInventory.get(name);
+    }
+    public Ingredient getIngredient(String name, String unit) throws IllegalArgumentException{
+        if(!availableInventory.containsKey(name))throw new IllegalArgumentException("No Ingredient With name: " + name);
+        return new Ingredient(availableInventory.get(name).getFood(), shoppingList.unitConversion(unit, availableInventory.get(name)), unit);
     }
 
     public boolean validIngredient (String name, double amount, String unit) {
-        if (availableInventory.containsKey(name)) {
-            for (Ingredient i:availableInventory.get(name)) {
-                if (i.getUnit().equals(unit)) {
-                    if (i.getAmount() >= amount) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        } else {
-            return false;
-        }
+        if(!availableInventory.containsKey(name)) return false;
+        double have = shoppingList.unitConversion(unit, availableInventory.get(name));
+        if(!(have < amount))return true;
+        return false;
     }
 
 
