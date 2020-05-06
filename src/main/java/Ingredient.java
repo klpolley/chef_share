@@ -7,8 +7,8 @@ public class Ingredient implements Comparable<Ingredient> {
     private String unit;
 
     public Ingredient(Food foodIn, double amtIn, String unitIn) throws IllegalArgumentException{
-        if(foodIn == null) throw new IllegalArgumentException("food cannot be null");
-        if(!(amtIn > 0)) throw new IllegalArgumentException("amount cannot be negitive or zero");
+        if(foodIn == null) throw new IllegalArgumentException("Food cannot be null.");
+        if(!(amtIn > 0)) throw new IllegalArgumentException("Amount cannot be negative or zero.");
         food = foodIn;
         amount = amtIn;
         if(!validUnit(unitIn)) throw new IllegalArgumentException("Invalid Unit");

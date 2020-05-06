@@ -182,13 +182,16 @@ public class FoodUI {
                 System.out.println("Invalid command.");
             }
 
-            System.out.println("Please enter \"create\" to create a new food, or \"select\" to select an existing food");
+            if (result == null) {
+                System.out.println("Please enter \"create\" to create a new food, or \"select\" to select an existing food");
 
-            try {
-                command = reader.readLine();
-            } catch (IOException e) {
-                System.out.println("Error reading input.");
+                try {
+                    command = reader.readLine();
+                } catch (IOException e) {
+                    System.out.println("Error reading input.");
+                }
             }
+
         }
 
         return result;
