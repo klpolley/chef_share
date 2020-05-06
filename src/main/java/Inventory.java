@@ -76,6 +76,14 @@ public class Inventory {
         }
     }
 
+
+    public Ingredient getIngredient(String name) throws IllegalArgumentException{
+        return null;
+    }
+    public Ingredient getIngredient(String name, String unit) throws IllegalArgumentException{
+        return null;
+    }
+
     public boolean validIngredient (String name, double amount, String unit) {
         if (availableInventory.containsKey(name)) {
             for (Ingredient i:availableInventory.get(name)) {
