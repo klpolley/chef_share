@@ -11,18 +11,22 @@ public class InventoryTest {
     void addIngredientTest(){
         //Testing that ingredient is added properly
         Inventory i = new Inventory();
-        Food food = new Food("Banana", 100);
-        Ingredient ingredient = new Ingredient(food, 1, "g");
+        Food food = new Food("Banana", 100, 1);
+        Ingredient ingredient = new Ingredient(food, 1100, "g");
         i.addIngredient(ingredient);
         assertTrue(i.haveIngredient(ingredient));
 
         //Testing that both ingredients are still in the inventory when adding another one
-        Food food2 = new Food("Orange", 100);
+        Food food2 = new Food("Orange", 100, 10);
         Ingredient ingredient2 = new Ingredient(food2, 1, "g");
         assertFalse(i.haveIngredient(ingredient2));
         i.addIngredient(ingredient2);
         assertTrue(i.haveIngredient(ingredient));
         assertTrue(i.haveIngredient(ingredient2));
+
+        assertTrue(i.validIngredient("Banana", 1, "kg"));
+        assertTrue(i.validIngredient("Banana", 1, "fl oz"));
+        assertFalse(i.validIngredient("Banana", 10, "gal"));
     }
 
     @Test
@@ -31,7 +35,10 @@ public class InventoryTest {
         Food food = new Food("Banana", 100);
         Ingredient ingredient = new Ingredient(food, 1, "g");
         i.addIngredient(ingredient);
-        assertEquals("1.0 g\nBanana\n", i.toString());
+        Ingredient i1 = new Ingredient(food, 1, "kg");
+        assertEquals("1.00 g\nBanana\n", i.toString());
+        i.addIngredient(i1);
+        assertEquals("1001.00 g\nBanana\n", i.toString());
     }
 
     @Test
@@ -62,7 +69,7 @@ public class InventoryTest {
     void removeIngredientTest() {
         Inventory inventory = new Inventory();
 
-        Food food = new Food("Banana", 100);
+        Food food = new Food("Banana", 100, 1);
         Food food2 = new Food("Orange", 100);
         Food food3 = new Food("Apple", 100);
 
