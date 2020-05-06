@@ -87,7 +87,7 @@ public class InventoryTest {
         inventory.addIngredient(ing5);
 
         String shouldBe = "5.0 lb\nApple\n" +
-                "500.26 g\nBanana\n" +
+                "572.26 g\nBanana\n" +
                 "2.0 g\nOrange\n";
         assertEquals(shouldBe, inventory.toString());
 
@@ -98,14 +98,14 @@ public class InventoryTest {
         inventory.removeIngredient("Banana", 2, "g");
 
         shouldBe = "5.0 lb\nApple\n" +
-                "498.26 g\nBanana\n" +
+                "570.26 g\nBanana\n" +
                 "2.0 g\nOrange\n";
         assertEquals(shouldBe, inventory.toString());
 
         inventory.removeIngredient("Apple", 1.5, "lb");
 
         shouldBe = "3.5 lb\nApple\n" +
-                "498.26 g\nBanana\n" +
+                "570.26 g\nBanana\n" +
                 "2.0 g\nOrange\n";
         assertEquals(shouldBe, inventory.toString());
 
