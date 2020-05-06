@@ -51,6 +51,10 @@ public class Food {
         return name;
     }
 
+    public String details(){
+        return name + "\n" + calories + "\n" + density;
+    }
+
     public static boolean isCalorieValid(double caloriesIn){
         boolean isValid = true;
 

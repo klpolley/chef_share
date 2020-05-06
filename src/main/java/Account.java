@@ -268,4 +268,11 @@ public class Account {
         }
     }
 
+    public void deleteRecipe(String name) {
+        if (!recipeList.containsKey(name)) throw new IllegalArgumentException("Recipe does not exist");
+        else {
+            recipeList.remove(name);
+        }
+    }
+
 }
