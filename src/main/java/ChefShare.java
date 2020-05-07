@@ -69,4 +69,8 @@ public class ChefShare {
         return getCurrentUser().getRecipeList();
     }
 
+    public shoppingList getCurrentUserShoppingList() { return getCurrentUser().getShoppingList();}
+
+    public String printShoppingList(shoppingList s){ return getCurrentUser().printShoppingList();}
+
 }
