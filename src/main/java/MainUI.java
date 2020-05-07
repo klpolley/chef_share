@@ -7,10 +7,14 @@ public class MainUI {
 
     private ChefShare app;
     private RecipeUI recipeUI;
+    private InvUI invUI;
+    private FoodUI foodUI;
 
     public MainUI(ChefShare app) {
         this.app = app;
         recipeUI = new RecipeUI(app);
+        invUI = new InvUI(app);
+        foodUI = new FoodUI(app);
     }
 
     public void run() {
@@ -144,7 +148,7 @@ public class MainUI {
     }
 
     public void inventoryView(BufferedReader reader) {
-        System.out.println("Inventory Reached");
+        invUI.InvMenu(reader);
     }
 
     public void shoppingListView(BufferedReader reader) {
@@ -152,8 +156,7 @@ public class MainUI {
     }
 
     public void foodView(BufferedReader reader) {
-        FoodUI f = new FoodUI(app);
-        f.foodMenu(reader);
+        foodUI.foodMenu(reader);
     }
 
 
