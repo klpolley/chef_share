@@ -105,6 +105,8 @@ public class shoppingListUI {
             Account me = app.getCurrentUser();
             me.addToShoppingList(i);
 
+            System.out.println("Ingredient has been added to your list.");
+
         }else if (command.equals("recipe")){}
     }
 
@@ -116,6 +118,63 @@ public class shoppingListUI {
     }
 
     public void removeFromList(BufferedReader reader){
+        /*System.out.println("Enter the name of the ingredient you would like to remove: ");
+
+        String name = "";
+
+        try {
+            name = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+
+        int index = app.getCurrentUserIngredient(name);
+
+        if (index != -1){
+
+        }else{
+            System.out.println("This ingredient does not ")
+        }
+        Account me = app.getCurrentUser();*/
+
+        System.out.println("Enter the name of the ingredient you would like to remove: ");
+
+        String name = "";
+
+        try {
+            name = reader.readLine();
+            Account me = app.getCurrentUser();
+
+            int index = app.getCurrentUserIngredientIndex(name);
+            if (index == -1){
+                System.out.println("This ingredient is not in your list.");
+            }else{
+                double amount = app.getCurrUserIngAmount(index);
+                String unit = app.getCurrUserIngUnit(index);
+
+                System.out.println("You currently have " + amount  + unit + ".");
+                System.out.println("How much would you like to remove (enter a number): ");
+
+                String removeAmountS = "";
+                try {
+                    removeAmountS = reader.readLine();
+                } catch (IOException e) {
+                    System.out.println("Error reading input.");
+                }
+
+                double removeAmount = Double.parseDouble(removeAmountS);
+
+                if (removeAmount > amount){
+                    System.out.println("Invalid amount.");
+                }else{
+                    me.removeFromShoppingList(name,removeAmount,unit);
+                    System.out.println("Desired amount has been removed.");
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
 
     }
 

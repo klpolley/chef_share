@@ -73,6 +73,11 @@ public class ChefShare {
 
     public String printShoppingList(shoppingList s){ return getCurrentUser().printShoppingList();}
 
+    public int getCurrentUserIngredientIndex(String name) {return accounts.getCurrentAccount().getShoppingList().getIngredientIndex(name);}
 
+    public double getCurrUserIngAmount(int index) {return accounts.getCurrentAccount().getShoppingList().getAmount(index);}
 
+    public String getCurrUserIngUnit(int index) {return accounts.getCurrentAccount().getShoppingList().getUnit(index); }
+
+    public void removeIngredientShopping(String name, double amount, String unit) {accounts.getCurrentAccount().removeFromShoppingList(name,amount,unit);}
 }
