@@ -48,10 +48,11 @@ public class InvUI {
                 System.out.println("Error reading input.");
             }
         }
+        System.out.println("Chef Share:");
     }
 
     private void help(){
-        System.out.printf("Available Commands: ");
+        System.out.println("Available Commands: ");
         System.out.println("Help");
         System.out.println("View");
         System.out.println("Add");
@@ -63,11 +64,10 @@ public class InvUI {
         System.out.println(current.toString());
     }
     private void add(BufferedReader reader, Inventory current){
-        System.out.println("Add to Inventory.\n 'Back' to return to Inventory Menu");
         System.out.println("Would you like to add to ingredient already in Inventory? (y/n)");
         String command = "";
         try {
-            command = reader.readLine();
+            command = reader.readLine().toLowerCase();
         } catch (IOException e) {
             System.out.println("Error reading input. Returning to Inventory Menu");
             return;
@@ -113,6 +113,7 @@ public class InvUI {
         }
         else{
             System.out.println("Invalid Input Returning To Inventory Menu.");
+            return;
         }
 
         boolean loop = true;
@@ -120,22 +121,24 @@ public class InvUI {
         String unit = "";
         while(loop){
             loop = false;
-            System.out.println("Please enter the unit of the amount you wish to add:");
+            System.out.println("Please enter the unit of the amount you wish to add or done:");
             try {
                 command = reader.readLine();
             } catch (IOException e) {
                 System.out.println("Error reading input.");
                 loop = true;
             }
+            if(command.equalsIgnoreCase("done")) return;
             unit = command;
             if(!Ingredient.validUnit(unit)){
                 System.out.println("Invalid Unit");
                 loop = true;
             }
             if(!loop){
-                System.out.println("Please enter the amount you wish to add:");
+                System.out.println("Please enter the amount you wish to add or done:");
                 try {
                     command = reader.readLine();
+                    if(command.equalsIgnoreCase("done")) return;
                     amt = Double.parseDouble(command);
                 } catch (IOException e) {
                     System.out.println("Error reading input.");
@@ -157,6 +160,17 @@ public class InvUI {
             }
         }
     }
-    private void remove(BufferedReader reader, Inventory current ){}
+    private void remove(BufferedReader reader, Inventory current ){
+        System.out.println("Would you like to move recipe's worth of ingredient? (y/n)");
+        String command = "";
+        try {
+            command = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error reading input. Returning to Inventory Menu");
+            return;
+        }
+        if(command.equalsIgnoreCase("y"));
+
+    }
     private void get(BufferedReader reader, Inventory current){}
 }

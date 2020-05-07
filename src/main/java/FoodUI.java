@@ -47,6 +47,7 @@ public class FoodUI {
                 System.out.println("Error reading input.");
             }
         }
+        System.out.println("Chef Share:");
     }
 
     private void help(){

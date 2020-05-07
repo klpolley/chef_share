@@ -12,20 +12,20 @@ public class Inventory {
     }
 
     public void addIngredient(Ingredient i){
-        String name = i.getName();
-        if(!availableInventory.containsKey(i.getName())){
-            availableInventory.put(i.getName(), i);
+        String name = i.getName().toLowerCase();
+        if(!availableInventory.containsKey(name)){
+            availableInventory.put(name, i);
         }
         else{
-            Ingredient temp = availableInventory.get(i.getName());
+            Ingredient temp = availableInventory.get(name);
             temp.setAmount(temp.getAmount() + shoppingList.unitConversion(temp.getUnit(), i));
-            availableInventory.put(i.getName(), temp);
+            availableInventory.put(name, temp);
         }
     }
 
     public boolean haveIngredient(Ingredient i){
-        if(!availableInventory.containsKey(i.getName())) return false;
-        return !(availableInventory.get(i.getName()).getAmount() < shoppingList.unitConversion(availableInventory.get(i.getName()).getUnit(), i));
+        if(!availableInventory.containsKey(i.getName().toLowerCase())) return false;
+        return !(availableInventory.get(i.getName().toLowerCase()).getAmount() < shoppingList.unitConversion(availableInventory.get(i.getName().toLowerCase()).getUnit(), i));
     }
 
     public String toString() {
@@ -46,6 +46,7 @@ public class Inventory {
 
 
     public void removeIngredient(String name, double amount, String unit) {
+        name = name.toLowerCase();
         if (!availableInventory.containsKey(name)) throw new IllegalArgumentException("Food not in inventory");
         double have = shoppingList.unitConversion(unit, availableInventory.get(name));
         if(have < amount)throw new IllegalArgumentException("not enough food");
@@ -57,17 +58,17 @@ public class Inventory {
 
 
     public Ingredient getIngredient(String name) throws IllegalArgumentException{
-        if(!availableInventory.containsKey(name))throw new IllegalArgumentException("No Ingredient With name: " + name);
-        return availableInventory.get(name);
+        if(!availableInventory.containsKey(name.toLowerCase()))throw new IllegalArgumentException("No Ingredient With name: " + name);
+        return availableInventory.get(name.toLowerCase());
     }
     public Ingredient getIngredient(String name, String unit) throws IllegalArgumentException{
-        if(!availableInventory.containsKey(name))throw new IllegalArgumentException("No Ingredient With name: " + name);
-        return new Ingredient(availableInventory.get(name).getFood(), shoppingList.unitConversion(unit, availableInventory.get(name)), unit);
+        if(!availableInventory.containsKey(name.toLowerCase()))throw new IllegalArgumentException("No Ingredient With name: " + name);
+        return new Ingredient(availableInventory.get(name.toLowerCase()).getFood(), shoppingList.unitConversion(unit, availableInventory.get(name.toLowerCase())), unit);
     }
 
     public boolean validIngredient (String name, double amount, String unit) {
-        if(!availableInventory.containsKey(name)) return false;
-        double have = shoppingList.unitConversion(unit, availableInventory.get(name));
+        if(!availableInventory.containsKey(name.toLowerCase())) return false;
+        double have = shoppingList.unitConversion(unit, availableInventory.get(name.toLowerCase()));
         if(!(have < amount))return true;
         return false;
     }

@@ -43,6 +43,7 @@ public class RecipeUI {
                 System.out.println("Error reading input.");
             }
         }
+        System.out.println("Chef Share:");
     }
 
     public void viewMyRecipes(BufferedReader reader) {
