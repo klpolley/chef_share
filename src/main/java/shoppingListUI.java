@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Collection;
 
 public class shoppingListUI {
 
@@ -44,7 +45,7 @@ public class shoppingListUI {
         }
     }
 
-    public void addToList(BufferedReader reader){
+    public void addToList(BufferedReader reader) {
         System.out.println("Would you like to add 'ingredient' or from a 'recipe'? ");
 
         String command = "";
@@ -55,7 +56,7 @@ public class shoppingListUI {
             System.out.println("Error reading input.");
         }
 
-        if (command.equals("ingredient")){
+        if (command.equals("ingredient")) {
             System.out.println("Please enter your ingredient name: ");
 
             String name = "";
@@ -100,15 +101,58 @@ public class shoppingListUI {
                 System.out.println("Error reading input.");
             }
 
-            Ingredient i = new Ingredient(f,amount,unit);
+            Ingredient i = new Ingredient(f, amount, unit);
 
             Account me = app.getCurrentUser();
             me.addToShoppingList(i);
 
             System.out.println("Ingredient has been added to your list.");
 
-        }else if (command.equals("recipe")){}
-    }
+        } else if (command.equals("recipe")) {
+            System.out.println("Enter the full name of the recipe to add from (case sensitive).");
+
+            String recipeName = "";
+
+            try {
+                recipeName = reader.readLine();
+                Account me = app.getCurrentUser();
+
+                List<Recipe> recipe = app.getRecipeListByNameSearch(recipeName);
+                if (recipe.size() == 0) {
+                    System.out.println("Invalid recipe name.");
+                } else {
+                    int i = 0;
+                    boolean found = false;
+                    while (found == false){
+                        String recipeCheck = recipe.get(i).getName();
+                        System.out.println("Is this the recipe you're looking for - " + recipeCheck + " - y or n?");
+
+                        String confirm = "";
+
+                        try {
+                            confirm = reader.readLine();
+                        } catch (IOException e) {
+                            System.out.println("Error reading input.");
+                        }
+                        if (confirm.equals("y")){
+                            found = true;
+                        }else{
+                            i++;
+                            found = false;
+                        }
+                    }
+                    Recipe r = recipe.get(i);
+
+                    me.addRecipeToShoppingList(r);
+
+                    System.out.println("Ingredients have been added to your list.");
+                }
+                } catch(IOException e){
+                    System.out.println("Error reading input.");
+                }
+            }
+        }
+
 
     public void viewMyList(BufferedReader reader){
         System.out.println("Your current shopping list: ");
@@ -118,24 +162,6 @@ public class shoppingListUI {
     }
 
     public void removeFromList(BufferedReader reader){
-        /*System.out.println("Enter the name of the ingredient you would like to remove: ");
-
-        String name = "";
-
-        try {
-            name = reader.readLine();
-        } catch (IOException e) {
-            System.out.println("Error reading input.");
-        }
-
-        int index = app.getCurrentUserIngredient(name);
-
-        if (index != -1){
-
-        }else{
-            System.out.println("This ingredient does not ")
-        }
-        Account me = app.getCurrentUser();*/
 
         System.out.println("Enter the name of the ingredient you would like to remove: ");
 

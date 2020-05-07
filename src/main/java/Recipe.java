@@ -116,6 +116,14 @@ public class Recipe implements Comparable<Recipe> {
         else throw new IllegalArgumentException("Ingredient does not exist!");
     }
 
+    public Ingredient returnIngredient(int loc) {
+        if(loc > 0 && loc <= getNumberIngredients()){
+            Ingredient i = ingredients.get(loc-1);
+            return i;
+        }
+        else throw new IllegalArgumentException("Ingredient does not exist!");
+    }
+
     public int getNumberIngredients() {
         return ingredients.size();
     }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collection;
 
 public class ChefShare {
 
@@ -79,5 +80,10 @@ public class ChefShare {
 
     public String getCurrUserIngUnit(int index) {return accounts.getCurrentAccount().getShoppingList().getUnit(index); }
 
-    public void removeIngredientShopping(String name, double amount, String unit) {accounts.getCurrentAccount().removeFromShoppingList(name,amount,unit);}
+    public int ingredientListLength(Recipe r) { return r.getNumberIngredients();}
+
+    public Collection<Ingredient> recipeIngredientList(Recipe r) { return r.getIngredients();}
+
+
+
 }
