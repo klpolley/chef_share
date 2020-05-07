@@ -142,7 +142,8 @@ public class FoodUI {
                 printFoods(app.searchFood(foodName));
             }
 
-            System.out.println("To find your food, please enter some or all of its name, or enter \"list all food\" to view all food, or enter back to cancel");
+            System.out.println("To find your food, please enter some or all of its name (case-sensitive), " +
+                    "or enter \"list all food\" to view all food, or enter 'back' to cancel");
 
             try {
                 foodName = reader.readLine();
