@@ -15,6 +15,7 @@ public class ChefShareTest {
         steps.add("step 2");
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         Food eggs = new Food("Eggs", 100);
+        app.addFood(eggs);
         ingredients.add(new Ingredient(eggs, 2, "g"));
 
         Recipe recipe = new Recipe("Thing With Eggs", steps, ingredients);
@@ -30,6 +31,7 @@ public class ChefShareTest {
         ingredients = new ArrayList<>();
         ingredients.add(new Ingredient(eggs, 100, "g"));
         Food superEggs = new Food("Super Eggs", 1000);
+        app.addFood(superEggs);
         ingredients.add(new Ingredient(superEggs, 100, "g"));
 
         recipe = new Recipe("Thing With SO MANY Eggs", steps, ingredients);

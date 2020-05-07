@@ -122,6 +122,8 @@ public class RecipeUI {
 
         try {
             name = reader.readLine();
+            if (app.getCurrentUser().getRecipeNameList().contains(name))
+                throw new IllegalArgumentException("A recipe with that name already exists.");
 
             List<Ingredient> ings = addIngredients(reader);
 
