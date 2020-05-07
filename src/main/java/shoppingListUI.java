@@ -47,7 +47,65 @@ public class shoppingListUI {
     public void addToList(BufferedReader reader){
         System.out.println("Would you like to add 'ingredient' or from a 'recipe'? ");
 
+        String command = "";
 
+        try {
+            command = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+
+        if (command.equals("ingredient")){
+            System.out.println("Please enter your ingredient name: ");
+
+            String name = "";
+
+            try {
+                name = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+
+            System.out.println("Enter number of calories: ");
+
+            String calS = "";
+
+            try {
+                calS = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+            int cal = Integer.parseInt(calS);
+
+            Food f = new Food(name, cal);
+
+            System.out.println("Enter amount of ingredient: ");
+
+            String amountS = "";
+
+            try {
+                amountS = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+            double amount = Double.parseDouble(amountS);
+
+            System.out.println("Enter units of measurement: ");
+
+            String unit = "";
+
+            try {
+                unit = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+
+            Ingredient i = new Ingredient(f,amount,unit);
+
+            Account me = app.getCurrentUser();
+            me.addToShoppingList(i);
+
+        }else if (command.equals("recipe")){}
     }
 
     public void viewMyList(BufferedReader reader){
