@@ -97,10 +97,18 @@ public class Account {
         if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
         recipeList.get(name).addStep(step);
     }
+    public void addIngredient(String name, Ingredient ingredient)throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        recipeList.get(name).addIngredient(ingredient);
+    }
 
     public String getStep(String name, int stepNum) throws IllegalArgumentException{
         if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
         return recipeList.get(name).getStep(stepNum);
+    }
+    public Ingredient getIngredient(String name, int ingredientNum) throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        return recipeList.get(name).returnIngredient(ingredientNum);
     }
     public int getNumberSteps(String name)throws IllegalArgumentException{
         if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
@@ -109,6 +117,11 @@ public class Account {
     public void editStep(String name, int stepNum, String newStep) throws IllegalArgumentException{
         if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
         recipeList.get(name).editStep(stepNum, newStep);
+    }
+
+    public void editIngredient(String name, int ingredientNum, Ingredient ingredient) throws IllegalArgumentException{
+        if(!recipeList.containsKey(name)) throw new IllegalArgumentException("No Such Recipe");
+        recipeList.get(name).editIngredient(ingredient, ingredientNum);
     }
 
     public void createRecipe(String name) throws IllegalArgumentException{
