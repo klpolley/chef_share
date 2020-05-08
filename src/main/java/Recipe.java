@@ -15,7 +15,7 @@ public class Recipe implements Comparable<Recipe> {
         this.tags = new HashSet<>();
     }
 
-    public Recipe(String nameIn, ArrayList<String> stepsIn, ArrayList<Ingredient> ingredientsIn) throws IllegalArgumentException{
+    public Recipe(String nameIn, List<String> stepsIn, List<Ingredient> ingredientsIn) throws IllegalArgumentException{
         setName(nameIn);
         this.steps = stepsIn;
         this.ingredients = ingredientsIn;
@@ -172,8 +172,6 @@ public class Recipe implements Comparable<Recipe> {
     public int numTags() {return tags.size();}
     public Iterator<String> getTags(){return tags.iterator();}
 
-
-    //FOR JSON
 
     public Recipe() {
         this.tags = new HashSet<>();
