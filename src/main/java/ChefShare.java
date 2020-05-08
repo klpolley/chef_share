@@ -69,7 +69,15 @@ public class ChefShare {
     public List<Recipe> getCurrentUserRecipes() {
         return getCurrentUser().getRecipeList();
     }
-
+  
+    public Recipe getRecipeByName(String name){
+        List<Recipe> rs = accounts.getAllRecipes();
+        for(Recipe r:rs){
+            if(r.getName().equalsIgnoreCase(name))
+                return r;
+        }
+        return null;
+    }
     public shoppingList getCurrentUserShoppingList() { return getCurrentUser().getShoppingList();}
 
     public String printShoppingList(shoppingList s){ return getCurrentUser().printShoppingList();}

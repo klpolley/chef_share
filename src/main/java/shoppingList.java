@@ -126,12 +126,12 @@ public class shoppingList {
 
     public static double unitConversion(String unitTo, Ingredient from) throws IllegalArgumentException{
         if(!Ingredient.validUnit(unitTo)) throw new IllegalArgumentException("Invalid Unit");
-        if(from == null) throw new IllegalArgumentException("ingredient to be converted cannot be null");
+        if(from == null) throw new IllegalArgumentException("Ingredient to be converted cannot be null");
         if(unitSimp(unitTo) == unitSimp(from.getUnit())) return from.getAmount();
 
         if(!(Ingredient.isVolumeUnit(unitTo) && Ingredient.isVolumeUnit(from.getUnit()))){ //if not both volume units
             if((Ingredient.isVolumeUnit(unitTo) || Ingredient.isVolumeUnit(from.getUnit()))){ //if one is a volume unit. This catches if neither is a volume unit which would still be true for the previous if statement
-                if(!(from.getFood().getDensity() > 0))throw new IllegalArgumentException("no density to properly convert");
+                if(!(from.getFood().getDensity() > 0))throw new IllegalArgumentException("No density to properly convert");
                 if(Ingredient.isVolumeUnit(unitTo)){ // Weight to Volume
                     double temp = unitConversion("gram", from);
                     Ingredient tempI = new Ingredient(from.getFood(), temp/from.getFood().getDensity(), "ml");

@@ -56,6 +56,9 @@ public class ChefShareTest {
         recipe = new Recipe("Invisible", steps, ingredients);
         app.createRecipe(recipe);
 
+        app.addFood(eggs);
+        app.addFood(superEggs);
+
         app.logout();
 
         return app;
