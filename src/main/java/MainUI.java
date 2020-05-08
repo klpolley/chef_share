@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
 
 public class MainUI {
 
@@ -9,12 +8,14 @@ public class MainUI {
     private RecipeUI recipeUI;
     private InvUI invUI;
     private FoodUI foodUI;
+    private shoppingListUI shoppingListUI;
 
     public MainUI(ChefShare app) {
         this.app = app;
         recipeUI = new RecipeUI(app);
         invUI = new InvUI(app);
         foodUI = new FoodUI(app);
+        shoppingListUI = new shoppingListUI(app);
     }
 
     public void run() {
@@ -125,7 +126,7 @@ public class MainUI {
                 inventoryView(reader);
             }
             else if (command.equals("shopping list")) {
-                shoppingListView(reader);
+                shoppingListUI.shoppingListView(reader);
             }
             else if (command.equals("food")) {
                 foodView(reader);

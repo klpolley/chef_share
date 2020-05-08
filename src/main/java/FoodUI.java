@@ -120,7 +120,8 @@ public class FoodUI {
     }
 
     private Food search(BufferedReader reader){
-        System.out.println("To find your food, please enter some or all of its name, or enter \"list all food\" to view all food, or enter back to cancel");
+        System.out.println("To find your food, please enter some or all of its name (case-sensitive), " +
+                "or enter \"list all food\" to view all food, or enter 'back' to cancel");
 
         String foodName = "";
 
@@ -142,7 +143,8 @@ public class FoodUI {
                 printFoods(app.searchFood(foodName));
             }
 
-            System.out.println("To find your food, please enter some or all of its name, or enter \"list all food\" to view all food, or enter back to cancel");
+            System.out.println("To find your food, please enter some or all of its name (case-sensitive), " +
+                    "or enter \"list all food\" to view all food, or enter 'back' to cancel");
 
             try {
                 foodName = reader.readLine();
@@ -183,13 +185,16 @@ public class FoodUI {
                 System.out.println("Invalid command.");
             }
 
-            System.out.println("Please enter \"create\" to create a new food, or \"select\" to select an existing food");
+            if (result == null) {
+                System.out.println("Please enter \"create\" to create a new food, or \"select\" to select an existing food");
 
-            try {
-                command = reader.readLine();
-            } catch (IOException e) {
-                System.out.println("Error reading input.");
+                try {
+                    command = reader.readLine();
+                } catch (IOException e) {
+                    System.out.println("Error reading input.");
+                }
             }
+
         }
 
         return result;
