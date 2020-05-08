@@ -81,6 +81,7 @@ public class RecipeUI {
 
             try {
                 int num = Integer.parseInt(select);
+                System.out.println(app.printRecipeSelection(num, recipeList));
                 editRecipe(reader, recipeList.get(num-1));
                 return;
             } catch (NumberFormatException e) {
