@@ -49,7 +49,7 @@ public class Inventory {
         name = name.toLowerCase();
         if (!availableInventory.containsKey(name)) throw new IllegalArgumentException("Food not in inventory");
         double have = shoppingList.unitConversion(unit, availableInventory.get(name));
-        if(have < amount)throw new IllegalArgumentException("not enough food");
+        if(have < amount)throw new IllegalArgumentException("Not enough food");
         Ingredient edit = availableInventory.get(name);
         edit.setAmount(edit.getAmount() - shoppingList.unitConversion(edit.getUnit(), new Ingredient(edit.getFood(), amount, unit)));
         availableInventory.put(name, edit);
