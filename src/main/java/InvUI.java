@@ -189,7 +189,13 @@ public class InvUI {
             Iterator<Ingredient> i = r.getIngredients().iterator();
             while(i.hasNext()){
                 Ingredient curr = i.next();
-                complete = current.haveIngredient(curr);
+                try{
+                    complete = current.haveIngredient(curr);
+                }
+                catch(IllegalArgumentException e){
+                    System.out.println(e.getMessage() + "\nReturning to Inventory Menu");
+                    return;
+                }
                 if(!complete)
                     break;
             }
@@ -207,9 +213,14 @@ public class InvUI {
                     while(i.hasNext()){
                         Ingredient curr = i.next();
                         try{
-                            current.removeIngredient(curr.getName(), Math.max(curr.getAmount(), current.getIngredient(curr.getName()).getAmount()), curr.getUnit());
+                            current.removeIngredient(curr.getName(), curr.getAmount(),  curr.getUnit());
                         }
-                        catch(IllegalArgumentException e){}
+                        catch(IllegalArgumentException e){
+                            try{
+                                current.removeIngredient(curr.getName(), current.getIngredient(curr.getName()).getAmount(), current.getIngredient(curr.getName()).getUnit());
+                            }
+                            catch(IllegalArgumentException e1){}
+                        }
                     }
                 }
                 else{
