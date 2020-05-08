@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collection;
 
 public class ChefShare {
 
@@ -68,5 +69,21 @@ public class ChefShare {
     public List<Recipe> getCurrentUserRecipes() {
         return getCurrentUser().getRecipeList();
     }
+
+    public shoppingList getCurrentUserShoppingList() { return getCurrentUser().getShoppingList();}
+
+    public String printShoppingList(shoppingList s){ return getCurrentUser().printShoppingList();}
+
+    public int getCurrentUserIngredientIndex(String name) {return accounts.getCurrentAccount().getShoppingList().getIngredientIndex(name);}
+
+    public double getCurrUserIngAmount(int index) {return accounts.getCurrentAccount().getShoppingList().getAmount(index);}
+
+    public String getCurrUserIngUnit(int index) {return accounts.getCurrentAccount().getShoppingList().getUnit(index); }
+
+    public int ingredientListLength(Recipe r) { return r.getNumberIngredients();}
+
+    public Collection<Ingredient> recipeIngredientList(Recipe r) { return r.getIngredients();}
+
+
 
 }

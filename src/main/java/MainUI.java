@@ -6,10 +6,12 @@ public class MainUI {
 
     private ChefShare app;
     private RecipeUI recipeUI;
+    private shoppingListUI shoppingListUI;
 
     public MainUI(ChefShare app) {
         this.app = app;
         recipeUI = new RecipeUI(app);
+        shoppingListUI = new shoppingListUI(app);
     }
 
     public void run() {
@@ -120,7 +122,7 @@ public class MainUI {
                 inventoryView(reader);
             }
             else if (command.equals("shopping list")) {
-                shoppingListView(reader);
+                shoppingListUI.shoppingListView(reader);
             }
             else if (command.equals("food")) {
                 foodView(reader);
