@@ -12,7 +12,7 @@ public class shoppingListUI {
     }
 
     public void shoppingListView(BufferedReader reader){
-        System.out.println("Shopping List: would you like to add, remove, or view your list? Enter 'back' to return. ");
+        System.out.println("Shopping List: would you like to add, remove, transfer, or view your list? Enter 'back' to return. ");
 
         String command = "";
 
@@ -30,6 +30,8 @@ public class shoppingListUI {
                 viewMyList(reader);
             } else if (command.equals("remove")) {
                 removeFromList(reader);
+            } else if (command.equals("transfer")){
+                transferFromList(reader);
             }
             else {
                 System.out.println("Invalid command.");
@@ -202,6 +204,25 @@ public class shoppingListUI {
             System.out.println("Error reading input.");
         }
 
+    }
+
+    public void transferFromList(BufferedReader reader){
+        System.out.println("Would you like to transfer your shopping list to your inventory - y or n? ");
+
+        String command = "";
+        try {
+            command = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+
+        if (command.equals("y")){
+            Account me = app.getCurrentUser();
+
+            me.transferToInventory();
+
+            System.out.println("Your list has been transferred.");
+        }
     }
 
 }
