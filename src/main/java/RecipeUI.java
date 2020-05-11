@@ -15,7 +15,7 @@ public class RecipeUI {
     }
 
     public void recipeView(BufferedReader reader) {
-        System.out.println("Recipes: add, edit, delete, view, search. 'back' to return.");
+        System.out.println("Recipes: add, edit, delete, view, search, rename. 'back' to return.");
 
         String command = "";
 
@@ -41,6 +41,9 @@ public class RecipeUI {
             }
             else if (command.equals("delete")) {
                 deleteRecipe(reader);
+            }
+            else if(command.equals("rename")){
+                renameRecipe(reader);
             }
             else {
                 System.out.println("Invalid command.");
@@ -492,6 +495,42 @@ public class RecipeUI {
         }
 
 
+    }
+
+    void renameRecipe(BufferedReader reader){
+        System.out.println("Please Enter the name of the recipe you want to change: ");
+
+        String command = "";
+        List<Recipe> r = null;
+        Recipe r2 = null;
+
+        try {
+            command = reader.readLine();
+            r = app.getCurrentUser().getRecipeList();
+            if (r.size() == 0){
+                System.out.println("No Recipes to change the name of. Returning to Recipe menu");
+                return;
+            }
+            for(Recipe x: r){
+                if(x.getName().equals(command))
+                    r2 = x;
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+        if (r2 == null){
+            System.out.println("No Recipe with that name. Returning to Recipe menu");
+            return;
+        }
+        System.out.println("Please enter the new name for the recipeL: ");
+        try {
+            command = reader.readLine();
+
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+        r2.setName(command);
     }
 
 }

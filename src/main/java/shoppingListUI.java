@@ -37,7 +37,7 @@ public class shoppingListUI {
                 System.out.println("Invalid command.");
             }
 
-            System.out.println("Shopping List: would you like to add, remove, or view your list? Enter 'back' to return. ");
+            System.out.println("Shopping List: would you like to add, remove, transfer, or view your list? Enter 'back' to return. ");
 
             try {
                 command = reader.readLine();
